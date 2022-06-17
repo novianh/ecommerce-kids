@@ -25,9 +25,9 @@
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                  <h2 class="mb-5">
-                    @yield('title')
-                  </h2>
+                    <h2 class="mb-5">
+                        @yield('title')
+                    </h2>
                     @yield('content')
                 </div>
                 <!-- content-wrapper ends -->
