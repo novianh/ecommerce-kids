@@ -12,4 +12,11 @@
    <link rel="stylesheet" href="{{ asset('template/css/vertical-layout-light/style.css') }}">
    <!-- endinject -->
    <!-- CSS only -->
+    <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="{{ asset('template/vendors/mdi/css/materialdesignicons.min.css') }}">
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{{ asset('template/css/vertical-layout-light/style.css') }}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{{ asset('template/images/favicon.png') }}" />
+</head>
 

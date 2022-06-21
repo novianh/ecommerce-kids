@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CmsHomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,8 @@ Auth::routes();
 
 Route::get('/home/user', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home')->middleware('admin_user');
+Route::resource('home', CmsHomeController::class)->middleware('admin_user');
 
 Route::get('/kids_ecommerce', function() {
-   return view('frontend.layouts.shopping.contact');
+   return view('frontend.layouts.home.index');
 });

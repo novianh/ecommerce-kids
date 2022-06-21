@@ -95,6 +95,4 @@
 
       </section>
    </main>
-
-       
 @endsection
