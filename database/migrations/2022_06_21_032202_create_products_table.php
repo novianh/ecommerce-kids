@@ -18,8 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->text('desc');
             $table->string('sku');
-            $table->unsignedInteger('category_id');
-            $table->unsignedInteger('inventory_id');
+            $table->integer('quantity');
             $table->decimal('price');
             $table->decimal('discount');
             $table->timestamps();

@@ -1,34 +1,40 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-          <li class="nav-item">
+          <li class="nav-item {{ Request::is('dashboard*') ? 'active' : '' }}">
             <a class="nav-link" href="index.html">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <i class="icon-home menu-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></i>
-              <span class="menu-title">HomePage</span>
+              <span class="menu-title">Homepage</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ route('home.index') }}">Main Cover</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{ route('home.index') }}">Main Hero</a></li>
                 <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
                 <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
               </ul>
             </div>
+          </li> --}}
+          <li class="nav-item  {{ Request::is('gallery*') ? 'active' : ''}} {{ Request::is('product*') ? 'active' : ''}}">
+            <a class="nav-link" href="{{ route('product.index') }}">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Products</span>
+            </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {{ Request::is('home*') ? 'active' : '' }}">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
               <i class="icon-columns menu-icon"></i>
-              <span class="menu-title">Form elements</span>
+              <span class="menu-title">Homepage</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('home.index') }}">Basic Elements</a></li>
               </ul>
             </div>
           </li>

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class GalleryProduct extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'image',
+        'product_id',
+    ];
 }
