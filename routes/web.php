@@ -33,23 +33,3 @@ Route::get('/kids_ecommerce', function () {
    return view('cms.products.index');
 });
 
-// Route::get('/login/user', [LoginController::class, 'showUserLoginForm']);
-// Route::get('/login/customer', [LoginController::class, 'showCustomerLoginForm']);
-// Route::get('/register/user', [RegisterController::class, 'showUserRegisterForm']);
-// Route::get('/register/customer', [RegisterController::class, 'showCustomerRegisterForm']);
-
-// Route::post('/login/user', [LoginController::class, 'userLogin']);
-// Route::post('/login/customer', [LoginController::class, 'customerLogin']);
-// Route::post('/register/user', [RegisterController::class, 'createUser']);
-// Route::post('/register/customer', [RegisterController::class, 'createCustomer']);
-
-// Route::group(['middleware' => 'auth:customer'], function () {
-//    Route::view('/customer', 'home');
-// });
-
-// Route::group(['middleware' => 'auth:user'], function () {
-
-//    Route::view('/user', 'adminHome');
-// });
-
-// Route::get('logout', [LoginController::class, 'logout']);
