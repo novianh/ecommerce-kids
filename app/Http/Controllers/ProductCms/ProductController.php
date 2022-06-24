@@ -5,7 +5,10 @@ namespace App\Http\Controllers\ProductCms;
 use App\Http\Controllers\Controller;
 use App\Models\GalleryProduct;
 use App\Models\Product;
+use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File as FacadesFile;
 
 use function GuzzleHttp\Promise\all;
 
@@ -82,13 +85,18 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+        // $product = Product::with(['gallery'])->orderBy('created_at', 'DESC')->paginate(10);
+        // $image = GalleryProduct::find($id);
         $product = Product::find($id);
+        $image = $product->gallery;
+        // \dd($image);
         if (!$product) {
             return redirect()->route('product.index')
                 ->with('error_message', 'Data dengan id ' . $id . ' tidak ditemukan');
         }
         return \view('cms.products.show', [
-            'product' => $product
+            'product' => $product,
+            'image' => $image
         ]);
     }
 
@@ -146,11 +154,16 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        // \dd($request->all());
-        $product = Product::find($id);
-        if ($product) $product->delete();
+        $products = Product::find($id);
+        $image = $products->gallery;
+        foreach ($image as $projectImage) {
+            $image_path = public_path() . '/storage/products/' . $projectImage->image;
+            unlink($image_path);
+        }
+        $products->delete();
+
         return redirect()->route('product.index')
             ->with('success_message', 'Berhasil menghapus user');
     }

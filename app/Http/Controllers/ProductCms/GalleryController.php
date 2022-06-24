@@ -17,10 +17,10 @@ class GalleryController extends Controller
     public function index($id)
     {
         $image = Product::find($id);
-        // if (!$image) {
-        //     return redirect()->route('product.index')
-        //         ->with('error_message', 'Data dengan id ' . $id . ' tidak ditemukan');
-        // }
+        if (!$image) {
+            return redirect()->route('product.index')
+                ->with('error_message', 'Data dengan id ' . $id . ' tidak ditemukan');
+        }
         return \view('cms.products.addImage', [
             'image' => $image
         ]);
@@ -52,7 +52,7 @@ class GalleryController extends Controller
 
         $input = $request->all();
         $image = $request->file('image');
-        $nama_image = uniqid() . "_" . $image->getClientOriginalName();
+        $nama_image = date('dmYHis') . "_" . $image->getClientOriginalName();
         $tujuan_upload = 'public/products';
         $image->storeAs($tujuan_upload, $nama_image);
         $input['image'] = "$nama_image";
@@ -63,7 +63,8 @@ class GalleryController extends Controller
 
         // ]);
         GalleryProduct::create($input);
-        return redirect()->route('product.index')
+
+        return redirect()->route('product.show', $request->product_id)
             ->with('success_message', 'Berhasil menambah product baru');;
     }
 
@@ -86,7 +87,14 @@ class GalleryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $image = GalleryProduct::find($id);
+        if (!$image) {
+            return redirect()->route('product.index')
+                ->with('error_message', 'Data dengan id ' . $id . ' tidak ditemukan');
+        }
+        return \view('cms.products.gallery.edit', [
+            'image' => $image
+        ]);
     }
 
     /**
@@ -98,7 +106,35 @@ class GalleryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'product_id' => 'required',
+            // 'image' => 'required'
+        ]);
+
+        $data = GalleryProduct::find($id);
+
+        if ($image = $request->file('image')) {
+            // $imagepath = GalleryProduct::find($id);
+            unlink("storage/products/" . $data->image);
+
+            $image = $request->file('image');
+            $nama_image = date('YmdHis') . "_" . $image->getClientOriginalName();
+            $tujuan_upload = 'public/products';
+            $image->storeAs($tujuan_upload, $nama_image);
+            $data->update([
+                'image' => $nama_image,
+            ]);
+        } else {
+            return \redirect()->back();
+        }
+
+        $data->image = $nama_image;
+        // \dd( $request->image);
+        $data->save();
+
+
+        return redirect()->back()
+            ->with('success', 'Product updated successfully');
     }
 
     /**
@@ -109,6 +145,9 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $image = GalleryProduct::find($id);
+        unlink("storage/products/" . $image->image);
+        $image->delete();
+        return redirect()->back()->with('status', 'Data Siswa Berhasil DiHapus');
     }
 }

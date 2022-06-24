@@ -80,7 +80,10 @@
 @enderror
 </div> --}}
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                        <button class="btn btn-light">Cancel</button>
+                        <button type="reset" class="btn btn-danger mr-2" id="submit">Reset</button>
+                        <a href="{{ url()->previous() }}" class="btn btn-light" data-dismiss="modal">Cancel</a>
+
+                        {{-- <button class="btn btn-light">Cancel</button> --}}
                     </form>
                 </div>
             </div>

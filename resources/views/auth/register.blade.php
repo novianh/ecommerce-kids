@@ -25,9 +25,10 @@
                             <form class="pt-3" method="POST" action="{{ route('register') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg" id="name"
-                                        placeholder="Username"@error('name') is-invalid @enderror" name="name"
-                                        value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                    <input type="text"
+                                        class="form-control form-control-lg  @error('name') is-invalid @enderror"
+                                        id="name" placeholder="Username" name="name" value="{{ old('name') }}"
+                                        required autocomplete="name" autofocus>
 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -36,8 +37,8 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-lg" id="email"
-                                        placeholder="Email" @error('email') is-invalid @enderror" name="email"
+                                    <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" id="email"
+                                        placeholder="Email"  name="email"
                                         value="{{ old('email') }}" required autocomplete="email">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -46,9 +47,9 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-lg"
+                                    <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror"
                                         id="exampleInputPassword1" placeholder="Password"
-                                        @error('password') is-invalid @enderror" name="password" required
+                                         name="password" required
                                         autocomplete="new-password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -57,17 +58,19 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-lg"
-                                        id="pass_confirm" placeholder="Confirm Password"
-                                        name="password_confirmation" required autocomplete="new-password">
+                                    <input type="password" class="form-control form-control-lg" id="pass_confirm"
+                                        placeholder="Confirm Password" name="password_confirmation" required
+                                        autocomplete="new-password">
                                 </div>
 
                                 <div class="mt-3">
-                                    <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
-                                    >SIGN UP</button>
+                                    <button type="submit"
+                                        class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN
+                                        UP</button>
                                 </div>
                                 <div class="text-center mt-4 font-weight-light">
-                                    Already have an account? <a href="{{ route('login') }}" class="text-primary">Login</a>
+                                    Already have an account? <a href="{{ route('login') }}"
+                                        class="text-primary">Login</a>
                                 </div>
                             </form>
                         </div>

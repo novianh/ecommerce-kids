@@ -16,4 +16,9 @@ class Product extends Model
         'price',
         'discount',
     ];
+
+    public function gallery()
+    {
+        return $this->hasMany(GalleryProduct::class);
+    }
 }

@@ -1,6 +1,6 @@
 @extends('backend.app')
 @section('title')
-    <i class='mdi mdi-image-area'></i> Add Image Products
+    <i class='mdi mdi-image-area'></i> Edit Products
 @endsection
 
 @section('style')
@@ -11,15 +11,14 @@
 @section('breadcrumb', 'Dashboard')
 
 @section('content')
-
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-
                     <form class="forms-sample" enctype="multipart/form-data" method="POST" id="addImage"
-                        action="{{ route('gallery.store') }}">
+                        action="{{ route('gallery.update', $image->id) }}">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <input type="hidden" name="product_id" id="product_id" class="form-control"
                                 id="disableTextInput" value="{{ $image->id }}">
@@ -46,18 +45,11 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{ asset('ecommerce/node_modules/dropify/dist/js/dropify.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            // Basic
-            $('.dropify').dropify();
-
-            // Used events
-            // var drEvent = $('.dropify').dropify();
-
-            // drEvent.on('dropify.error.imageFormat', function(event, element) {
-            //     alert('Image format error message!');
-            // });
-        });
-    </script>
+<script src="{{ asset('ecommerce/node_modules/dropify/dist/js/dropify.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        // Basic
+        $('.dropify').dropify();
+    });
+</script>
 @endsection
