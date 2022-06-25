@@ -20,6 +20,12 @@
               </ul>
             </div>
           </li> --}}
+          <li class="nav-item {{ Request::is('category*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('category.index') }}">
+              <i class="icon-box menu-icon"></i>
+              <span class="menu-title">Products Categories</span>
+            </a>
+          </li>
           <li class="nav-item  {{ Request::is('gallery*') ? 'active' : ''}} {{ Request::is('product*') ? 'active' : ''}}">
             <a class="nav-link" href="{{ route('product.index') }}">
               <i class="icon-paper menu-icon"></i>

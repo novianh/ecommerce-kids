@@ -1,28 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\ProductCms;
+namespace App\Http\Controllers\ProductCMS;
 
 use App\Http\Controllers\Controller;
-use App\Models\GalleryProduct;
-use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 
-class GalleryController extends Controller
+class ProductCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $image = Product::find($id);
-        if (!$image) {
-            return redirect()->route('product.index')
-                ->with('error_message', 'Data dengan id ' . $id . ' tidak ditemukan');
-        }
-        return \view('cms.products.addImage', [
-            'image' => $image
+        return \view('cms.products.category.index', [
+            'category' => ProductCategory::all()
         ]);
     }
 
@@ -46,20 +40,20 @@ class GalleryController extends Controller
     {
         // \dd($request->all());
         $request->validate([
-            'product_id' => 'required|exists:products,id',
+            'name' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,svg,gif',
         ]);
 
         $input = $request->all();
         $image = $request->file('image');
-        $nama_image = date('dmYHis') . "_" . $image->getClientOriginalName();
-        $tujuan_upload = 'public/products';
+        $nama_image = date('d-m-Y His') . "_" . $image->getClientOriginalName();
+        $tujuan_upload = 'public/category';
         $image->storeAs($tujuan_upload, $nama_image);
         $input['image'] = "$nama_image";
 
-        GalleryProduct::create($input);
+        ProductCategory::create($input);
 
-        return redirect()->route('product.show', $request->product_id)
+        return redirect()->route('category.index')
             ->with('success_message', 'Berhasil menambah product baru');
     }
 
@@ -82,13 +76,13 @@ class GalleryController extends Controller
      */
     public function edit($id)
     {
-        $image = GalleryProduct::find($id);
-        if (!$image) {
+        $category = ProductCategory::find($id);
+        if (!$category) {
             return redirect()->route('product.index')
                 ->with('error_message', 'Data dengan id ' . $id . ' tidak ditemukan');
         }
-        return \view('cms.products.gallery.edit', [
-            'image' => $image
+        return \view('cms.products.category.edit', [
+            'category' => $category
         ]);
     }
 
@@ -102,30 +96,33 @@ class GalleryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'product_id' => 'required',
+            'name' => 'required',
         ]);
 
-        $data = GalleryProduct::find($id);
+        $data = ProductCategory::find($id);
 
         if ($image = $request->file('image')) {
-            unlink("storage/products/" . $data->image);
+            unlink("storage/category/" . $data->image);
 
             $image = $request->file('image');
             $nama_image = date('Y-m-d His') . "_" . $image->getClientOriginalName();
-            $tujuan_upload = 'public/products';
+            $tujuan_upload = 'public/category';
             $image->storeAs($tujuan_upload, $nama_image);
             $data->update([
                 'image' => $nama_image,
+                'name' => $request->name,
             ]);
+            $data->save();
         } else {
-            return \redirect()->back();
+            $data->update([
+                'name' => $request->name,
+            ]);
+            $data->save();
         }
 
-        $data->image = $nama_image;
-        $data->save();
 
 
-        return redirect()->back()
+        return redirect()->route('category.index')
             ->with('success', 'Product updated successfully');
     }
 
@@ -137,9 +134,9 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        $image = GalleryProduct::find($id);
-        unlink("storage/products/" . $image->image);
-        $image->delete();
+        $category = ProductCategory::find($id);
+        unlink("storage/category/" . $category->image);
+        $category->delete();
         return redirect()->back()->with('status', 'Data Siswa Berhasil DiHapus');
     }
 }

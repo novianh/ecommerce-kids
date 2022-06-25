@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cms\Home\HeroController;
 use App\Http\Controllers\ProductCms\ProductController;
 use App\Http\Controllers\ProductCms\GalleryController;
+use App\Http\Controllers\ProductCMS\ProductCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,9 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('home')->middleware('admin_user');
 
-   Route::group(['prefix' => 'user'], function () {
-      Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-   });
+Route::group(['prefix' => 'user'], function () {
+   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
 
 
 
@@ -40,12 +41,17 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::get('/', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home');
       Route::resource('/home', HeroController::class);
       Route::resource('/product', ProductController::class);
-      // Route::resource('/gallery', ProductController::class);
+
+
+
       Route::get('/gallery/{id}/index', [GalleryController::class, 'index'])->name('gallery.index');
       Route::post('/gallery/store', [GalleryController::class, 'store'])->name('gallery.store');
       Route::get('/gallery/create', [GalleryController::class, 'create'])->name('gallery.create');
       Route::delete('/gallery/delete/{id}', [GalleryController::class, 'destroy'])->name('delete');
       Route::get('/gallery/{id}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
       Route::put('/gallery/update/{id}', [GalleryController::class, 'update'])->name('gallery.update');
+
+
+      Route::resource('category', ProductCategoryController::class)->except(['create', 'show']);
    });
 });

@@ -13,60 +13,53 @@
 @section('content')
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
+
             <div class="card">
                 <div class="card-body">
-                    <div class="col grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                {{-- <h4 class="card-title text-center">Data Products</h4> --}}
-                                <a href="" class="btn btn-primary mb-3" data-toggle="modal"
-                                    data-target="#exampleModal"> <i class="icon-plus"></i> Add Product</a>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th width="100rem"></th>
-                                                <th width="300rem">Name</th>
-                                                <th>SKU</th>
-                                                <th>Quantity</th>
-                                                <th>Price</th>
+                    {{-- <h4 class="card-title text-center">Data Products</h4> --}}
+                    <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal"> <i
+                            class="icon-plus"></i> Add Product</a>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th width="100rem"></th>
+                                    <th width="300rem">Name</th>
+                                    <th>SKU</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
 
-                                                <th>Action</th>
-                                            </tr>
+                                    <th>Action</th>
+                                </tr>
 
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($product as $prd)
-                                                <tr>
-                                                    <td><a href="{{ route('product.show', $prd) }}" class="btn text-dark">
-                                                            <i class="fa fa-search"></i></a></td>
-                                                    <td>
-                                                        {{ $prd->name }}
-                                                    </td>
-                                                    <td>{{ $prd->sku }}</td>
-                                                    <td>{{ $prd->quantity }}</td>
-                                                    <td>Rp. {{ $prd->price }}</td>
+                            </thead>
+                            <tbody>
+                                @foreach ($product as $prd)
+                                    <tr>
+                                        <td><a href="{{ route('product.show', $prd) }}" class="btn text-dark">
+                                                <i class="fa fa-search"></i></a></td>
+                                        <td>
+                                            {{ $prd->name }}
+                                        </td>
+                                        <td>{{ $prd->sku }}</td>
+                                        <td>{{ $prd->quantity }}</td>
+                                        <td>Rp. {{ $prd->price }}</td>
 
-                                                    <td>
-                                                        <a href="{{ route('product.edit', $prd) }}"
-                                                            class="btn btn-sm btn-success"><i class="fa fa-edit"
-                                                                data-toggle="modal" data-target="#edit"></i> Edit</a>
-                                                        <a href="{{ route('product.destroy', $prd) }}"
-                                                            class="btn btn-danger btn-sm mb-0"
-                                                            onclick="notificationBeforeDelete(event, this)"><i
-                                                                class=" fa fa-trash"></i> Delete</a>
-                                                        <a href="{{ route('gallery.index', $prd) }}"
-                                                            class=" btn btn-sm btn-primary"><i class="fa fa-plus"></i> Add
-                                                            image</a>
-
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                                        <td>
+                                            <a href="{{ route('product.edit', $prd) }}" class="btn btn-sm btn-success"><i
+                                                    class="fa fa-edit" data-toggle="modal" data-target="#edit"></i> Edit</a>
+                                            <a href="{{ route('product.destroy', $prd) }}"
+                                                class="btn btn-danger btn-sm mb-0"
+                                                onclick="notificationBeforeDelete(event, this)"><i class=" fa fa-trash"></i>
+                                                Delete</a>
+                                            <a href="{{ route('gallery.index', $prd) }}"
+                                                class=" btn btn-sm btn-primary"><i class="fa fa-plus"></i> Add
+                                                image</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -87,6 +80,19 @@
                     <form class="forms-sample" enctype="multipart/form-data" method="POST"
                         action="{{ route('product.store') }}" id="my-awesome-dropzone">
                         @csrf
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Product Category</label>
+                            
+                            <select name="id_category" class="form-control">
+                                <option value="">Pilih</option>
+                                @foreach ($category as $row)
+                                <option value="{{ $row->id }}" {{ old('id_category') == $row->id ? 'selected':'' }}>{{ $row->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('id_category')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
                         <div class="form-group">
                             <label for="exampleInputUsername1">Product Name</label>
                             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
@@ -111,8 +117,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Rp.</span>
                             </div>
-                            <input type="number" class="form-control  @error('price') is-invalid @enderror "
-                                aria-label="Amount (to the nearest dollar)" min="0" name="price">
+                            <input type="text" class="form-control  @error('price') is-invalid @enderror "
+                                min="0" name="price">
                             @error('price')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -128,6 +134,14 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="status">Status</label>
+                            <select name="status" class="form-control" required>
+                                <option value="1" {{ old('status') == '1' ? 'selected':'' }}>Publish</option>
+                                <option value="0" {{ old('status') == '0' ? 'selected':'' }}>Draft</option>
+                            </select>
+                            <p class="text-danger">{{ $errors->first('status') }}</p>
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Description</label>
                             <textarea class="form-control  @error('desc') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3"
                                 name="desc" placeholder="Description"></textarea>
@@ -135,17 +149,8 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        {{-- <div class="form-group">
-                            <label for="exampleInputPassword1">Product Image</label>
-                            <input type="file" class="dropify @error('desc') is-invalid @enderror" id="input-file-now"
-                                name="image" data-errors-position="outside" data-max-file-size="4M"
-                                data-allowed-file-extensions="jpeg png jpg svg gif" />
-                            @error('desc')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div> --}}
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
@@ -154,7 +159,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="addImageForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    {{-- <div class="modal fade" id="addImageForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -190,7 +195,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('js')
@@ -252,12 +257,6 @@
             // Basic
             $('.dropify').dropify();
 
-            // Used events
-            // var drEvent = $('.dropify').dropify();
-
-            // drEvent.on('dropify.error.imageFormat', function(event, element) {
-            //     alert('Image format error message!');
-            // });
         });
     </script>
 @endsection
