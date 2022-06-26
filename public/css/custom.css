@@ -1,0 +1,46 @@
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
+.sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: #e91e63;
+}
+.nav.nav-pills {
+    background-color: rgb(25, 25, 25);
+    gap: 1rem!important;
+}
+.nav.nav-pills .nav-link {
+    color: white;
+    padding: 1rem .7rem;
+}
+
+.nav.nav-pills .nav-link:hover:not(.active) {
+    color: white;
+}
+
+[class*="sidebar-dark-"] {
+    background-color: rgb(25, 25, 25);
+}
+
+.layout-navbar-fixed
+    .wrapper
+    .sidebar-dark-primary
+    .brand-link:not([class*="navbar"]) {
+    background-color: rgb(25, 25, 25);
+}
+
+@media (min-width: 768px) {
+    body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav)
+        .content-wrapper,
+    body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav)
+        .main-footer,
+    body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav)
+        .main-header {
+        margin-left: 270px;
+    }
+}
+
+.main-sidebar, .main-sidebar::before{
+   width: 270px;
+}
+
+.layout-navbar-fixed .wrapper .main-sidebar:hover .brand-link {
+   width: 270px;
+}

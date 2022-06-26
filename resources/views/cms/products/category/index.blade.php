@@ -1,16 +1,19 @@
-@extends('backend.app')
-@section('title')
-    <i class='icon-box'></i> Add Category Products
-@endsection
+@extends('adminlte::page')
+@section('title', 'Dashboard')
 
-@section('style')
+@section('content_header')
+    <h1><i class='fas fa-fw fa-boxes'></i>  Products Category</h1>
+@stop
+
+@push('css')
     <link rel="stylesheet" href="{{ asset('ecommerce/node_modules/dropify/dist/css/dropify.min.css') }}">
-@endsection
+    {{-- <link rel="stylesheet" href="{{ asset('css/argon-dashboard.min.css') }}"> --}}
+@endpush
 
 @section('breadcrumb', 'Dashboard')
 
 @section('content')
-    <div class="">
+    <div class="mt-3">
         <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
@@ -62,7 +65,7 @@
                                 <tbody>
                                     @foreach ($category as $ctg)
                                         <tr>
-                                            <td><img src="{{ url('storage/category/' . $ctg->image) }}" alt="">
+                                            <td><img src="{{ url('storage/category/' . $ctg->image) }}" alt="" class="avatar avatar-sm">
                                                 {{ $ctg->image }} </td>
                                             <td>{{ $ctg->name }} </td>
                                             <td>

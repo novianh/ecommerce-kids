@@ -32,8 +32,8 @@ Route::group(['prefix' => 'user'], function () {
 
 
 
-Route::get('/kids_ecommerce', function () {
-   return view('cms.products.index');
+Route::get('/try', function () {
+   return view('try');
 });
 
 Route::group(['middleware' => 'admin_user'], function () {
@@ -55,3 +55,9 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::resource('category', ProductCategoryController::class)->except(['create', 'show']);
    });
 });
+
+Auth::routes();
+
+Route::get('/home', function() {
+    return view('home');
+})->name('home')->middleware('auth');
