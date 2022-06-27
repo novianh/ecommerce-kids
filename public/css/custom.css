@@ -44,3 +44,8 @@
 .layout-navbar-fixed .wrapper .main-sidebar:hover .brand-link {
    width: 270px;
 }
+
+.page-item.active .page-link {
+    background-color: #e91e63;
+    border: none;
+}

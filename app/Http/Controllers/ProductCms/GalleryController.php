@@ -60,7 +60,7 @@ class GalleryController extends Controller
         GalleryProduct::create($input);
 
         return redirect()->route('product.show', $request->product_id)
-            ->with('success_message', 'Berhasil menambah product baru');
+            ->with('success_message', 'Add new image successfully');
     }
 
     /**
@@ -126,7 +126,7 @@ class GalleryController extends Controller
 
 
         return redirect()->back()
-            ->with('success', 'Product updated successfully');
+            ->with('success_message', 'Image updated successfully');
     }
 
     /**
@@ -140,6 +140,27 @@ class GalleryController extends Controller
         $image = GalleryProduct::find($id);
         unlink("storage/products/" . $image->image);
         $image->delete();
-        return redirect()->back()->with('status', 'Data Siswa Berhasil DiHapus');
+        return redirect()->back()->with('success_message', 'Delete Completed');
+    }
+
+    public function trash()
+    {
+        // mengampil data product yang sudah dihapus
+        $product = Product::onlyTrashed()->get();
+        // $image = $product->gallery;
+        return view('cms.products.trash', ['product' => $product,]);
+    }
+    public function restore($id)
+    {
+        $product = Product::onlyTrashed()->find($id);
+        $product->restore();
+        return redirect()->route('product.index')->with('success_message', 'Restore Completed');
+    }
+    public function restoreAll()
+    {
+        $product = Product::onlyTrashed();
+    	$product->restore();
+
+        return redirect()->route('product.index')->with('success_message', 'Restore Completed');
     }
 }

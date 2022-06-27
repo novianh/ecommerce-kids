@@ -253,16 +253,16 @@ return [
             'label'       => 4,
             'label_color' => 'success',
         ],
-        ['header' => 'Product Settings'],
+        ['header' => 'Product Management'],
         [
             'text' => 'Category',
             'url'  => '/admin/category',
             'icon' => 'fas fa-fw fa-boxes',
         ],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => ' Product List ',
+            'url'  => 'admin/product',
+            'icon' => 'fas fa-list-ul',
         ],
         [
             'text'    => 'multilevel',

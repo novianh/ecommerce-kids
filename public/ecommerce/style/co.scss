@@ -1,0 +1,53 @@
+@import "main";
+
+#co{
+   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: $black;
+      opacity: .4; /* Firefox */
+   }
+   
+   :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color: $black;
+      opacity: .4; /* Firefox */
+   }
+   
+   ::-ms-input-placeholder { /* Microsoft Edge */
+      color: $black;
+      opacity: .4; /* Firefox */
+   }
+   h5{
+      font-weight: 700 !important;
+   }
+   label{
+      color: $black;
+   }
+   .card{
+      .card-header{
+         background-color: $pink;
+         margin: 1rem;
+         border: none;
+      }
+      .card-body{
+         font-family: $font-tambahan;
+         font-weight: 700 ;
+         background-color: $white;
+         li{
+            h6{
+               font-weight: 700; 
+            }
+            border-bottom: 1px dashed $border ;
+         }
+         li.total{
+            border: none !important;
+            color: $blue;
+            span{
+               color: $blue !important;
+            }
+         }
+         .status{
+            color: $blue;
+         }
+      }
+   }
+}
+

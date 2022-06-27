@@ -1,8 +1,8 @@
 @extends('adminlte::page')
-@section('title', 'Dashboard')
+@section('title', 'Category')
 
 @section('content_header')
-    <h1><i class='fas fa-fw fa-boxes'></i>  Products Category</h1>
+    <h1><i class='fas fa-fw fa-boxes'></i> Products Category</h1>
 @stop
 
 @push('css')
@@ -23,14 +23,15 @@
                             action="{{ route('category.store') }}">
                             @csrf
 
-                            <div class="form-group">
-                                <label for="exampleInputUsername1">Category Name</label>
-                                <input type="text" name="name"
-                                    class="form-control @error('name') is-invalid @enderror" id="exampleInputUsername1"
-                                    placeholder="Category Name">
-                                @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                            <div class="my-3">
+                                <div class="input-group input-group-outline @error('name') is-invalid @enderror">
+                                    <label for="" class="form-label">Category Name</label>
+                                    <input type="text" name="name" class="form-control" id="exampleInputUsername1"
+                                        aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>
+                                    @error('name')
+                                        <p><small class="text-danger">{{ $message }}</small></p>
+                                    @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Category Image</label>
@@ -54,7 +55,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table text-center">
                                 <thead>
                                     <tr>
                                         <th>Category Image</th>
@@ -62,21 +63,33 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="text-center">
                                     @foreach ($category as $ctg)
                                         <tr>
-                                            <td><img src="{{ url('storage/category/' . $ctg->image) }}" alt="" class="avatar avatar-sm">
-                                                {{ $ctg->image }} </td>
+                                            <td><img src="{{ url('storage/category/' . $ctg->image) }}" alt=""
+                                                    class="avatar avatar-sm">
+                                            </td>
                                             <td>{{ $ctg->name }} </td>
                                             <td>
-                                                <a href="{{ route('category.edit', $ctg) }}"
-                                                    class="btn btn-sm btn-success"><i class="fa fa-edit" data-toggle="modal"
-                                                        data-target="#edit"></i> Edit</a>
-                                                <a href="{{ route('category.destroy', $ctg) }}"
-                                                    class="btn btn-danger btn-sm mb-0"
-                                                    onclick="notificationBeforeDelete(event, this)"><i
-                                                        class=" fa fa-trash"></i>
-                                                    Delete</a>
+                                                <div class="dropdown">
+                                                    <a class="btn text-secondary " href="#" role="button"
+                                                        id="dropdownMenuLink{{ $ctg->id }}" data-toggle="dropdown"
+                                                        aria-expanded="false">
+
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu"
+                                                        aria-labelledby="dropdownMenuLink{{ $ctg->id }}">
+                                                        <a href="{{ route('category.edit', $ctg) }}"
+                                                            class="dropdown-item text-success"><i class="fa fa-edit"
+                                                                data-toggle="modal" data-target="#edit"></i> Edit</a>
+                                                        <a href="{{ route('category.destroy', $ctg) }}"
+                                                            class="dropdown-item text-danger"
+                                                            onclick="notificationBeforeDelete(event, this)"><i
+                                                                class=" fa fa-trash"></i>
+                                                            Delete</a>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

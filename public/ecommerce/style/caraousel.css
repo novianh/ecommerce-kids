@@ -1,0 +1,12 @@
+.carousel-wrap {
+	width: 100%;
+	margin: auto;
+	position: relative;
+}
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+	background: #f4bfbf;
+}
+.owl-theme .owl-dots .owl-dot span{
+	background-color: #f4bfbf77;
+}

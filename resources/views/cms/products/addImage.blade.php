@@ -1,12 +1,14 @@
-@extends('backend.app')
-@section('title')
-    <i class='mdi mdi-image-area'></i> Add Image Products
-@endsection
+@extends('adminlte::page')
+@section('title', 'Add Image')
 
-@section('style')
+@section('content_header')
+    <i class='mdi mdi-image-area'></i> Add Image Products
+@stop
+
+@push('css')
     <link rel="stylesheet" href="{{ asset('ecommerce/node_modules/dropify/dist/css/dropify.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/vendors/font-awesome/css/font-awesome.min.css') }}">
-@endsection
+@endpush
 
 @section('breadcrumb', 'Dashboard')
 
@@ -51,13 +53,6 @@
         $(document).ready(function() {
             // Basic
             $('.dropify').dropify();
-
-            // Used events
-            // var drEvent = $('.dropify').dropify();
-
-            // drEvent.on('dropify.error.imageFormat', function(event, element) {
-            //     alert('Image format error message!');
-            // });
         });
     </script>
 @endsection

@@ -5,10 +5,11 @@ use App\Models\Product;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductCategory extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'image',
@@ -17,6 +18,6 @@ class ProductCategory extends Model
 
     public function product()
     {
-        return $this->hasMany('App\Models\Product', 'id');
+        return $this->hasMany('App\Models\Product', 'id')->withTrashed();
     }
 }

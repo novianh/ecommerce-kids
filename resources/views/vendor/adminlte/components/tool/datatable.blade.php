@@ -2,7 +2,7 @@
 
 <div class="table-responsive">
 
-<table id="{{ $id }}" style="width:100%" {{ $attributes->merge(['class' => $makeTableClass()]) }}>
+<table id="{{ $id=1 }}" style="width:100%" {{ $attributes->merge(['class' => $makeTableClass()]) }}>
 
     {{-- Table head --}}
     <thead @isset($headTheme) class="thead-{{ $headTheme }}" @endisset>

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         'name',
         'desc',
@@ -29,13 +30,13 @@ class Product extends Model
     {
         //ADAPUN VALUENYA AKAN MENCETAK HTML BERDASARKAN VALUE DARI FIELD STATUS
         if ($this->status == 0) {
-            return '<span class="badge badge-light">Draft</span>';
+            return '<span class="badge bg-gradient-secondary">Draft</span>';
         }
-        return '<span class="badge badge-success">Aktif</span>';
+        return '<span class="badge bg-gradient-success">Aktif</span>';
     }
 
     public function category()
     {
-        return $this->belongsTo("App\Models\ProductCategory", "id_category");
+        return $this->belongsTo("App\Models\ProductCategory", "id_category")->withTrashed();
     }
 }

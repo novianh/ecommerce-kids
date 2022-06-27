@@ -1,12 +1,14 @@
-@extends('backend.app')
-@section('title')
-    <i class='mdi mdi-image-area'></i> Edit Products
-@endsection
+@extends('adminlte::page')
+@section('title', 'Edit Image')
 
-@section('style')
+@section('content_header')
+    <h1><i class='mdi mdi-image-area'></i> Edit Image</h1>
+@stop
+
+@push('css')
     <link rel="stylesheet" href="{{ asset('ecommerce/node_modules/dropify/dist/css/dropify.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/vendors/font-awesome/css/font-awesome.min.css') }}">
-@endsection
+@endpush
 
 @section('breadcrumb', 'Dashboard')
 

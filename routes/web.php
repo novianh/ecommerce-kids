@@ -33,7 +33,7 @@ Route::group(['prefix' => 'user'], function () {
 
 
 Route::get('/try', function () {
-   return view('try');
+   return view('vendor\adminlte\components\tool\datatable');
 });
 
 Route::group(['middleware' => 'admin_user'], function () {
@@ -41,7 +41,10 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::get('/', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home');
       Route::resource('/home', HeroController::class);
       Route::resource('/product', ProductController::class);
-
+      
+      Route::get('/list/trash', [GalleryController::class, 'trash'])->name('product.trash');
+      Route::get('/list/restore/{id}', [GalleryController::class, 'restore'])->name('product.restore');
+      Route::get('/list/restoreAll', [GalleryController::class, 'restoreAll'])->name('product.restoreAll');
 
 
       Route::get('/gallery/{id}/index', [GalleryController::class, 'index'])->name('gallery.index');
