@@ -22,15 +22,19 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <input type="hidden" name="product_id" id="product_id" class="form-control"
+                            <input type="hidden" name="id" id="id" class="form-control"
                                 id="disableTextInput" value="{{ $image->id }}">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" name="product_id" id="product_id" class="form-control"
+                                id="disableTextInput" value="{{ $image->product_id }}">
                         </div>
 
                         <div class="form-group">
                             <label for="exampleInputPassword1">Product Image</label>
                             <input type="file" id="image" class="dropify @error('image') is-invalid @enderror"
                                 id="input-file-now" name="image" data-errors-position="outside" data-max-file-size="4M"
-                                data-allowed-file-extensions="jpeg png jpg svg gif" />
+                                data-allowed-file-extensions="jpeg png jpg svg gif" data-default-file="{{ url('storage/products/' . $image->image) }}" />
                             @error('image')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror

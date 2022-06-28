@@ -25,14 +25,18 @@ class Product extends Model
     {
         return $this->hasMany(GalleryProduct::class);
     }
+    public function entity()
+    {
+        return $this->hasMany(Entity::class);
+    }
 
     public function getStatusLabelAttribute()
     {
         //ADAPUN VALUENYA AKAN MENCETAK HTML BERDASARKAN VALUE DARI FIELD STATUS
         if ($this->status == 0) {
-            return '<span class="badge bg-gradient-secondary">Draft</span>';
+            return '<span class="badge bg-secondary">Draft</span>';
         }
-        return '<span class="badge bg-gradient-success">Aktif</span>';
+        return '<span class="badge bg-success">Active</span>';
     }
 
     public function category()

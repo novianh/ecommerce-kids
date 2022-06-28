@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cms\Home\HeroController;
 use App\Http\Controllers\ProductCms\ProductController;
 use App\Http\Controllers\ProductCms\GalleryController;
+use App\Http\Controllers\ProductCms\EntityController;
 use App\Http\Controllers\ProductCMS\ProductCategoryController;
 
 /*
@@ -41,7 +42,7 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::get('/', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home');
       Route::resource('/home', HeroController::class);
       Route::resource('/product', ProductController::class);
-      
+
       Route::get('/list/trash', [GalleryController::class, 'trash'])->name('product.trash');
       Route::get('/list/restore/{id}', [GalleryController::class, 'restore'])->name('product.restore');
       Route::get('/list/restoreAll', [GalleryController::class, 'restoreAll'])->name('product.restoreAll');
@@ -54,6 +55,11 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::get('/gallery/{id}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
       Route::put('/gallery/update/{id}', [GalleryController::class, 'update'])->name('gallery.update');
 
+      Route::get('/entity/{id}/index', [EntityController::class, 'index'])->name('entity.index');
+      Route::post('/entity/store', [EntityController::class, 'store'])->name('entity.store');
+      Route::get('/entity/{id}/edit', [EntityController::class, 'edit'])->name('entity.edit');
+      Route::put('/entity/update/{id}', [EntityController::class, 'update'])->name('entity.update');
+      Route::delete('/entity/delete/{id}', [EntityController::class, 'destroy'])->name('entity.delete');
 
       Route::resource('category', ProductCategoryController::class)->except(['create', 'show']);
    });
@@ -61,6 +67,6 @@ Route::group(['middleware' => 'admin_user'], function () {
 
 Auth::routes();
 
-Route::get('/home', function() {
-    return view('home');
+Route::get('/home', function () {
+   return view('home');
 })->name('home')->middleware('auth');

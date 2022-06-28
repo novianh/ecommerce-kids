@@ -52,7 +52,7 @@ class GalleryController extends Controller
 
         $input = $request->all();
         $image = $request->file('image');
-        $nama_image = date('dmYHis') . "_" . $image->getClientOriginalName();
+        $nama_image = date('d-m-Y His') . "_" . $image->getClientOriginalName();
         $tujuan_upload = 'public/products';
         $image->storeAs($tujuan_upload, $nama_image);
         $input['image'] = "$nama_image";
@@ -103,7 +103,9 @@ class GalleryController extends Controller
     {
         $request->validate([
             'product_id' => 'required',
+            'id' => 'required',
         ]);
+        // \dd($request);
 
         $data = GalleryProduct::find($id);
 
@@ -118,14 +120,14 @@ class GalleryController extends Controller
                 'image' => $nama_image,
             ]);
         } else {
-            return \redirect()->back();
+            return redirect()->route('product.show', $request->product_id)
+            ->with('success_message', 'Image not updated');
         }
 
         $data->image = $nama_image;
         $data->save();
 
-
-        return redirect()->back()
+        return redirect()->route('product.show', $request->product_id)
             ->with('success_message', 'Image updated successfully');
     }
 

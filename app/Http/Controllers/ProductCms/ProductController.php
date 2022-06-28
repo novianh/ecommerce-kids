@@ -88,6 +88,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $image = $product->gallery;
         $category = $product->category;
+        $entity = $product->entity;
 
         if (!$product) {
             return redirect()->route('product.index')
@@ -97,6 +98,7 @@ class ProductController extends Controller
             'product' => $product,
             'image' => $image,
             'category' => $category,
+            'entity' => $entity
         ]);
         // return response()->json($product);
     }
@@ -128,17 +130,7 @@ class ProductController extends Controller
         $input = $request->all();
         $product->update($input);
 
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->quantity = $request->quantity;
-        $product->desc = $request->desc;
-        $product->sku = $request->sku;
-        $product->status = $request->status;
-        $product->id_category = $request->id_category;
-        $product->save();
-        // return redirect()->route('product.index')
-        //     ->with('success_message', 'Berhasil mengubah product');
-        return ['success' => true, 'message' => 'Update successfully',];
+        return ['success' => true, 'message' => 'Update entity successfully',];
     }
 
     public function destroy($id)
