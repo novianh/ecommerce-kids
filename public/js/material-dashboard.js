@@ -120,7 +120,7 @@ if (document.querySelector('.fixed-plugin')) {
 
 }
 
-//Set Sidebar Color
+Set Sidebar Color
 function sidebarColor(a) {
   var parent = document.querySelector(".nav-link.active");
   var color = a.getAttribute("data-color");
@@ -230,7 +230,7 @@ function sidebarType(a) {
   }
 }
 
-// Set Navbar Fixed
+Set Navbar Fixed
 function navbarFixed(el) {
   let classes = ['position-sticky', 'blur', 'shadow-blur', 'mt-4', 'left-auto', 'top-1', 'z-index-sticky'];
   const navbar = document.getElementById('navbarBlur');
@@ -616,7 +616,7 @@ function toggleSidenav() {
   }
 }
 
-// Resize navbar color depends on configurator active type of sidenav
+Resize navbar color depends on configurator active type of sidenav
 
 let referenceButtons = document.querySelector('[data-class]');
 
@@ -635,7 +635,7 @@ function navbarColorOnResize() {
   }
 }
 
-// Deactivate sidenav type buttons on resize and small screens
+Deactivate sidenav type buttons on resize and small screens
 window.addEventListener("resize", sidenavTypeOnResize);
 window.addEventListener("load", sidenavTypeOnResize);
 

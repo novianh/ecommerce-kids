@@ -18,12 +18,17 @@ class Product extends Model
         'discount',
         'status',
         'id_category',
-        'id_entity'
+        'id_entity',
+        'img_thumbnail'
     ];
 
     public function gallery()
     {
         return $this->hasMany(GalleryProduct::class);
+    }
+    public function newGallery()
+    {
+        return $this->hasMany(GalleryProduct::class)->latest()->first();
     }
     public function entity()
     {

@@ -28,6 +28,6 @@ class HomeController extends Controller
 
     public function adminHome()
     {
-        return view('cms.index');
+        return view('cms.products.index');
     }
 }

@@ -54,7 +54,7 @@ class ProductCategoryController extends Controller
         ProductCategory::create($input);
 
         return redirect()->route('category.index')
-            ->with('success_message', 'Berhasil menambah product baru');
+            ->with('success_message', 'Adding category successfully');
     }
 
     /**
@@ -123,7 +123,7 @@ class ProductCategoryController extends Controller
 
 
         return redirect()->route('category.index')
-            ->with('success', 'Product updated successfully');
+            ->with('success', 'Category updated successfully');
     }
 
     /**
@@ -137,6 +137,6 @@ class ProductCategoryController extends Controller
         $category = ProductCategory::find($id);
         unlink("storage/category/" . $category->image);
         $category->delete();
-        return redirect()->back()->with('status', 'Data Siswa Berhasil DiHapus');
+        return redirect()->back()->with('status', 'Delete Successfully');
     }
 }

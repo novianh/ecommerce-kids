@@ -7,10 +7,6 @@ use App\Models\GalleryProduct;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator as FacadesValidator;
-use Illuminate\Validation\Validator as ValidationValidator;
-// use Illuminate\Support\Facades\Validator;
-use JeroenNoten\LaravelAdminLte\View\Components\Tool\Datatable;
 use Yajra\DataTables\Datatables;
 
 class ProductController extends Controller
@@ -36,7 +32,8 @@ class ProductController extends Controller
                             class="dropdown-item text-success btn-edit"><i class="fa fa-edit"
                                 data-toggle="modal" data-target="#edit"></i> Edit</a>
                         <button data-rowid="' . $row->id . '" class="text-danger btn-delete dropdown-item"><i class="fa fa-trash"></i> Delete</button>
-                        <a href="gallery/'.$row->id.'/index"
+
+                        <a href="gallery/' . $row->id . '/index"
                             class="dropdown-item text-primary"><i class="fa fa-plus"></i> Add
                             image</a>
                     </div>
@@ -62,12 +59,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // \dd($request->all());
-        $validator = $request->validate([
+        $request->validate([
             'name' => 'required',
             'price' => 'required',
             'quantity' => 'required',
             'desc' => 'required',
             'sku' => 'required',
+            'status' => 'required',
             'id_category' => 'required|exists:product_categories,id',
         ]);
 
@@ -75,12 +73,8 @@ class ProductController extends Controller
 
         Product::create($product);
 
-        // return redirect()->route('product.index')
-        //     ->with('success_message', 'Berhasil menambah product baru');
 
         return ['success' => true, 'message' => 'Delete successfully',];
-
-        // return ['success' => true, 'message' => 'Post Created successfully',];
     }
 
     public function show($id)
@@ -127,8 +121,38 @@ class ProductController extends Controller
             'id_category' => 'required',
         ]);
         $product = Product::find($id);
-        $input = $request->all();
-        $product->update($input);
+        if ($image = $request->file('img_thumbnail')) {
+            unlink("storage/category/" . $product->img_thumbnail);
+
+            $image = $request->file('img_thumbnail');
+            $nama_image = date('Y-m-d His') . "_" . $image->getClientOriginalName();
+            $tujuan_upload = 'public/category';
+            $image->storeAs($tujuan_upload, $nama_image);
+            $product->update([
+                'img_thumbnail' => $nama_image,
+                'name' => $request->name,
+                'price' =>  $request->price,
+                'quantity' =>  $request->quantity,
+                'desc' =>  $request->desc,
+                'sku' => $request->sku,
+                'status' => $request->status,
+                'id_category' => $request->id_category,
+            ]);
+            $product->save();
+        } else {
+            $product->update([
+                'name' => $request->name,
+                'price' =>  $request->price,
+                'quantity' =>  $request->quantity,
+                'desc' =>  $request->desc,
+                'sku' => $request->sku,
+                'status' => $request->status,
+                'id_category' => $request->id_category,
+            ]);
+            $product->save();
+        }
+        // $input = $request->all();
+        // $product->update($input);
 
         return ['success' => true, 'message' => 'Update entity successfully',];
     }
@@ -137,7 +161,8 @@ class ProductController extends Controller
     {
         $products = Product::find($id);
         $image = $products->gallery;
-        if ($image == !\null) {
+        unlink("storage/products/thumbnail/" . $products->img_thumbnail);
+        if ($image == !null) {
             foreach ($image as $projectImage) {
                 $image_path = public_path() . '/storage/products/' . $projectImage->image;
                 unlink($image_path);
@@ -145,11 +170,7 @@ class ProductController extends Controller
         }
         $products->delete();
 
-        // return redirect()->route('product.index')
-        //     ->with('success_message', 'Berhasil menghapus data');
+
         return ['success' => true, 'message' => 'Delete successfully',];
-        // return response()->json(['success' => 'Post Deleted successfully']);
     }
-
-
 }

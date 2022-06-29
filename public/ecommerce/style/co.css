@@ -41,32 +41,42 @@ select:focus {
           box-shadow: 0 0 0 0.25rem #f4bfbf84 !important;
 }
 
-.form-control ::-webkit-input-placeholder {
+.form-control::-webkit-input-placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: red;
+  color: #dee2e6;
+  font-weight: 600;
   opacity: 1;
   /* Firefox */
 }
 
-.form-control :-ms-input-placeholder {
+.form-control:-ms-input-placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: red;
+  color: #dee2e6;
+  font-weight: 600;
   opacity: 1;
   /* Firefox */
 }
 
-.form-control ::-ms-input-placeholder {
+.form-control::-ms-input-placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: red;
+  color: #dee2e6;
+  font-weight: 600;
   opacity: 1;
   /* Firefox */
 }
 
-.form-control ::placeholder {
+.form-control::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: red;
+  color: #dee2e6;
+  font-weight: 600;
   opacity: 1;
   /* Firefox */
+}
+
+.form-control::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #dee2e6;
+  font-weight: 600;
 }
 
 .form-check-input[type=checkbox] {
@@ -1206,6 +1216,26 @@ input[type="search"]:focus {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+.owl-item .card .row {
+  height: 25rem;
+}
+
+@media screen and (min-width: 768px) {
+  .owl-item .card .row {
+    height: 20rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .owl-item .card .row {
+    height: 25rem;
+  }
+}
+
+.owl-item .card .card__overlay.card-body {
+  height: 7rem;
 }
 
 #co ::-webkit-input-placeholder {

@@ -1071,3 +1071,23 @@ input[type="search"]{
       background-size: cover;
    }
 }
+
+.owl-item{
+   .card{
+      .row{
+         .col-12{
+
+            height: 25rem;
+            @media screen and (min-width: $md) {
+               height: 20rem;
+            }
+            @media screen and (min-width: $lg) {
+               height: 25rem;
+            }
+         }
+      }
+      // .card-body{
+      //    height: 7rem;
+      // }
+   }
+}

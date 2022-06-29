@@ -11,7 +11,7 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
                <div class="navbar-nav text-start ">
                   <a class="nav-line nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4" aria-current="page"
-                     href="#"> Home</a>
+                     href="{{ route('home.index') }}"> Home</a>
                   <a class=" nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
                      href="#categories">Categories</a>
                   <a class="nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4" href="#about-us">About

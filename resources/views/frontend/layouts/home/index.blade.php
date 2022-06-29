@@ -40,23 +40,27 @@
             <section id="categories" class="py-5">
                 <div class="container">
                     <div class="row row-cols-1 justify-content-center align-items-center g-3">
-                        <div class="col-9 col-md-6 col-lg-4 position-relative clients">
-                            <a href="#">
-                                <figure class="c4-izmir c4-image-zoom-in " style="height: 10rem; width: 100%; ">
-                                    <img class="img-fluid brand-img" src="ecommerce/img/cat-twin.jpg" alt="Logo"
-                                        width="100%">
-                                    <figcaption class="c4-layout-center-center">
-                                        <div class="c4-reveal-right ">
-                                            <h3>Twin</h3>
-                                        </div>
-                                        <div class="c4-reveal-left c4-delay-200 " style="width: 100%;">
-                                            <div class=" line"></div>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </a>
-                        </div>
-                        <div class="col-9 col-md-6 col-lg-4 position-relative clients">
+                        @foreach ($category as $ctg)
+                            <div class="col-9 col-md-6 col-lg-4 position-relative clients">
+                                <a href="#">
+                                    <figure class="c4-izmir c4-image-zoom-in " style="height: 10rem; width: 100%; ">
+
+                                        <img class="img-fluid brand-img"
+                                            src="{{ url('storage/category/' . $ctg->image) ?? asset('ecommerce/img/cat-twin.jpg') }}"
+                                            alt="Logo" width="100%">
+                                        <figcaption class="c4-layout-center-center">
+                                            <div class="c4-reveal-right text-capitalize">
+                                                <h3>{{ $ctg->name ?? 'Twin' }}</h3>
+                                            </div>
+                                            <div class="c4-reveal-left c4-delay-200 " style="width: 100%;">
+                                                <div class=" line"></div>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+                            </div>
+                        @endforeach
+                        {{-- <div class="col-9 col-md-6 col-lg-4 position-relative clients">
                             <a href="#">
                                 <figure class="c4-izmir c4-image-zoom-in " style="height: 10rem; width: 100%;">
                                     <img class="img-fluid brand-img" src="ecommerce/img/cat-girl.jpg" alt="Logo"
@@ -87,15 +91,16 @@
                                     </figcaption>
                                 </figure>
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="col-9 col-md-6 col-lg-12 position-relative clients">
                             <a href="#">
                                 <figure class="c4-izmir c4-image-zoom-in " style="height: 10rem; width: 100%;">
-                                    <img class="img-fluid brand-img" src="ecommerce/img/cat-toy.jpg" alt="Logo"
-                                        width="100%">
+                                    <img class="img-fluid brand-img"
+                                        src="{{ url('storage/category/' . $categoryLast->image) ?? asset('ecommerce/img/cat-toy.jpg') }}"
+                                        alt="Logo" width="100%">
                                     <figcaption class="c4-layout-center-center">
                                         <div class="c4-reveal-right ">
-                                            <h3>Toy</h3>
+                                            <h3>{{ $categoryLast->name ?? 'Toy' }}</h3>
                                         </div>
                                         <div class="c4-reveal-left c4-delay-200 " style="width: 100%;">
                                             <div class=" line"></div>
@@ -122,10 +127,10 @@
             <section id="newArrival" class=" bg-light">
                 <div class="ornaments position-relative">
                     <div class="ornament position-absolute">
-                        <img src="ecommerce/img/starorn.svg" alt="" width="100px">
+                        <img src="{{ asset('ecommerce/img/starorn.svg') }}" alt="" width="100px">
                     </div>
                     <div class="ornament2 position-absolute">
-                        <img src="ecommerce/img/starorn.svg" alt="" width="100px">
+                        <img src="{{ asset('ecommerce/img/starorn.svg') }}" alt="" width="100px">
                     </div>
                 </div>
                 <div class="container py-5">
@@ -136,46 +141,54 @@
                         </div>
                         <div class="col-8 carousel-wrap col-xl-10 mx-xl-0">
                             <div class=" owl-carousel owl-theme">
-                                <div class="card rounded-5 border-0 position-relative item ">
-                                    <div class="row ">
-                                        <a href="#" class="link imgBx p-4 pb-0">
-                                            <img src="{{ asset('ecommerce/img/doll.png') }}"
-                                                class=" card-img-top mx-auto p-5 m-5 my-3" alt="img product"
-                                                width="100%" />
-                                        </a>
-                                    </div>
-                                    <div class="card__overlay card-body ">
-                                        <div class="card__header">
-                                            <div class="row row-cols-1" data-bs-toggle="collapse" href="#collapseExample"
-                                                role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                <div class="col-7">
-                                                    <h5 class="card-title fw-bold mb-0">Bear Brown Doll</h5>
-                                                    <small class="ctr-sku">Toy, 4AUSCS</small>
-                                                </div>
-                                                <div class="col-5 text-end">
-                                                    <p class="harga">Rp.500K</p>
-                                                </div>
+                                @foreach ($newPrd as $np)
+                                    <div class="card rounded-5 border-0 position-relative item ">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div
+                                                class="col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">
+                                                <a href="/user/try" class="link">
+                                                    <img src="{{ url('storage/products/thumbnail/' . $np->img_thumbnail) ?? asset('ecommerce/img/doll.png') }}"
+                                                        class=" card-img-top mx-auto p-5 m-5 my-3" alt="img product"
+                                                        width="100%" />
+                                                </a>
                                             </div>
-                                            <div class="text-center pt-3 card__description collapse "
-                                                id="collapseExample">
-
-                                                <div class="mx-2 row row-cols-1 gap-3 ">
-                                                    <div class="col d-grid">
-                                                        <a href="" class="btn-product"><i
-                                                                class="fi fi-sr-shopping-cart-add"></i>
-                                                            Add</a>
+                                        </div>
+                                        <div class="card__overlay card-body text-center ">
+                                            <div class="card__header">
+                                                <div class="row row-cols-1" data-bs-toggle="collapse"
+                                                    href="#collapseExample{{ $np->id }}" role="button"
+                                                    aria-expanded="false" aria-controls="collapseExample">
+                                                    <div class="col">
+                                                        <h5 class="card-title fw-bold mb-0">
+                                                            {{ $np->name ?? 'Bear Brown Doll' }}</h5>
+                                                        <small class="ctr-sku">{{ $np->category->name ?? 'Toy' }},
+                                                            {{ $np->sku ?? '4AUSCS' }}</small>
                                                     </div>
-                                                    <div class="col d-grid">
-                                                        <a href="" class="btn-product"><i
-                                                                class="fi fi-sr-eye"></i> More</a>
+                                                    <div class="col">
+                                                        <p class="harga">Rp. {{ $np->price ?? '500K' }}</p>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <div class="text-center pt-3 card__description collapse "
+                                                    id="collapseExample{{ $np->id }}">
 
+                                                    <div class="mx-2 row row-cols-1 gap-3 ">
+                                                        <div class="col d-grid">
+                                                            <a href="" class="btn-product"><i
+                                                                    class="fi fi-sr-shopping-cart-add"></i>
+                                                                Add</a>
+                                                        </div>
+                                                        <div class="col d-grid">
+                                                            <a href="" class="btn-product"><i
+                                                                    class="fi fi-sr-eye"></i> More</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card rounded-5 border-0 position-relative item ">
+                                @endforeach
+                                {{-- <div class="card rounded-5 border-0 position-relative item ">
                                     <div class="row ">
                                         <a href="#" class="link imgBx p-4 pb-0">
                                             <img src="{{ asset('ecommerce/img/doll.png') }}"
@@ -294,7 +307,7 @@
 
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="col text-center">
                                 <small><a href="#" class="link align-items-center" id="style-2"

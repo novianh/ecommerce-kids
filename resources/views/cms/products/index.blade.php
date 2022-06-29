@@ -25,7 +25,6 @@
                         <table id="example2" class="table table-hover text-center">
                             <thead>
                                 <tr>
-
                                     <th>Name</th>
                                     <th>SKU</th>
                                     <th>Quantity</th>

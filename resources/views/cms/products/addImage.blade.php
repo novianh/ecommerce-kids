@@ -31,7 +31,7 @@
                             <label for="exampleInputPassword1">Product Image</label>
                             <input type="file" id="image" class="dropify @error('image') is-invalid @enderror"
                                 id="input-file-now" name="image" data-errors-position="outside" data-max-file-size="4M"
-                                data-allowed-file-extensions="jpeg png jpg svg gif" />
+                                data-allowed-file-extensions="jpeg png jpg svg gif"/>
                             @error('image')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror

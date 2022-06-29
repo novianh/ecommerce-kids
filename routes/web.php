@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductCms\ProductController;
 use App\Http\Controllers\ProductCms\GalleryController;
 use App\Http\Controllers\ProductCms\EntityController;
 use App\Http\Controllers\ProductCMS\ProductCategoryController;
+use App\Http\Controllers\ProductCms\ThumbnailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,29 +25,34 @@ use App\Http\Controllers\ProductCMS\ProductCategoryController;
 
 Auth::routes();
 
-
-Route::get('/', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('home')->middleware('admin_user');
+Route::get('/', [App\Http\Controllers\Front\HomeController::class, 'index'])->name('home.index')->middleware('admin_user');
 
 Route::group(['prefix' => 'user'], function () {
-   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+   Route::get('/', [App\Http\Controllers\Front\HomeController::class, 'index'])->name('home.index');
+   Route::get('/try', function () {
+      return view('frontend.layouts.shopping.prdDetails');
+   });
 });
 
 
 
-Route::get('/try', function () {
-   return view('vendor\adminlte\components\tool\datatable');
-});
 
 Route::group(['middleware' => 'admin_user'], function () {
    Route::group(['prefix' => 'admin'], function () {
       Route::get('/', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home');
-      Route::resource('/home', HeroController::class);
+      Route::resource('/hero', HeroController::class);
       Route::resource('/product', ProductController::class);
 
       Route::get('/list/trash', [GalleryController::class, 'trash'])->name('product.trash');
       Route::get('/list/restore/{id}', [GalleryController::class, 'restore'])->name('product.restore');
       Route::get('/list/restoreAll', [GalleryController::class, 'restoreAll'])->name('product.restoreAll');
 
+      Route::get('/thumbnail/{id}/index', [ThumbnailController::class, 'index'])->name('thumbnail.index');
+      Route::put('/thumbnail/store/{id}', [ThumbnailController::class, 'store'])->name('thumbnail.store');
+      Route::get('/thumbnail/create', [ThumbnailController::class, 'create'])->name('thumbnail.create');
+      Route::delete('/thumbnail/delete/{id}', [ThumbnailController::class, 'destroy'])->name('thumbnail.delete');
+      Route::get('/thumbnail/{id}/edit', [ThumbnailController::class, 'edit'])->name('thumbnail.edit');
+      Route::put('/thumbnail/update/{id}', [ThumbnailController::class, 'update'])->name('thumbnail.update');
 
       Route::get('/gallery/{id}/index', [GalleryController::class, 'index'])->name('gallery.index');
       Route::post('/gallery/store', [GalleryController::class, 'store'])->name('gallery.store');
@@ -64,9 +70,3 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::resource('category', ProductCategoryController::class)->except(['create', 'show']);
    });
 });
-
-Auth::routes();
-
-Route::get('/home', function () {
-   return view('home');
-})->name('home')->middleware('auth');

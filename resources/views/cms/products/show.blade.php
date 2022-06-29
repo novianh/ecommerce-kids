@@ -20,10 +20,11 @@
 
 @section('content')
 
-    <a href="{{ url()->previous() }}" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-angle-left"></i> Back</a>
+    <a href="{{ url()->previous() }}" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-angle-left"></i>
+        Back</a>
     <div class="row text-secondary">
         <div class="col-md-6">
-            <div class="card mt-5" data-animation="false">
+            <div class="card mt-5" data-animation="true">
                 <div class="card-header p-3 pt-2">
                     <div
                         class="icon icon-lg icon-shape bg-primary shadow-dark text-center border-radius-xl mt-n4 position-absolute">
@@ -35,9 +36,17 @@
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-body">
-                    <div class=" row justify-content-start">
+
+                    <div class="d-flex mt-n6 mx-auto justify-content-center text-center">
+                        <a href="{{ route('thumbnail.index', $product->id) }}" class="dropdown-item text-primary"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" title=" Add thumbnail">
+                            <i class="fas fa-plus-square text-lg"></i></a>
+
+                    </div>
+                    <div class=" mt-4 row justify-content-start">
                         <div class="col-6 col-lg-5 text-start text-xl-left text-muted">
                             <ul class="list-unstyled gap-3 mb-0">
+                                <li>Product Image Thumbnail:</li>
                                 <li>Product Name:</li>
                                 <li>Product SKU:</li>
                                 <li>Product Price:</li>
@@ -50,6 +59,19 @@
                         </div>
                         <div class="col-6 col-lg-7">
                             <ul class="list-unstyled mb-0">
+                                <li>
+                                    @isset($product->img_thumbnail)
+                                        <img class="avaatar avatar-sm rounded" width="100%"
+                                            src="{{ url('storage/products/thumbnail/' . $product->img_thumbnail) }}"
+                                            alt="">
+                                    </li>
+                                @endisset
+                                @empty($product->img_thumbnail)
+                                <a href="{{ route('thumbnail.index', $product->id) }}" class="dropdown-item text-primary"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title=" Add thumbnail">
+                                    <i class="fas fa-plus-square text-lg"></i></a>
+                                    
+                                @endempty
                                 <li>{{ $product->name }}</li>
                                 <li>{{ $product->sku }}</li>
                                 <li>{{ $product->price }}</li>
@@ -131,7 +153,8 @@
                                         data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit">
                                         <i class="fa fa-edit text-lg"></i>
                                     </a>
-                                    <a href="{{ route('entity.delete', $item) }}" onclick="notificationBeforeDelete(event, this)" class="ms-3 text-danger border-0"
+                                    <a href="{{ route('entity.delete', $item) }}"
+                                        onclick="notificationBeforeDelete(event, this)" class="ms-3 text-danger border-0"
                                         data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete">
                                         <i class="fa fa-trash text-lg"></i>
                                     </a>
@@ -161,7 +184,8 @@
                         <a href="{{ route('gallery.index', $product) }}" class="text-primary  ml-2"
                             data-bs-toggle="tooltip" data-bs-placement="bottom"
                             title=" Add
-                                image"><i class="fas fa-plus-square  text-lg"></i></a>
+                                image"><i
+                                class="fas fa-plus-square  text-lg"></i></a>
                     </div>
                     <div class="mt-4 row text-center ">
                         @if ($product->gallery)
