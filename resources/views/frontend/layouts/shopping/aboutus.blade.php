@@ -15,13 +15,13 @@
                <div class="row row-cols-md-2 text-center justify-content-center gap-xl-3 gap-md-0 gap-lg-4 gap-3">
                   <div class="col-4 col-md-2 p-xl-3 wrappers">
                      <div class="wrapper rounded-circle text-center mb-3 ">
-                        <img src="ecommerce/img/whyus/bestprice.svg" alt="icon" width="100%" class="p-4 p-xl-5">
+                        <img src="{{ asset ('ecommerce/img/whyus/bestprice.svg') }}" alt="icon" width="100%" class="p-4 p-xl-5">
                      </div>
                      <small class="pt-5">Best Price</small>
                   </div>
                   <div class="col-4 col-md-2 p-xl-3 wrappers">
                      <div class="wrapper rounded-circle text-center mb-3">
-                        <img src="ecommerce/img/whyus/freedev.svg" alt="icon" width="100%" class="p-4 p-xl-5 ">
+                        <img src="{{ asset ('ecommerce/img/whyus/freedev.svg') }}" alt="icon" width="100%" class="p-4 p-xl-5 ">
                      </div>
                      <small class="pt-5 ">Best Price</small>
                   </div>
@@ -30,13 +30,13 @@
 
                   <div class="col-4 col-md-2 p-xl-3 wrappers">
                      <div class="wrapper rounded-circle text-center mb-3">
-                        <img src="ecommerce/img/whyus/quality.svg" alt="icon" width="100%" class="p-4 p-xl-5 ">
+                        <img src="{{ asset ('ecommerce/img/whyus/quality.svg') }}" alt="icon" width="100%" class="p-4 p-xl-5 ">
                      </div>
                      <small class="pt-5">Best Price</small>
                   </div>
                   <div class="col-4 col-md-2 p-xl-3 wrappers">
                      <div class="wrapper rounded-circle text-center mb-3">
-                        <img src="ecommerce/img/whyus/bestprice.svg" alt="icon" width="100%" class="p-4 p-xl-5 ">
+                        <img src="{{ asset ('ecommerce/img/whyus/bestprice.svg') }}" alt="icon" width="100%" class="p-4 p-xl-5 ">
                      </div>
                      <small class="pt-5">Best Price</small>
                   </div>
@@ -46,10 +46,10 @@
          <div class="pb-5">
             <div class="ornaments position-relative">
                <div class="ornament position-absolute">
-                  <img src="ecommerce/img/starorn.svg" alt="" width="100px">
+                  <img src="{{ asset ('ecommerce/img/starorn.svg') }}" alt="" width="100px">
                </div>
                <div class="ornament2 position-absolute">
-                  <img src="ecommerce/img/starorn.svg" alt="" width="100px">
+                  <img src="{{ asset ('ecommerce/img/starorn.svg') }}" alt="" width="100px">
                </div>
             </div>
             <div class="row">

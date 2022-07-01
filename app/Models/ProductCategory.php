@@ -18,6 +18,6 @@ class ProductCategory extends Model
 
     public function product()
     {
-        return $this->hasMany('App\Models\Product', 'id')->withTrashed();
+        return $this->hasMany('App\Models\Product', 'id_category');
     }
 }

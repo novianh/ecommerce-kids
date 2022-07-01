@@ -34,47 +34,28 @@
             <div class="bg-light mb-5">
                 <div class="ornaments position-relative">
                     <div class="ornament position-absolute">
-                        <img src="ecommerce/img/starorn.svg" alt="" width="100px">
+                        <img src="{{ url('ecommerce/img/starorn.svg') }}" alt="" width="100px">
                     </div>
                     <div class="ornament2 position-absolute">
-                          <img src="ecommerce/img/starorn.svg" alt="" width="100px">
-                       </div>
+                        <img src="{{ url('ecommerce/img/starorn.svg') }}" alt="" width="100px">
+                    </div>
                 </div>
                 <div class="container py-5">
                     <div class="row justify-content-center">
                         <div class="item col-10 col-sm-9 col-md-6 col-lg-3 ">
                             <div class="clearfix" style="width:100%;">
                                 <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                    <li data-thumb="ecommerce/img/yellow-dress.png">
-                                        <div class="item rounded-4 bg-white">
-                                            <div class=" ">
-                                                <img src="ecommerce/img/yellow-dress.png" alt="prd" width="100%"
-                                                    class="p-md-4 p-2">
+                                    @foreach ($image as $image)
+                                        <li
+                                            data-thumb="{{ url('storage/products/' . $image->image) ?? asset('ecommerce/img/yellow-dress.png') }}">
+                                            <div class="item rounded-4 bg-white">
+                                                <div class=" ">
+                                                    <img src="{{ url('storage/products/' . $image->image) ?? 'image not found' }}"
+                                                        alt="prd" width="100%" class="p-md-4 p-2">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                    <li data-thumb="ecommerce/img/doll.png">
-                                        <div class="item rounded-4 bg-white">
-                                            <div class=" ">
-                                                <img src="ecommerce/img/doll.png" alt="prd" width="100%" class="p-md-4 p-2">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li data-thumb="ecommerce/img/doll.png">
-                                        <div class="item rounded-4 bg-white">
-                                            <div class=" ">
-                                                <img src="ecommerce/img/doll.png" alt="prd" width="100%" class="p-md-4 p-2">
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li data-thumb="ecommerce/img/doll.png">
-                                        <div class="item rounded-4 bg-white">
-                                            <div class=" ">
-                                                <img src="ecommerce/img/doll.png" alt="prd" width="100%" class="p-md-4 p-2">
-                                            </div>
-                                        </div>
-                                    </li>
-
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -83,31 +64,48 @@
                             <div class="row wrapper px-4 py-5 rounded-5 align-items-center">
                                 <div class="">
                                     <div class="col-12">
-                                        <p class="card-title title-prd">Bear Brown Doll</p>
-                                        <small class="ctr-sku">Toy, AUDC123</small>
+                                        <p class="card-title title-prd text-capitalize">
+                                            {{ $product->name ?? 'Bear Brown Doll' }}</p>
+                                        <small class="ctr-sku">{{ $category->name ?? 'Toy' }},
+                                            {{ $product->sku ?? 'AUDC123' }}</small>
                                     </div>
                                     <div class="col-12 mt-3">
-                                        <p class="harga">Rp.500k</p>
+                                        <p class=""> Price: <span class="harga">
+                                                Rp.{{ $product->price ?? '500k' }}</span></p>
                                     </div>
                                     <div class="col-12 mt-3">
-                                        <p class="desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                            Aspernatur velit
-                                            suscipit iure at,
-                                            ipsa reprehenderit quis qui animi labore corporis! Consectetur earum minus
-                                            facilis quas
-                                            expedita
-                                            voluptates sit, excepturi natus.</p>
+                                        <p>Stock: <span class="desc mb-3"> {{ $product->quantity ?? '12' }}</span></p>
+                                        <div class="mt-3">
+                                            <span class=" mt-3">Size: </span>
+                                            @foreach ($entity as $entiti)
+                                                <span class="desc text-uppercase">
+                                                    {{ $entiti->size ?? 'All Size' }}</span>
+                                            @endforeach
+                                        </div>
+                                        <div class="mt-3">
+                                            <span class=" mt-3">Color:</span>
+                                            @foreach ($entity as $entity)
+                                                <span class="desc text-capitalize">{{ $entity->color }}</span>
+                                            @endforeach
+
+                                        </div>
+
+
+
                                     </div>
                                     <div class="col-12 mt-3">
                                         <form action="">
                                             <div class="row ">
                                                 <div class="col-sm-6 col-12">
-                                                    <select class="form-select rounded-5"
+                                                    <input type="number" placeholder="1" min="1"
+                                                        max="{{ $product->quantity ?? '0' }}"
+                                                        class="form-control rounded-5">
+                                                    {{-- <select class="form-select rounded-5"
                                                         aria-label="Default select example">
                                                         <option value="1" selected>1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
-                                                    </select>
+                                                    </select> --}}
                                                 </div>
                                                 <div class="col d-grid mt-md-0 mt-1 mt-sm-0">
                                                     <button type="submit" class=" btn btn-product"><i
@@ -123,13 +121,15 @@
 
                         <div class="col-10 col-sm-9 col-md-12 col-lg-9 mt-5">
                             <h3>Description</h3>
-                            <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
-                                minus
-                                deleniti voluptate minima laboriosam, vero dolorum impedit explicabo ducimus ad maxime
-                                velit
-                                mollitia! Provident quas rem esse hic, commodi sint.</p>
-                            <p>Quantity: <span class="desc"> 12</span></p>
-                            <p>Color: <span class="desc">Blue, Black, White</span></p>
+                            <p class="desc">
+                                {{ $product->desc ??
+                                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
+                                                                                                minus
+                                                                                                deleniti voluptate minima laboriosam, vero dolorum impedit explicabo ducimus ad maxime
+                                                                                                velit
+                                                                                                mollitia! Provident quas rem esse hic, commodi sint.' }}
+                            </p>
+
                         </div>
                     </div>
                 </div>
@@ -163,8 +163,7 @@
                                                     <span class="harga">Rp.500.000</span>
                                                 </div>
                                             </div>
-                                            <div class="text-center pt-3 card__description collapse "
-                                                id="collapseExample">
+                                            <div class="text-center pt-3 card__description collapse " id="collapseExample">
 
                                                 <div class="mx-2 row row-cols-1 gap-3 ">
                                                     <div class="col d-grid">
@@ -173,8 +172,8 @@
                                                             Add</a>
                                                     </div>
                                                     <div class="col d-grid">
-                                                        <a href="" class="btn-product"><i
-                                                                class="fi fi-sr-eye"></i> More</a>
+                                                        <a href="" class="btn-product"><i class="fi fi-sr-eye"></i>
+                                                            More</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -211,7 +210,7 @@
 
 
 @section('js')
-    <script src="{{ asset ('ecommerce/src/js/lightslider.js') }}"></script>
+    <script src="{{ asset('ecommerce/src/js/lightslider.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#image-gallery').lightSlider({

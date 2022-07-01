@@ -10,7 +10,7 @@
                            <h2>Get Easy <span>With Us</span></h2>
                         </div>
                         <div class="col-6 col-md-3 col-lg-3">
-                           <img src="ecommerce/img/cloud-footer.svg" alt="cloud">
+                           <img src="{{ asset ('ecommerce/img/cloud-footer.svg') }}" alt="cloud">
                         </div>
                      </div>
                      <div class="row pt-3 justify-content-sm-center gap-xl-3">
@@ -39,12 +39,12 @@
                            </ul>
                         </div>
                         <div class="col-md-4 col-5 col-lg-3 d-block d-sm-none">
-                           <img src="ecommerce/img/gajah.png" alt="elepath" width="100%">
+                           <img src="{{ asset ('ecommerce/img/gajah.png') }}" alt="elepath" width="100%">
                         </div>
                      </div>
                   </div>
                   <div class="col-md-3 col-3 d-none d-lg-block">
-                     <img src="ecommerce/img/gajah.png" alt="elepath" width="100%">
+                     <img src="{{ asset ('ecommerce/img/gajah.png') }}" alt="elepath" width="100%">
                   </div>
                </div>
             </div>

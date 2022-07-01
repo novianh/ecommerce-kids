@@ -82,6 +82,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $image = $product->gallery;
         $category = $product->category;
+        // $categories = $category->product;
         $entity = $product->entity;
 
         if (!$product) {
@@ -94,7 +95,7 @@ class ProductController extends Controller
             'category' => $category,
             'entity' => $entity
         ]);
-        // return response()->json($product);
+        // return response()->json($categories);
     }
 
     public function edit($id)

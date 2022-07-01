@@ -25,10 +25,16 @@ use App\Http\Controllers\ProductCms\ThumbnailController;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\Front\HomeController::class, 'index'])->name('home.index')->middleware('admin_user');
+Route::get('/', [App\Http\Controllers\Front\HomeController::class, 'index'])->name('home');
 
 Route::group(['prefix' => 'user'], function () {
-   Route::get('/', [App\Http\Controllers\Front\HomeController::class, 'index'])->name('home.index');
+   Route::get('/', [App\Http\Controllers\Front\HomeController::class, 'index'])->name('home');
+   Route::get('/home/process/{id}', [App\Http\Controllers\Front\HomeController::class, 'process'])->name('home.process');
+   Route::get('/detail/{id}', [App\Http\Controllers\Front\HomeController::class, 'detail'])->name('home.detail');
+   Route::get('/category', [App\Http\Controllers\Front\HomeController::class, 'category'])->name('home.category');
+   Route::get('/collection', [App\Http\Controllers\Front\HomeController::class, 'collection'])->name('collection.index');
+   Route::get('/products', [App\Http\Controllers\Front\HomeController::class, 'products'])->name('products.index');
+   Route::get('/about', [App\Http\Controllers\Front\HomeController::class, 'about'])->name('about.index');
    Route::get('/try', function () {
       return view('frontend.layouts.shopping.prdDetails');
    });

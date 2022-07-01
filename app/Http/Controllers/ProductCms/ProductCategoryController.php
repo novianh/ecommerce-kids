@@ -16,7 +16,7 @@ class ProductCategoryController extends Controller
     public function index()
     {
         return \view('cms.products.category.index', [
-            'category' => ProductCategory::all()
+            'category' => ProductCategory::all()->sortByDesc("created_at")
         ]);
     }
 

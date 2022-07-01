@@ -1,12 +1,15 @@
-@extends('backend.app')
-@section('title')
-    <i class='mdi mdi-image-area'></i> Add Image Products
-@endsection
+@extends('adminlte::page')
+@section('title', 'Edit Category')
 
-@section('style')
+@section('content_header')
+    <h1><i class='mdi mdi-image-area'></i> Edit Category</h1>
+@stop
+
+@push('css')
     <link rel="stylesheet" href="{{ asset('ecommerce/node_modules/dropify/dist/css/dropify.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/vendors/font-awesome/css/font-awesome.min.css') }}">
-@endsection
+@endpush
+
 
 @section('breadcrumb', 'Dashboard')
 @section('content')
@@ -21,10 +24,10 @@
                             @csrf
                             @method('PUT')
 
-                            <div class="form-group">
+                            <div class="input-group input-group-static input-group-lg  @error('name') is-invalid @enderror mb-3">
                                 <label for="exampleInputUsername1">Category Name</label>
                                 <input type="text" name="name"
-                                    class="form-control @error('name') is-invalid @enderror" id="exampleInputUsername1"
+                                    class="form-control" id="exampleInputUsername1"
                                     placeholder="Category Name" value="{{ old('name', $category->name) }}">
                                 @error('name')
                                     <small class="text-danger">{{ $message }}</small>

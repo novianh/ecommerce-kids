@@ -11,89 +11,96 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $product = Product::all();
+        $product = Product::all()->where('status', '=', 'active');
         // \dd($product);
+        $categoryLast = ProductCategory::latest()->first();
+        $categoryLastPrd = $categoryLast->product;
+
 
         return \view('frontend.layouts.home.index', [
-            'Product' => $product,
-            'newPrd' => Product::all()->take(4),
+            'product' => $product,
+            'newPrd' => Product::all()->take(4)->where('status', '=', 'active'),
             'category' => ProductCategory::all()->skip(1)->take(3),
             'categoryLast' => ProductCategory::latest()->first(),
             'entity' => Entity::all(),
-            'image' => GalleryProduct::all()
+            'image' => GalleryProduct::all(),
+            'categories' => ProductCategory::all()->sortByDesc("created_at"),
+            'productCtgLast' => $categoryLastPrd,
+
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function detail($id)
     {
-        //
+        $detail = Product::find($id);
+        $image = $detail->gallery;
+        $category = $detail->category;
+        $entity = $detail->entity;
+        return \view('frontend.layouts.shopping.prdDetails',[
+            'product' => $detail,
+            'image' => $image,
+            'category' => $category,
+            'entity' => $entity
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
+    }
+    public function process($id)
+    {
+        $category = ProductCategory::find($id);
+
+        $product = $category->product->where('quantity', '>', '0');
+        // \dd($product);
+
+        // return ['success' => true, 'message' => 'show successfully',];
+        return response()->json($product);
+    }
+    public function category()
+    {
+        return view('frontend.layouts.shopping.categories',[
+            'categories'=>ProductCategory::all()
+        ]);
+    }
+    public function about()
+    {
+        return view('frontend.layouts.shopping.aboutus');
+    }
+    public function collection()
+    {
+        return view('frontend.layouts.shopping.collection');
+    }
+    public function products()
+    {
+        return view('frontend.layouts.shopping.products');
     }
 }

@@ -14,18 +14,19 @@
                         <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
                             <div class="navbar-nav text-start ">
                                 <a class="nav-line nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4" aria-current="page"
-                                    href="{{ route('home.index') }}"> Home</a>
+                                    href="{{ route('home') }}"> Home</a>
                                 <a class=" nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
-                                    href="/categories.html">Categories</a>
+                                    href="{{ route('home.category') }}">Categories</a>
                                 <a class="nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
-                                    href="/aboutus.html">About
+                                    href="{{ route('about.index') }}">About
                                     Us</a>
                                 <a class="nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
-                                    href="/products.html">Products</a>
+                                    href="{{ route('products.index') }}">Products</a>
                                 <a class="nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
-                                    href="/collection.html">Collection</a>
+                                    href="{{ route('collection.index') }}">Collection</a>
                                 <a class="nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
-                                    href="/contact.html">Contact Us</a>
+                                    href="{{ route('home') }}/#getintouch">Contact Us</a>
+
 
                             </div>
                         </div>
@@ -43,47 +44,45 @@
 
                                     </ul> --}}
 
-                                    <!-- Right Side Of Navbar -->
-                                    <ul class="navbar-nav ms-auto">
-                                        <!-- Authentication Links -->
-                                        @guest
-                                            @if (Route::has('login'))
-                                                <li class="nav-item">
-                                                    <a class="nav-link"
-                                                        href="{{ route('login') }}">{{ __('Login') }}</a>
-                                                </li>
-                                            @endif
+                                <!-- Right Side Of Navbar -->
+                                <ul class="navbar-nav ms-auto">
+                                    <!-- Authentication Links -->
+                                    @guest
+                                        @if (Route::has('login'))
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                            </li>
+                                        @endif
 
-                                            @if (Route::has('register'))
-                                                <li class="nav-item">
-                                                    <a class="nav-link"
-                                                        href="{{ route('register') }}">{{ __('Register') }}</a>
-                                                </li>
-                                            @endif
-                                        @else
-                                            <li class="nav-item dropdown">
-                                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#"
-                                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false" v-pre>
-                                                    {{ Auth::user()->name }}
+                                        @if (Route::has('register'))
+                                            <li class="nav-item">
+                                                <a class="nav-link"
+                                                    href="{{ route('register') }}">{{ __('Register') }}</a>
+                                            </li>
+                                        @endif
+                                    @else
+                                        <li class="nav-item dropdown">
+                                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#"
+                                                role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false" v-pre>
+                                                {{ Auth::user()->name }}
+                                            </a>
+
+                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                                    {{ __('Logout') }}
                                                 </a>
 
-                                                <div class="dropdown-menu dropdown-menu-end"
-                                                    aria-labelledby="navbarDropdown">
-                                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                                        onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">
-                                                        {{ __('Logout') }}
-                                                    </a>
-
-                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                        class="d-none">
-                                                        @csrf
-                                                    </form>
-                                                </div>
-                                            </li>
-                                        @endguest
-                                    </ul>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                    class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </div>
+                                        </li>
+                                    @endguest
+                                </ul>
                                 {{-- </div> --}}
 
                                 <a href="#"
