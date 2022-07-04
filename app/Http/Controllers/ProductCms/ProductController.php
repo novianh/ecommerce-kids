@@ -152,8 +152,6 @@ class ProductController extends Controller
             ]);
             $product->save();
         }
-        // $input = $request->all();
-        // $product->update($input);
 
         return ['success' => true, 'message' => 'Update entity successfully',];
     }

@@ -43,7 +43,7 @@
                     <div class="row row-cols-1 justify-content-center align-items-center g-3">
                         @foreach ($category as $ctg)
                             <div class="col-9 col-md-6 col-lg-4 position-relative clients">
-                                <a href="#">
+                                <a href="{{ route('products.category', $ctg) }}">
                                     <figure class="c4-izmir c4-image-zoom-in " style="height: 10rem; width: 100%; ">
 
                                         <img class="img-fluid brand-img"
@@ -128,7 +128,7 @@
                                                     href="#collapseExample{{ $np->id }}" role="button"
                                                     aria-expanded="false" aria-controls="collapseExample">
                                                     <div class="col">
-                                                        <h5 class="card-title fw-bold mb-0">
+                                                        <h5 class="card-title fw-bold mb-0 text-capitalize">
                                                             {{ $np->name ?? 'Bear Brown Doll' }}</h5>
                                                         <small class="ctr-sku">{{ $np->category->name ?? 'Toy' }},
                                                             {{ $np->sku ?? '4AUSCS' }}</small>

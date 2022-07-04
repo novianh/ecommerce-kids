@@ -7,6 +7,7 @@ use App\Models\Entity;
 use App\Models\GalleryProduct;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -18,11 +19,13 @@ class HomeController extends Controller
         // \dd($product);
         $categoryLast = ProductCategory::latest()->first();
         $categoryLastPrd = $categoryLast->product;
+        // $g=Product::latest()->take(4)->where('status', 'active')->get();
+        // \dd($g);
 
 
         return \view('frontend.layouts.home.index', [
             'product' => $product,
-            'newPrd' => Product::all()->take(4)->where('status', '=', 'active'),
+            'newPrd' => Product::latest()->take(4)->where([['status','active'],['quantity','>', 0]])->get(),
             'category' => ProductCategory::all()->skip(1)->take(3),
             'categoryLast' => ProductCategory::latest()->first(),
             'entity' => Entity::all(),
@@ -52,7 +55,7 @@ class HomeController extends Controller
         $image = $detail->gallery;
         $category = $detail->category;
         $entity = $detail->entity;
-        return \view('frontend.layouts.shopping.prdDetails',[
+        return \view('frontend.layouts.shopping.prdDetails', [
             'product' => $detail,
             'image' => $image,
             'category' => $category,
@@ -87,8 +90,8 @@ class HomeController extends Controller
     }
     public function category()
     {
-        return view('frontend.layouts.shopping.categories',[
-            'categories'=>ProductCategory::all()
+        return view('frontend.layouts.shopping.categories', [
+            'categories' => ProductCategory::all()
         ]);
     }
     public function about()
@@ -97,10 +100,58 @@ class HomeController extends Controller
     }
     public function collection()
     {
-        return view('frontend.layouts.shopping.collection');
+        $product=Product::where('quantity', 0)->get();
+        // \dd($product);
+
+        return view('frontend.layouts.shopping.collection',[
+            'product' => $product ,
+        ]);
     }
     public function products()
     {
-        return view('frontend.layouts.shopping.products');
+        return view('frontend.layouts.shopping.products', [
+            'products' => Product::simplePaginate(12),
+            'categoryAll' => ProductCategory::all()
+        ]);
+    }
+    public function productByCategory($id)
+    {
+        $category = ProductCategory::find($id);
+        $product = $category->product()->simplePaginate(12);
+        return view('frontend.layouts.shopping.products', [
+            'category' => $category,
+            'categoryAll' => ProductCategory::all(),
+            'product' => $product
+        ]);
+    }
+    public function filterStore(Request $request)
+    {
+        if($request->search){
+            $products = Product::where('name', 'LIKE', "%{$request->search}%") 
+            ->simplePaginate(12);
+        }
+        if ($request->new == 'new' && $request->price_from && $request->price_to) {
+            $filter_min_price = $request->price_from;
+            $filter_max_price = $request->price_to;
+            if ($filter_min_price && $filter_max_price) {
+                $products = Product::whereBetween('price', [$filter_min_price, $filter_max_price])->latest()->simplePaginate(12);
+            }
+        }
+        if (!$request->new == 'new' && $request->price_from && $request->price_to) {
+
+            // This will only execute if you received any price
+            // Make you you validated the min and max price properly
+            $min_price = Product::min('price');
+            $max_price = Product::max('price');
+            $filter_min_price = $request->price_from;
+            $filter_max_price = $request->price_to;
+            if ($filter_min_price && $filter_max_price) {
+                $products = Product::whereBetween('price', [$filter_min_price, $filter_max_price])->simplePaginate(12);
+            }
+        }
+        return \view('frontend.layouts.shopping.products', [
+            'productFilter' => $products,
+            'categoryAll' => ProductCategory::all(),
+        ]);
     }
 }

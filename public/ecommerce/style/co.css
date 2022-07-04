@@ -1234,6 +1234,22 @@ input[type="search"]:focus {
   }
 }
 
+.card .row .product {
+  height: 25rem;
+}
+
+@media screen and (min-width: 768px) {
+  .card .row .product {
+    height: 20rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .card .row .product {
+    height: 25rem;
+  }
+}
+
 body::-webkit-scrollbar {
   background-color: #fff;
   width: 16px;

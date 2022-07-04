@@ -20,4 +20,5 @@ class ProductCategory extends Model
     {
         return $this->hasMany('App\Models\Product', 'id_category');
     }
+
 }

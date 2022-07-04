@@ -97,8 +97,8 @@
                                         <form action="">
                                             <div class="row ">
                                                 <div class="col-sm-6 col-12">
-                                                    <input type="number" placeholder="1" min="1"
-                                                        max="{{ $product->quantity ?? '0' }}"
+                                                    <input type="number" placeholder="input your order" min="0"
+                                                        max="{{ $product->quantity ?? '10' }}"
                                                         class="form-control rounded-5">
                                                     {{-- <select class="form-select rounded-5"
                                                         aria-label="Default select example">

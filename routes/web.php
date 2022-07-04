@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductCms\GalleryController;
 use App\Http\Controllers\ProductCms\EntityController;
 use App\Http\Controllers\ProductCMS\ProductCategoryController;
 use App\Http\Controllers\ProductCms\ThumbnailController;
+use App\Http\Controllers\Front\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,9 @@ Route::group(['prefix' => 'user'], function () {
    Route::get('/detail/{id}', [App\Http\Controllers\Front\HomeController::class, 'detail'])->name('home.detail');
    Route::get('/category', [App\Http\Controllers\Front\HomeController::class, 'category'])->name('home.category');
    Route::get('/collection', [App\Http\Controllers\Front\HomeController::class, 'collection'])->name('collection.index');
-   Route::get('/products', [App\Http\Controllers\Front\HomeController::class, 'products'])->name('products.index');
+   Route::get('/products/all', [App\Http\Controllers\Front\HomeController::class, 'products'])->name('products.index');
+   Route::get('/products/{id}/category', [App\Http\Controllers\Front\HomeController::class, 'productByCategory'])->name('products.category');
+   Route::post('/products/filter', [HomeController::class, 'filterStore'])->name('products.filter');
    Route::get('/about', [App\Http\Controllers\Front\HomeController::class, 'about'])->name('about.index');
    Route::get('/try', function () {
       return view('frontend.layouts.shopping.prdDetails');
@@ -50,7 +53,7 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::resource('/product', ProductController::class);
 
       Route::get('/list/trash', [GalleryController::class, 'trash'])->name('product.trash');
-      Route::get('/list/restore/{id}', [GalleryController::class, 'restore'])->name('product.restore');
+      Route::get('/list/restore/{id}', [GalleryController::class, 'restore'])->name('proproduduct.restore');
       Route::get('/list/restoreAll', [GalleryController::class, 'restoreAll'])->name('product.restoreAll');
 
       Route::get('/thumbnail/{id}/index', [ThumbnailController::class, 'index'])->name('thumbnail.index');

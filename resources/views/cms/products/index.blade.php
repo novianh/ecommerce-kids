@@ -133,7 +133,7 @@
                             <label for="exampleInputUsername1" class="">Price <small class="text-warning">
                                     *(per
                                     item)</small></label>
-                            <input type="text" name="price" required
+                            <input type="number" name="price" required
                                 class="form-control @error('price') is-invalid @enderror" id="exampleInputUsername1">
                             @error('price')
                                 <small class="text-danger">{{ $message }}</small>
