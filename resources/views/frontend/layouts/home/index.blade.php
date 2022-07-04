@@ -111,7 +111,7 @@
                         <div class="col-8 carousel-wrap col-xl-10 mx-xl-0">
                             <div class=" owl-carousel owl-theme">
                                 @foreach ($newPrd as $np)
-                                    <div class="card rounded-5 border-0 position-relative item ">
+                                    <div class="card rounded-5 border-0 position-relative item product_data ">
                                         <div class="row justify-content-center align-items-center">
                                             <div
                                                 class="col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">
@@ -124,9 +124,7 @@
                                         </div>
                                         <div class="card__overlay card-body text-center ">
                                             <div class="card__header">
-                                                <div class="row row-cols-1" data-bs-toggle="collapse"
-                                                    href="#collapseExample{{ $np->id }}" role="button"
-                                                    aria-expanded="false" aria-controls="collapseExample">
+                                                <div class="row row-cols-1">
                                                     <div class="col">
                                                         <h5 class="card-title fw-bold mb-0 text-capitalize">
                                                             {{ $np->name ?? 'Bear Brown Doll' }}</h5>
@@ -292,6 +290,7 @@
                 <h2 class="text-center mb-4">Get in <span>Touch</span></h2>
                 @include('frontend.layouts.home.contact')
             </section>
+            <button class="add-to-cart-btn">
         </main>
 
     </div>
@@ -299,7 +298,11 @@
 
 @section('js')
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+
     <script>
+
+
+        
         // ajax
         jQuery(document).ready(function() {
             jQuery.noConflict();
@@ -324,7 +327,7 @@
                         if (!jQuery.trim(response)) {
                             jQuery('#data').append(
                                 '<h5 class="text-center" style="color:rgb(140 192 222)">Sorry! There are no products in this category</h5>'
-                                )
+                            )
                         } else {
                             jQuery.each(data, function(key, val) {
                                 console.log(val.name)
@@ -335,15 +338,15 @@
                                     '<div class="col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">' +
                                     '<a href="user/detail/' + val.id +
                                     '" class="link">' +
-                                    '<img src="{{ URL::asset("storage/products/thumbnail") }}' +'/'  + val
+                                    '<img src="{{ URL::asset('storage/products/thumbnail') }}' +
+                                    '/' + val
                                     .img_thumbnail +
                                     '" class=" card-img-top mx-auto p-5 m-5 my-3" alt="img product" width="100%" />' +
                                     '</a>' +
                                     '</div>' +
                                     '</div>' +
                                     ' <div class="card__overlay card-body text-center "> <div class="card__header">' +
-                                    '<div class="row row-cols-1" data-bs-toggle="collapse" href="#' +
-                                    '" role="button" aria-expanded="false" aria-controls="collapseExample">' +
+                                    '<div class="row row-cols-1" ' +
                                     ' <div class="col"> <h5 class="card-title fw-bold mb-0">' +
                                     val.name + '</h5>' +
                                     '<small class="ctr-sku">' +

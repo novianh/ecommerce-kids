@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductCms\GalleryController;
 use App\Http\Controllers\ProductCms\EntityController;
 use App\Http\Controllers\ProductCMS\ProductCategoryController;
 use App\Http\Controllers\ProductCms\ThumbnailController;
+use App\Http\Controllers\ProductCms\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 
 /*
@@ -38,6 +39,18 @@ Route::group(['prefix' => 'user'], function () {
    Route::get('/products/{id}/category', [App\Http\Controllers\Front\HomeController::class, 'productByCategory'])->name('products.category');
    Route::post('/products/filter', [HomeController::class, 'filterStore'])->name('products.filter');
    Route::get('/about', [App\Http\Controllers\Front\HomeController::class, 'about'])->name('about.index');
+
+   Route::post('/add-to-cart',[HomeController::class, 'addtocart'])->name('add-to-cart');
+   Route::get('/load-cart-data',[HomeController::class, 'cartloadbyajax'])->name('load-cart-data');
+   Route::get('/cart',[HomeController::class, 'cart'])->name('cart');
+   Route::post('/update-to-cart',[HomeController::class, 'updatetocart'])->name('update-to-cart');
+   Route::delete('/delete-from-cart',[HomeController::class, 'deletefromcart'])->name('delete-from-cart');
+   Route::get('/clear-cart',[HomeController::class, 'clearcart'])->name('clear-cart');
+
+   // co
+   Route::get('/checkout',[CheckoutController::class, 'index'])->name('checkout');
+
+
    Route::get('/try', function () {
       return view('frontend.layouts.shopping.prdDetails');
    });

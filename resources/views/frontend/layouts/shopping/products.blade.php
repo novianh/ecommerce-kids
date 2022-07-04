@@ -31,7 +31,8 @@
                                     <div class="input-group">
                                         <input type="search" placeholder="What're you searching for?"
                                             class="form-control border-0 bg-light form-control rounded-5" name="search">
-                                        <button type="submit" class="btn-search mt-1 me-1"><i class="fi fi-br-search"></i></button>
+                                        <button type="submit" class="btn-search mt-1 me-1"><i
+                                                class="fi fi-br-search"></i></button>
                                     </div>
                                 </div>
                             </form>
@@ -50,30 +51,39 @@
                             </p>
                             <div class="collapse dont-collapse-sm" id="collapseExample">
                                 <div class="row justify-content-lg-start justify-content-center categories-products">
-                                    <div class="col-12">
+                                    <form action="{{ route('products.filter') }}" method="POST">
+                                        @csrf
+                                    <div class="col-12 text-capitalize mb-3">
 
-                                        <ul style="line-height:180%" class="ms-0 text-capitalize">
+                                        {{-- <ul style="line-height:180%" class="ms-0 text-capitalize">
                                             <li>
-                                                <a href="{{ route('products.index') }}"
-                                                    class=" ">All</a>
+                                                <a href="{{ route('products.index') }}" class=" ">All</a>
                                             </li>
-                                            @isset($categoryAll)
-                                                @foreach ($categoryAll as $item)
-                                                    <li>
+                                        </ul> --}}
+                                        @isset($categoryAll)
+                                            @foreach ($categoryAll as $item)
+                                                {{-- <li>
                                                         <a href="{{ route('products.category', $item) }}"
                                                             class=" ">{{ $item->name }}</a>
-                                                    </li>
-                                                @endforeach
+                                                    </li> --}}
+                                                    {{-- <input type="text" value="{{ $item->id }}"> --}}
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="{{ $item->id }}"
+                                                        id="flexCheckDefault{{ $item->id }}" name="category_id">
+                                                    <label class="form-check-label" for="flexCheckDefault{{ $item->id }}">
+                                                        {{ $item->name }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
 
-                                            @endisset
-                                            @empty($categoryAll)
-                                                <p class="text-start">Category is empty</p>
-                                            @endempty
+                                        @endisset
+                                        @empty($categoryAll)
+                                            <p class="text-start">Category is empty</p>
+                                        @endempty
 
-                                        </ul>
+
                                     </div>
-                                    <form action="{{ route('products.filter') }}" method="POST" >
-                                        @csrf
+                                   
                                         <div class="col-lg-12">
                                             <h5 class="fw-bold">Filter</h5>
 
@@ -81,14 +91,14 @@
                                                 <label for="range">Price Range</label>
                                                 <input type="text" class="form-control js-range-slider" name="my_range"
                                                     value="" id="demo_0" />
-                                                    <div class="extra-controls">
-                                                        
-                                                        <div class="result">
-                                                            <input type="hidden" name="price_from" class="js-result-from">
-                                                            <input type="hidden" name="price_to" class="js-result-to">
-                                                            
-                                                        </div>
+                                                <div class="extra-controls">
+
+                                                    <div class="result">
+                                                        <input type="hidden" name="price_from" class="js-result-from">
+                                                        <input type="hidden" name="price_to" class="js-result-to">
+
                                                     </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -142,9 +152,7 @@
                                             </div>
                                             <div class="card__overlay card-body text-center ">
                                                 <div class="card__header">
-                                                    <div class="row row-cols-1" data-bs-toggle="collapse"
-                                                        href="#collapseExample{{ $prd->id }}" role="button"
-                                                        aria-expanded="false" aria-controls="collapseExample">
+                                                    <div class="row row-cols-1">
                                                         <div class="col">
                                                             <h5 class="card-title fw-bold mb-0">
                                                                 {{ $prd->name ?? 'Bear Brown Doll' }}</h5>
@@ -279,7 +287,7 @@
 
                                     </div>
                                 @endforeach --}}
-                                @elseif(empty($products) && empty($product) && !empty($productFilter))
+                            @elseif(empty($products) && empty($product) && !empty($productFilter))
                                 @foreach ($productFilter as $prd)
                                     <div class="mt-4 col-9 col-sm-6 col-md-5 col-lg-5 col-xl-4">
                                         <div class="card rounded-5 border-0 position-relative item ">
@@ -386,8 +394,8 @@
         };
 
         var writeResult = function() {
-            var resultFrom = from ;
-            var resultTo = to ;
+            var resultFrom = from;
+            var resultTo = to;
             $resultFromClass.val(resultFrom);
             $resultToClass.val(resultTo);
         };
@@ -402,11 +410,11 @@
             skin: "round",
             prefix: "Rp.",
             step: 50,
-             onStart: function(data) {
+            onStart: function(data) {
                 saveResult(data);
                 writeResult();
-            }, 
-            onChange:function(data) {
+            },
+            onChange: function(data) {
                 saveResult(data);
                 writeResult();
             },

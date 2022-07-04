@@ -80,9 +80,18 @@
                         </ul>
                         {{-- </div> --}}
 
-                        <a href="#"
-                            class="d-flex align-items-center justify-content-center text-decoration-none text-muted"><i
-                                class="fi fi-sr-shopping-cart" style="font-size: 20px;"></i></a>
+                        <a href="{{ route('cart') }}"
+                            class="d-flex align-items-center justify-content-center text-decoration-none text-muted position-relative">
+                            <i class="fi fi-sr-shopping-cart" style="font-size: 20px;"></i>
+
+                            <span
+                                class="basket-item-count position-absolute top-0 start-100 translate-middle bg-light rounded-circle ">
+                                <span class="badge badge-pill text-dark"></span>
+                            </span>
+                        </a>
+
+
+
                     </div>
                 </div>
             </div>

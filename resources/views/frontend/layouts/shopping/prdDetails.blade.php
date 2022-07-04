@@ -47,7 +47,7 @@
                                 <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
                                     @foreach ($image as $image)
                                         <li
-                                            data-thumb="{{ url('storage/products/' . $image->image) ?? asset('ecommerce/img/yellow-dress.png') }}">
+                                            data-thumb="{{ url('storage/products/' . $image->image)}}">
                                             <div class="item rounded-4 bg-white">
                                                 <div class=" ">
                                                     <img src="{{ url('storage/products/' . $image->image) ?? 'image not found' }}"
@@ -62,7 +62,7 @@
 
                         <div class="col-10 col-sm-9 col-md-6 mt-3 mt-md-0">
                             <div class="row wrapper px-4 py-5 rounded-5 align-items-center">
-                                <div class="">
+                                <div class="product_data">
                                     <div class="col-12">
                                         <p class="card-title title-prd text-capitalize">
                                             {{ $product->name ?? 'Bear Brown Doll' }}</p>
@@ -93,22 +93,18 @@
 
 
                                     </div>
+
                                     <div class="col-12 mt-3">
                                         <form action="">
                                             <div class="row ">
                                                 <div class="col-sm-6 col-12">
+                                                    <input type="hidden" class="product_id" value="{{ $product->id }}">
                                                     <input type="number" placeholder="input your order" min="0"
                                                         max="{{ $product->quantity ?? '10' }}"
-                                                        class="form-control rounded-5">
-                                                    {{-- <select class="form-select rounded-5"
-                                                        aria-label="Default select example">
-                                                        <option value="1" selected>1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                    </select> --}}
+                                                        class="form-control rounded-5 qty-input">
                                                 </div>
                                                 <div class="col d-grid mt-md-0 mt-1 mt-sm-0">
-                                                    <button type="submit" class=" btn btn-product"><i
+                                                    <button type="submit" class=" btn btn-product add-to-cart-btn"><i
                                                             class="fi fi-sr-shopping-cart-add"></i>
                                                         Add</button>
                                                 </div>
@@ -123,11 +119,7 @@
                             <h3>Description</h3>
                             <p class="desc">
                                 {{ $product->desc ??
-                                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
-                                                                                                minus
-                                                                                                deleniti voluptate minima laboriosam, vero dolorum impedit explicabo ducimus ad maxime
-                                                                                                velit
-                                                                                                mollitia! Provident quas rem esse hic, commodi sint.' }}
+                                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis deleniti voluptate minima laboriosam, vero dolorum impedit explicabo ducimus ad maxime velit mollitia! Provident quas rem esse hic, commodi sint.' }}
                             </p>
 
                         </div>
@@ -172,7 +164,8 @@
                                                             Add</a>
                                                     </div>
                                                     <div class="col d-grid">
-                                                        <a href="" class="btn-product"><i class="fi fi-sr-eye"></i>
+                                                        <a href="" class="btn-product"><i
+                                                                class="fi fi-sr-eye"></i>
                                                             More</a>
                                                     </div>
                                                 </div>
@@ -225,5 +218,62 @@
                 }
             });
         });
+    </script>
+    <script>
+        $(document).ready(function() {
+            
+            $('.add-to-cart-btn').click(function(e) {
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                var product_id = $(this).closest('.product_data').find('.product_id').val();
+                var quantity = $(this).closest('.product_data').find('.qty-input').val();
+
+                $.ajax({
+                    url: "{{ route('add-to-cart') }}",
+                    method: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'quantity': quantity,
+                        'product_id': product_id,
+                    },
+                    success: function(response) {
+                        // alertify.set('notifier', 'position', 'top-right');
+                        // alertify.success(response.status);
+                        // console.log(response.status)
+                        window.location.reload();
+                    },
+                });
+            });
+            cartload();
+
+
+        });
+
+        function cartload() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: "{{ route('load-cart-data') }}",
+                method: "GET",
+                success: function(response) {
+                    // console.log(response)
+                    $('.basket-item-count').html('');
+                    var parsed = jQuery.parseJSON(response)
+                    var value = parsed; //Single Data Viewing
+                    $('.basket-item-count').append($('<span class="badge badge-pill text-dark">' + value[
+                        'totalcart'] + '</span>'));
+                }
+            });
+        }
     </script>
 @endsection
