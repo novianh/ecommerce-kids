@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cms\Home\HeroController;
+use App\Http\Controllers\Front\AddressController;
 use App\Http\Controllers\ProductCms\ProductController;
 use App\Http\Controllers\ProductCms\GalleryController;
 use App\Http\Controllers\ProductCms\EntityController;
@@ -30,7 +31,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\Front\HomeController::class, 'index'])->name('home');
 
 Route::group(['prefix' => 'user'], function () {
-   Route::get('/', [App\Http\Controllers\Front\HomeController::class, 'index'])->name('home');
+   Route::get('/', [App\Http\Controllers\Front\HomeController::class, 'index'])->name('user.home');
    Route::get('/home/process/{id}', [App\Http\Controllers\Front\HomeController::class, 'process'])->name('home.process');
    Route::get('/detail/{id}', [App\Http\Controllers\Front\HomeController::class, 'detail'])->name('home.detail');
    Route::get('/category', [App\Http\Controllers\Front\HomeController::class, 'category'])->name('home.category');
@@ -49,6 +50,10 @@ Route::group(['prefix' => 'user'], function () {
 
    // co
    Route::get('/checkout',[CheckoutController::class, 'index'])->name('checkout');
+   Route::get('/checkout/store',[CheckoutController::class, 'store'])->name('checkout.store');
+
+   // address
+   Route::resource('/address', AddressController::class);
 
 
    Route::get('/try', function () {

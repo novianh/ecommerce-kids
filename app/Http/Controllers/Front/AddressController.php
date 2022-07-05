@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\ProductCms;
+namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\CustomerAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
+// use Redirect,Response;
 
-class CheckoutController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,12 +17,7 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        $cookie_data = stripslashes(Cookie::get('shopping_cart'));
-        $cart_data = json_decode($cookie_data, true);
-        $id= Auth::user()->id;
-        return \view('frontend.layouts.shopping.co', [
-            'address' => CustomerAddress::where('cst_id', $id )->latest()->get()
-        ])->with('cart_data',$cart_data);
+        //
     }
 
     /**
@@ -43,7 +38,29 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        \dd($request);
+        $request->validate([
+            "name" => "required",
+            "telephone" => "required",
+            "address" => "required",
+            "address2" => "required",
+            "country" => "required",
+            "state" => "required",
+            "zip" => "required",
+        ]);
+
+        $id = Auth::user()->id;
+
+        $input = $request->all();
+        $input['cst_id'] = "$id";
+
+        $create =  CustomerAddress::create($input);
+        $inputAll = [
+            'id' => $create->id,
+            'name' => $create->name
+        ];
+        // \dd($input);
+
+        return  response()->json($inputAll);
     }
 
     /**
@@ -54,7 +71,7 @@ class CheckoutController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
@@ -89,15 +106,5 @@ class CheckoutController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-
-    public function data_cart()
-    {
-        $cookie_data = stripslashes(Cookie::get('shopping_cart'));
-        $cart_data = json_decode($cookie_data, true);
-        return view('frontend.layouts.shopping.co')
-            ->with('cart_data',$cart_data)
-        ;
     }
 }

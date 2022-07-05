@@ -19,7 +19,9 @@ class HomeController extends Controller
         $product = Product::where([['status', '=', 'active'],['quantity','>', 0]])->get();
         // \dd($product);
         $categoryLast = ProductCategory::latest()->first();
-        $categoryLastPrd = $categoryLast->product;
+        if ($categoryLast) {
+            $categoryLastPrd = $categoryLast->product;
+        }
 
 
         return \view('frontend.layouts.home.index', [
@@ -193,7 +195,7 @@ class HomeController extends Controller
                 {
                     $cart_data[$keys]["item_quantity"] = $request->input('quantity');
                     $item_data = json_encode($cart_data);
-                    $minutes = 60;
+                    $minutes = 120;
                     Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
                     return response()->json(['status'=>'"'.$cart_data[$keys]["item_name"].'" Already Added to Cart','status2'=>'2']);
                 }
@@ -314,5 +316,26 @@ class HomeController extends Controller
     {
         Cookie::queue(Cookie::forget('shopping_cart'));
         return response()->json(['status'=>'Your Cart is Cleared']);
+    }
+
+    public function try()
+    {
+        $product = Product::where([['status', '=', 'active'],['quantity','>', 0]])->get();
+        // \dd($product);
+        $categoryLast = ProductCategory::latest()->first();
+        $categoryLastPrd = $categoryLast->product;
+
+
+        return \view('frontend.layouts.home.index', [
+            'product' => $product,
+            'newPrd' => Product::latest()->take(4)->where([['status','active'],['quantity','>', 0]])->get(),
+            'category' => ProductCategory::all()->skip(1)->take(3),
+            'categoryLast' => ProductCategory::latest()->first(),
+            'entity' => Entity::all(),
+            'image' => GalleryProduct::all(),
+            'categories' => ProductCategory::all()->sortByDesc("created_at"),
+            'productCtgLast' => $categoryLastPrd,
+
+        ]);
     }
 }

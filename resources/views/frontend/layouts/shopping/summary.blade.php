@@ -87,7 +87,12 @@
                               </div>
 
                            </li>
-                           <li class="status d-flex justify-content-between mb-3 pb-3 border-bottom-0">
+                           <li class="d-flex justify-content-between mb-3 pb-3">
+                              <button class=" w-100 btn rounded-5" type="submit">Confirm</button>
+
+                           </li>
+
+                           {{-- <li class="status d-flex justify-content-between mb-3 pb-3 border-bottom-0">
                               <div class="">
                                  <h6 class="my-0">Status</h6>
                               </div>
@@ -95,7 +100,7 @@
                                  <span class="text-end ">Selesai</span>
                               </div>
 
-                           </li>
+                           </li> --}}
 
                         </ul>
                      </div>

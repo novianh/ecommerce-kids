@@ -243,14 +243,10 @@
                         'product_id': product_id,
                     },
                     success: function(response) {
-                        // alertify.set('notifier', 'position', 'top-right');
-                        // alertify.success(response.status);
-                        // console.log(response.status)
-                        window.location.reload();
+                        cartload();
                     },
                 });
             });
-            cartload();
 
 
         });

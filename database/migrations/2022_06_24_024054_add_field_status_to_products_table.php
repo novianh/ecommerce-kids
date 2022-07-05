@@ -14,7 +14,7 @@ class AddFieldStatusToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->boolean('status')->default(true)->after('discount');
+            $table->string('status')->default('active')->after('discount');
             $table->unsignedInteger('id_entity')->nullable();
             $table->unsignedInteger('id_category')->nullable();
         });

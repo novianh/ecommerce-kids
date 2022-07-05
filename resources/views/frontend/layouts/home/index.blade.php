@@ -290,7 +290,6 @@
                 <h2 class="text-center mb-4">Get in <span>Touch</span></h2>
                 @include('frontend.layouts.home.contact')
             </section>
-            <button class="add-to-cart-btn">
         </main>
 
     </div>

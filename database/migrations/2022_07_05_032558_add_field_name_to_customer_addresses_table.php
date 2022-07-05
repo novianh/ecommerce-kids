@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddRelationshipsToCustomerAddressesTable extends Migration
+class AddFieldNameToCustomerAddressesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,7 @@ class AddRelationshipsToCustomerAddressesTable extends Migration
     public function up()
     {
         Schema::table('customer_addresses', function (Blueprint $table) {
-            $table->foreign('cst_id')
-            ->references('id')->on('users')
-            ->onDelete('cascade'); 
+            $table->string('name')->after('cst_id');
         });
     }
 
@@ -28,7 +26,7 @@ class AddRelationshipsToCustomerAddressesTable extends Migration
     public function down()
     {
         Schema::table('customer_addresses', function (Blueprint $table) {
-            $table->dropForeign('customer_addresses_cst_id_foreign');
+            $table->dropColumn('name');
         });
     }
 }
