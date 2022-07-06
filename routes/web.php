@@ -8,7 +8,8 @@ use App\Http\Controllers\ProductCms\GalleryController;
 use App\Http\Controllers\ProductCms\EntityController;
 use App\Http\Controllers\ProductCMS\ProductCategoryController;
 use App\Http\Controllers\ProductCms\ThumbnailController;
-use App\Http\Controllers\ProductCms\CheckoutController;
+use App\Http\Controllers\Front\CheckoutController;
+use App\Http\Controllers\ProductCms\CheckoutController as CO;
 use App\Http\Controllers\Front\HomeController;
 
 /*
@@ -95,5 +96,17 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::delete('/entity/delete/{id}', [EntityController::class, 'destroy'])->name('entity.delete');
 
       Route::resource('category', ProductCategoryController::class)->except(['create', 'show']);
+
+      Route::get('/address', [AddressController::class, 'index'])->name('address.index');
+
+      Route::get('/checkout/shipment', [CO::class, 'shipment'])->name('co.shipment');
+      Route::get('/checkout/payment', [CO::class, 'payment'])->name('co.payment');
+      Route::post('/checkout/payment/store', [CO::class, 'paymentStore'])->name('co.payment.store');
+      Route::post('/checkout/shipment/store', [CO::class, 'shipmentStore'])->name('co.shipment.store');
+      Route::put('/checkout/payment/update/{id}', [CO::class, 'paymentUpdate'])->name('co.payment.update');
+      Route::put('/checkout/shipment/update/{id}', [CO::class, 'shipmentUpdate'])->name('co.shipment.update');
+      Route::get('/checkout/payment/{id}/edit', [CO::class, 'paymentEdit'])->name('co.payment.edit');
+      Route::delete('/checkout/payment/delete/{id}', [CO::class, 'destroyPayment'])->name('co.payment.delete');
+      Route::delete('/checkout/shipment/delete/{id}', [CO::class, 'destroyShipment'])->name('co.shipment.delete');
    });
 });

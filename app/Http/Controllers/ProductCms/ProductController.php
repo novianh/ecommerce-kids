@@ -18,7 +18,7 @@ class ProductController extends Controller
             return Datatables::of($product)
                 ->addColumn('action', function ($row) {
                     $html = '<div class="dropdown">
-                    <a class="btn text-secondary " href="#" role="button"
+                    <a class="btn text-secondary text-xxs font-weight-bolder " href="#" role="button"
                         id="dropdownMenuLink{{ $prd->id }}" data-toggle="dropdown"
                         aria-expanded="false">
                         <i class="fas fa-ellipsis-v"></i>

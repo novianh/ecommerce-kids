@@ -3,101 +3,141 @@
 namespace App\Http\Controllers\ProductCms;
 
 use App\Http\Controllers\Controller;
-use App\Models\CustomerAddress;
+use App\Models\Courier;
+use App\Models\Payment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
+use Yajra\DataTables\Facades\DataTables;
 
 class CheckoutController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function payment(Request $request)
     {
-        $cookie_data = stripslashes(Cookie::get('shopping_cart'));
-        $cart_data = json_decode($cookie_data, true);
-        $id= Auth::user()->id;
-        return \view('frontend.layouts.shopping.co', [
-            'address' => CustomerAddress::where('cst_id', $id )->latest()->get()
-        ])->with('cart_data',$cart_data);
+        $payment = Payment::all();
+        if ($request->ajax()) {
+            return DataTables::of($payment)
+                ->addColumn('action', function ($row) {
+                    $html = '<td class="align-middle text-right">
+                    <a href="javascript: ;"
+                        class="text-secondary font-weight-bold text-xs btn-edit"
+                        data-id="{{ $item->id }}" data-toggle="tooltip" data-placement="top"
+                        title="edit payment">
+                        Edit
+                    </a>
+                    <a href="javascript:;" class="ml-3 text-danger font-weight-bold text-xs btn-delete" data-rowid"' . $row->id . '" data-toggle="tooltip" data-placement="top" title="delete payment"> <i class="fas fa-times"></i></a>
+                </td>';
+                    return $html;
+                })
+                ->toJson();
+        }
+        return \view('cms.checkout.payment', [
+            'payment' => Payment::all(),
+           
+        ]);
+    }
+    public function shipment(Request $request)
+    {
+        $payment = Courier::all();
+        if ($request->ajax()) {
+            return DataTables::of($payment)
+                ->addColumn('action', function ($row) {
+                    $html = '<td class="align-middle text-right">
+                    <a href="javascript: ;"
+                        class="text-secondary font-weight-bold text-xs btn-edit"
+                        data-id="{{ $item->id }}" data-toggle="tooltip" data-placement="top"
+                        title="edit shipment">
+                        Edit
+                    </a>
+                    <a href="javascript:;" class="ml-3 text-danger font-weight-bold text-xs btn-delete" data-rowid="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="delete shipment"> <i class="fas fa-times"></i></a>
+                </td>';
+                    return $html;
+                })
+                ->toJson();
+        }
+        return \view('cms.checkout.shipment', [
+            'shipment' => Courier::latest()->get()
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function paymentStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $input = $request->all();
+        $save = Payment::create($input);
+        $inputAll = [
+            'id' => $save->id,
+            'name' => $save->name,
+            'account_number' => $save->account_number
+        ];
+
+        return ['success' => true, 'message' => 'add successfully',];
+    }
+    public function shipmentStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $input = $request->all();
+        $save = Courier::create($input);
+        $inputAll = [
+            'id' => $save->id,
+            'name' => $save->name,
+        ];
+
+        return ['success' => true, 'message' => 'add successfully',];
+    }
+    public function paymentEdit(Request $request, $id)
+    {
+
+        $payment = Payment::find($id);
+
+        return ['success' => true, 'message' => ' successfully',];
+    }
+    public function paymentUpdate(Request $request, $id)
+    {
+
+        $payment = Payment::find($id);
+        $result = $payment->update($request->all());
+
+        return ['success' => true, 'message' => 'update successfully',];
+    }
+    public function shipmentUpdate(Request $request, $id)
+    {
+
+        $shipment = Courier::find($id);
+        $result = $shipment->update($request->all());
+
+        return ['success' => true, 'message' => 'update successfully',];
+    }
+
+    public function show($id)
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        \dd($request);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroyPayment($id)
     {
-        //
+        $payment = Payment::find($id);
+        $payment->delete();
+        return ['success' => true, 'message' => 'Delete successfully',];
     }
-
-
-    public function data_cart()
+    public function destroyShipment($id)
     {
-        $cookie_data = stripslashes(Cookie::get('shopping_cart'));
-        $cart_data = json_decode($cookie_data, true);
-        return view('frontend.layouts.shopping.co')
-            ->with('cart_data',$cart_data)
-        ;
+        $shipment = Courier::find($id);
+        $shipment->delete();
+        return ['success' => true, 'message' => 'Delete successfully',];
     }
 }

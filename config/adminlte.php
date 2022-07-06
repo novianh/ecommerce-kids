@@ -265,12 +265,20 @@ return [
             'icon' => 'fas fa-list-ul',
         ],
         [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
+            'text'    => 'Checkout',
+            'icon'    => 'fas fa-credit-card',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'User Address',
+                    'url'  => '/admin/address',
+                ],
+                [
+                    'text' => 'Payment',
+                    'url'  => '/admin/checkout/payment',
+                ],
+                [
+                    'text' => 'Shipment',
+                    'url'  => '/admin/checkout/shipment',
                 ],
                 [
                     'text'    => 'level_one',
