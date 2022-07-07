@@ -15,11 +15,11 @@
         <section id="co" class=" bg-light">
             <div class="ornaments position-relative">
                 <!-- <div class="ornament position-absolute">
-                                           <img src="img/starorn.svg" alt="" width="100px">
-                                        </div> -->
+                                                               <img src="img/starorn.svg" alt="" width="100px">
+                                                            </div> -->
                 <!-- <div class="ornament2 position-absolute">
-                                           <img src="img/starorn.svg" alt="" width="100px">
-                                        </div> -->
+                                                               <img src="img/starorn.svg" alt="" width="100px">
+                                                            </div> -->
             </div>
             <form class="needs-validation" action="{{ route('checkout.store') }}">
                 @csrf
@@ -103,10 +103,10 @@
                                 </div>
                                 <div class=" col-12 mb-3">
                                     <label for="state" class="form-label">Address</label>
-                                    <select class="form-select rounded-5 mb-2 text-capitalize" id="address" required name="address">
+                                    <select class="form-select rounded-5 mb-2 text-capitalize" id="address" required
+                                        name="address">
                                         <option value="" id="addressOpt">Choose...</option>
                                         @if ($address)
-
                                             @foreach ($address as $address)
                                                 <option value="{{ $address->id }}">{{ $address->name }}</option>
                                             @endforeach
@@ -124,22 +124,22 @@
                                 </div>
                                 <div class="col-md-6 col-12 text-capitalize">
                                     <label for="state" class="form-label">Payment</label>
-                                    <select class="form-select rounded-5 text-capitalize" id="state" required name="payment">
+                                    <select class="form-select rounded-5 text-capitalize" id="state" required
+                                        name="payment">
                                         <option value="">Choose...</option>
                                         @foreach ($payment as $item)
-                                            
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class=" col-12 col-md-6 mt-3 mt-md-0 ">
                                     <label for="state" class="form-label">Courier Service</label>
-                                    <select class="form-select rounded-5 text-capitalize" id="state" required name="courier">
+                                    <select class="form-select rounded-5 text-capitalize" id="state" required
+                                        name="courier">
                                         <option value="">Choose...</option>
 
                                         @foreach ($shipment as $item)
-                                            
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -157,7 +157,7 @@
             <!-- Modal -->
             <div class="modal fade" id="modalAddress" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Add Address</h5>
@@ -169,24 +169,6 @@
                             @csrf
                             <div class="modal-body">
                                 <div class="row g-3">
-                                    {{-- <div class="col-sm-6">
-                                        <label for="firstName" class="form-label">First name</label>
-                                        <input type="text" class="form-control" id="firstName" placeholder=""
-                                            value="" required name="">
-                                        <div class="invalid-feedback">
-                                            Valid first name is required.
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        <label for="lastName" class="form-label">Last name</label>
-                                        <input type="text" class="form-control" id="lastName" placeholder=""
-                                            value="" required>
-                                        <div class="invalid-feedback">
-                                            Valid last name is required.
-                                        </div>
-                                    </div> --}}
-
                                     <div class="col-12">
                                         <label for="email" class="form-label">Address Name</label>
                                         <input type="text" class="form-control" id="email" placeholder="Home"
@@ -221,10 +203,13 @@
                                     </div>
 
                                     <div class="col-md-5">
-                                        <label for="country" class="form-label">Country</label>
-                                        <select class="form-select rounded-5" id="country" required name="country">
+                                        <label for="country" class="form-label">Province</label>
+                                        <select class="form-select rounded-5" id="provinsi" required name="country">
                                             <option value="">Choose...</option>
-                                            <option value="US">United States</option>
+                                            @foreach ($province as $id)
+                                                <option value="{{ $id->code }}">{{ $id->name }}</option>
+                                            @endforeach
+
                                         </select>
                                         <div class="invalid-feedback">
                                             Please select a valid country.
@@ -232,8 +217,8 @@
                                     </div>
 
                                     <div class="col-md-4">
-                                        <label for="state" class="form-label">State</label>
-                                        <select class="form-select rounded-5" id="state" required name="state">
+                                        <label for="state" class="form-label">City</label>
+                                        <select class="form-select rounded-5" id="kota" required name="state">
                                             <option value="">Choose...</option>
                                             <option value="california">California</option>
                                         </select>
@@ -300,14 +285,42 @@
                             console.log(data);
                             modal.modal('hide');
                             form.trigger("reset");
-                            $('#address').append('<option value="' + data.id + '" selected>' + data.name + '</option>');
-                            
+                            $('#address').append('<option value="' + data.id + '" selected>' +
+                                data.name + '</option>');
+
                         } else if (data.error) {
                             console.log(data.error);
                         }
                     },
                 }); //end ajax
             })
+        });
+    </script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+
+        $(document).ready(function() {
+
+            $('#provinsi').on('change', function() {
+
+                axios.post('{{ route('address.storeDropdown') }}', {
+                        code: $(this).val()
+                    })
+
+                    .then(function(response) {
+                        $('#kota').empty();
+                        $.each(response.data, function(id, name) {
+
+                            $('#kota').append(new Option(name, id))
+
+                        })
+
+                    });
+
+            });
+
         });
     </script>
 @endsection

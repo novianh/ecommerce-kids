@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductCms\ThumbnailController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\ProductCms\CheckoutController as CO;
 use App\Http\Controllers\Front\HomeController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,19 +43,26 @@ Route::group(['prefix' => 'user'], function () {
    Route::post('/products/filter', [HomeController::class, 'filterStore'])->name('products.filter');
    Route::get('/about', [App\Http\Controllers\Front\HomeController::class, 'about'])->name('about.index');
 
-   Route::post('/add-to-cart',[HomeController::class, 'addtocart'])->name('add-to-cart');
-   Route::get('/load-cart-data',[HomeController::class, 'cartloadbyajax'])->name('load-cart-data');
-   Route::get('/cart',[HomeController::class, 'cart'])->name('cart');
-   Route::post('/update-to-cart',[HomeController::class, 'updatetocart'])->name('update-to-cart');
-   Route::delete('/delete-from-cart',[HomeController::class, 'deletefromcart'])->name('delete-from-cart');
-   Route::get('/clear-cart',[HomeController::class, 'clearcart'])->name('clear-cart');
+   Route::post('/add-to-cart', [HomeController::class, 'addtocart'])->name('add-to-cart');
+   Route::get('/load-cart-data', [HomeController::class, 'cartloadbyajax'])->name('load-cart-data');
+   Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
+   Route::post('/update-to-cart', [HomeController::class, 'updatetocart'])->name('update-to-cart');
+   Route::delete('/delete-from-cart', [HomeController::class, 'deletefromcart'])->name('delete-from-cart');
+   Route::get('/clear-cart', [HomeController::class, 'clearcart'])->name('clear-cart');
 
    // co
-   Route::get('/checkout',[CheckoutController::class, 'index'])->name('checkout');
-   Route::get('/checkout/store',[CheckoutController::class, 'store'])->name('checkout.store');
+   Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+   Route::get('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
 
    // address
-   Route::resource('/address', AddressController::class);
+   // Route::resource('/address', AddressController::class);
+   Route::get('/address', [AddressController::class, 'index'])->name('address.index');
+   Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
+   Route::post('/address/storeDropdown', [AddressController::class, 'storeDropdown'])->name('address.storeDropdown');
+
+
+   // summary
+   Route::get('/gallery/{id}/index', [GalleryController::class, 'index'])->name('gallery.index');
 
 
    Route::get('/try', function () {
@@ -97,8 +105,7 @@ Route::group(['middleware' => 'admin_user'], function () {
 
       Route::resource('category', ProductCategoryController::class)->except(['create', 'show']);
 
-      Route::get('/address', [AddressController::class, 'index'])->name('address.index');
-
+      
       Route::get('/checkout/shipment', [CO::class, 'shipment'])->name('co.shipment');
       Route::get('/checkout/payment', [CO::class, 'payment'])->name('co.payment');
       Route::post('/checkout/payment/store', [CO::class, 'paymentStore'])->name('co.payment.store');
@@ -108,5 +115,11 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::get('/checkout/payment/{id}/edit', [CO::class, 'paymentEdit'])->name('co.payment.edit');
       Route::delete('/checkout/payment/delete/{id}', [CO::class, 'destroyPayment'])->name('co.payment.delete');
       Route::delete('/checkout/shipment/delete/{id}', [CO::class, 'destroyShipment'])->name('co.shipment.delete');
+
+      // address mng
+      Route::get('/address', [AddressController::class, 'index'])->name('address.index');
+      Route::put('/checkout/address/update/{id}', [CO::class, 'addressUpdate'])->name('admin.address.update');
+      Route::get('/checkout/address/{id}/edit', [CO::class, 'addressEdit'])->name('admin.address.edit');
+      Route::delete('/checkout/address/delete/{id}', [CO::class, 'destroyAddress'])->name('admin.address.delete');
    });
 });

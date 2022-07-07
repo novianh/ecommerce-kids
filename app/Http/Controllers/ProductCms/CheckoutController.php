@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\ProductCms;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Courier;
+use App\Models\CustomerAddress;
 use App\Models\Payment;
+use App\Models\Province;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -23,7 +26,7 @@ class CheckoutController extends Controller
                         title="edit payment">
                         Edit
                     </a>
-                    <a href="javascript:;" class="ml-3 text-danger font-weight-bold text-xs btn-delete" data-rowid"' . $row->id . '" data-toggle="tooltip" data-placement="top" title="delete payment"> <i class="fas fa-times"></i></a>
+                    <a href="javascript:;" class="ml-3 text-danger font-weight-bold text-xs btn-delete" data-rowid="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="delete payment"> <i class="fas fa-times"></i></a>
                 </td>';
                     return $html;
                 })
@@ -92,9 +95,23 @@ class CheckoutController extends Controller
     public function paymentEdit(Request $request, $id)
     {
 
-        $payment = Payment::find($id);
+        Payment::find($id);
 
         return ['success' => true, 'message' => ' successfully',];
+    }
+    public function addressEdit(Request $request, $id)
+    {
+
+        $data = CustomerAddress::find($id);
+        $province = Province::find($data->country);
+        $cityAll = $province->city;
+        
+
+        return view('cms.checkout.addressEdit', [
+            'address' => $data,
+            'province' => Province::all(),
+            'cityAll' => $cityAll
+        ]);
     }
     public function paymentUpdate(Request $request, $id)
     {
@@ -112,21 +129,16 @@ class CheckoutController extends Controller
 
         return ['success' => true, 'message' => 'update successfully',];
     }
-
-    public function show($id)
+    public function addressUpdate(Request $request, $id)
     {
-        //
+
+        $address = CustomerAddress::find($id);
+        $result = $address->update($request->all());
+
+        return redirect()->route('address.index')
+                ->with('success_message', 'Update address successfully');
     }
 
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     public function destroyPayment($id)
     {
@@ -139,5 +151,12 @@ class CheckoutController extends Controller
         $shipment = Courier::find($id);
         $shipment->delete();
         return ['success' => true, 'message' => 'Delete successfully',];
+    }
+    public function destroyAddress($id)
+    {
+        $address = CustomerAddress::find($id);
+        // \dd($address);
+        $address->delete();
+        return \redirect()->route('address.index')->with('success_message', 'Berhasil');
     }
 }

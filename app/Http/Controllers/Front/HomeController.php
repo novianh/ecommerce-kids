@@ -195,7 +195,7 @@ class HomeController extends Controller
                 {
                     $cart_data[$keys]["item_quantity"] = $request->input('quantity');
                     $item_data = json_encode($cart_data);
-                    $minutes = 120;
+                    $minutes = 60;
                     Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
                     return response()->json(['status'=>'"'.$cart_data[$keys]["item_name"].'" Already Added to Cart','status2'=>'2']);
                 }
@@ -231,6 +231,7 @@ class HomeController extends Controller
 
     public function cartloadbyajax()
     {
+        
         if(Cookie::get('shopping_cart'))
         {
             $cookie_data = stripslashes(Cookie::get('shopping_cart'));

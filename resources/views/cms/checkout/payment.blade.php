@@ -308,8 +308,8 @@
                     text: "Anda tidak akan dapat mengembalikan ini!",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
+                    confirmButtonColor: '#1a73e8',
+                    cancelButtonColor: '#f44335',
                     confirmButtonText: 'Ya, Hapus!'
                 }).then((result) => {
                     if (result.isConfirmed) {

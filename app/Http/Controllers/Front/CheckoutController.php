@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Courier;
 use App\Models\CustomerAddress;
 use App\Models\Payment;
+use App\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -20,7 +21,8 @@ class CheckoutController extends Controller
         return \view('frontend.layouts.shopping.co', [
             'address' => CustomerAddress::where('cst_id', $id )->latest()->get(),
             'payment' => Payment::latest()->get(),
-            'shipment' => Courier::latest()->get()
+            'shipment' => Courier::latest()->get(),
+            'province' => Province::all()
         ])->with('cart_data',$cart_data);
     }
 

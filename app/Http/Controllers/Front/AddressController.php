@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\CustomerAddress;
+use App\Models\Province;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 // use Redirect,Response;
@@ -17,7 +20,11 @@ class AddressController extends Controller
      */
     public function index()
     {
-        //
+        return view('cms.checkout.address', [
+            'address' => CustomerAddress::all(),
+            'user' => User::all(),
+
+        ]);
     }
 
     /**
@@ -61,6 +68,14 @@ class AddressController extends Controller
         // \dd($input);
 
         return  response()->json($inputAll);
+    }
+
+    public function storeDropdown(Request $request)
+    {
+        $kota = City::where('province_code', $request->code)->get()
+        ->pluck('name', 'id');
+
+        return response()->json($kota);
     }
 
     /**
