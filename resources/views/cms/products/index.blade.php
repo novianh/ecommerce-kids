@@ -134,7 +134,7 @@
                                     *(per
                                     item)</small></label>
                             <input type="number" name="price" required
-                                class="form-control @error('price') is-invalid @enderror" id="exampleInputUsername1">
+                                class="form-control @error('price') is-invalid @enderror" id="price" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                             @error('price')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -144,7 +144,7 @@
                             <label for="exampleInputEmail1" class="">Quantity</label>
 
                             <input type="number" required name="quantity" class="form-control"
-                                id="exampleInputUsername1">
+                                id="qqt">
                         </div>
                         <div class="input-group input-group-static my-3">
                             <label for="status">Status</label>

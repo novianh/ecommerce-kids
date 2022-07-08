@@ -26,6 +26,10 @@ class Product extends Model
     {
         return $this->hasMany(GalleryProduct::class);
     }
+    public function item()
+    {
+        return $this->hasMany("App\Models\OrderItem", "product_id");
+    }
     public function newGallery()
     {
         return $this->hasMany(GalleryProduct::class)->latest()->first();

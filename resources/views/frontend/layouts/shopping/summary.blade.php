@@ -47,7 +47,7 @@
                                                         </div>
 
                                                         <span class="text-muted">Rp.
-                                                            {{ number_format($data['item_quantity'] * $data['item_price'], 2) }}
+                                                            {{ number_format($data['item_quantity'] * $data['item_price']) }}
                                                         </span>
 
                                                     </li>
@@ -68,7 +68,7 @@
                                                         <h6 class="my-0 mb-3">Total</h6>
                                                     </div>
                                                     <span class="text-muted">Rp.
-                                                        {{ number_format($total, 2) }}</span>
+                                                        {{ number_format($total) }}</span>
                                                         <input type="hidden" name="total" value="{{ $request->total }}">
                                                 </li>
                                             @endif

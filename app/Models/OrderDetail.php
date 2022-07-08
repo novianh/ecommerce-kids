@@ -36,4 +36,8 @@ class OrderDetail extends Model
     {
         return $this->belongsTo("App\Models\Courier", "courier_id")->withTrashed();
     }
+    public function item()
+    {
+        return $this->hasMany("App\Models\OrderItem", "order_id")->withTrashed();
+    }
 }

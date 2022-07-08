@@ -53,7 +53,7 @@
                                             </div>
                                         </div>
                                         <div class="col col-2-row" data-label="Price">Rp.
-                                            {{ number_format($data['item_price'], 2) }}</div>
+                                            {{ number_format($data['item_price']) }}</div>
                                         <div class="col col-3-row" data-label="Quantity">
                                             <div class="row justify-content-center align-items-center">
                                                 <div class="col-md-10 col-xl-8">
@@ -81,7 +81,7 @@
                                             </div>
                                         </div>
                                         <div class="col col-4-row" data-label="Subtotal">
-                                            {{ number_format($data['item_quantity'] * $data['item_price'], 2) }}</div>
+                                            {{ number_format($data['item_quantity'] * $data['item_price']) }}</div>
                                         <div class="col col-4-row">
                                             <a class="text-decoration-none text-center delete_cart_data"
                                                 style="cursor: pointer;" href="#">
@@ -99,7 +99,7 @@
                                         Total
                                     </div>
                                     <div class="col col-4-row" data-label="Total">Rp. <span
-                                            class="cart-grand-price-viewajax">{{ number_format($total, 2) }}</span></div>
+                                            class="cart-grand-price-viewajax">{{ number_format($total) }}</span></div>
                                     <div class="col col-4-row">
                                         @if (Auth::user())
                                             <a href="{{ route ('checkout') }}" class="btn px-3 btn-sm rounded-5 text-white">Checkout</a>
