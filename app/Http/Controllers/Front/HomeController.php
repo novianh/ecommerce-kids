@@ -53,6 +53,7 @@ class HomeController extends Controller
     public function detail($id)
     {
         $detail = Product::find($id);
+        // \dd($id);
         $image = $detail->gallery;
         $category = $detail->category;
         $entity = $detail->entity;

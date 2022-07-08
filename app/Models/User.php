@@ -49,4 +49,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\CustomerAddress',  "cst_id");
     }
+    public function order()
+    {
+        return $this->hasMany('App\Models\OrderDetail',  "cst_id");
+    }
 }

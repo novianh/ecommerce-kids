@@ -25,4 +25,9 @@ class CustomerAddress extends Model
     {
         return $this->belongsTo("App\Models\User", "cst_id")->withTrashed();
     }
+
+    public function order()
+    {
+        return $this->hasMany("App\Models\OrderDetail", "address_id")->withTrashed();
+    }
 }

@@ -15,7 +15,7 @@ class AddRelationshipsToOrderDetailsTable extends Migration
     {
         Schema::table('order_details', function (Blueprint $table) {
             $table->foreign('cst_id')
-                ->references('id')->on('customers')
+                ->references('id')->on('users')
                 ->onDelete('cascade');
             $table->foreign('payment_id')
                 ->references('id')->on('payments')

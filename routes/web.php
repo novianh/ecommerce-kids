@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductCms\ThumbnailController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\ProductCms\CheckoutController as CO;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\SummaryController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -121,5 +122,9 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::put('/checkout/address/update/{id}', [CO::class, 'addressUpdate'])->name('admin.address.update');
       Route::get('/checkout/address/{id}/edit', [CO::class, 'addressEdit'])->name('admin.address.edit');
       Route::delete('/checkout/address/delete/{id}', [CO::class, 'destroyAddress'])->name('admin.address.delete');
+
+      // summary
+      Route::get('/summary', [SummaryController::class, 'index'])->name('summary.index');
+      Route::post('/summary/store', [SummaryController::class, 'store'])->name('summary.store');
    });
 });

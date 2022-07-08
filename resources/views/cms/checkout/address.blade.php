@@ -49,6 +49,7 @@
 
                                             </td>
                                             <td>
+                                                {{-- {{ dd($user)  }}/\ --}}
                                                 @foreach ($user->address as $item)
                                                     <ul class="ml-0 pl-1">
                                                         <li class="text-xs mb-0 d-flex justify-content-between">
