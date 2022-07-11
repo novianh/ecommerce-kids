@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Courier;
 use App\Models\CustomerAddress;
+use App\Models\OrderDetail;
 use App\Models\Payment;
 use App\Models\Province;
+use App\Models\Transfer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -24,7 +26,7 @@ class CheckoutController extends Controller
             'address' => CustomerAddress::where('cst_id', $id)->latest()->get(),
             'payment' => Payment::latest()->get(),
             'shipment' => Courier::latest()->get(),
-            'province' => Province::all()
+            'province' => Province::all(),
         ])->with('cart_data', $cart_data);
     }
 
@@ -37,13 +39,13 @@ class CheckoutController extends Controller
     {
         $cookie_data = stripslashes(Cookie::get('shopping_cart'));
         $cart_data = json_decode($cookie_data, true);
-        $shipment = Courier::find($request->courier); 
-        $address = CustomerAddress::find($request->address); 
-        $payment = Payment::find($request->payment); 
-        $province= Province::find( $address->country);
-        $city= City::find($address->state);
+        $shipment = Courier::find($request->courier);
+        $address = CustomerAddress::find($request->address);
+        $payment = Payment::find($request->payment);
+        $province = Province::find($address->country);
+        $city = City::find($address->state);
         // \dd();
-        return \view('frontend.layouts.shopping.summary',[
+        return \view('frontend.layouts.shopping.summary', [
             'request' => $request,
             'shipment' => $shipment,
             'payment' => $payment,
@@ -51,6 +53,40 @@ class CheckoutController extends Controller
             'province' => $province,
             'city' => $city
         ])->with('cart_data', $cart_data);
+    }
+
+
+    public function transfer(Request $request)
+    {
+        // \dd($request);
+        // $data = array();
+        if ($request->file('file')) {
+
+            $file = $request->file('file');
+            $filename = date('d-m-Y His') . "_" . $file->getClientOriginalName();
+            $tujuan_upload = 'storage/transfer';
+            $file->storeAs($tujuan_upload, $filename);
+
+            $data = Transfer::updateOrCreate([
+                'order_detail_id' =>  $request->order_detail_id
+            ],[
+                'transfer' => $filename,
+                'order_detail_id' => $request->order_detail_id
+            ]);
+
+            $orderDetail = OrderDetail::find($request->order_detail_id);
+
+            $orderDetail->update([
+                'status' => $request->status
+            ]);
+        }
+        $data = ['data not found'];
+
+        // $file = $request->all();
+        // if ($request->file) {
+        //     unlink("storage/products/thumbnail/" . $data->img_thumbnail);
+        // }
+        return  response()->json($data);
     }
 
 

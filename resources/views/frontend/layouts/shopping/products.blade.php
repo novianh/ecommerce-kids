@@ -113,8 +113,8 @@
                                         <div class="col-lg-12">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="discount"
-                                                    id="flexCheckDefault1" name="discount">
-                                                <label class="form-check-label" for="flexCheckDefault1">
+                                                    id="dsc" name="discount">
+                                                <label class="form-check-label" for="dsc">
                                                     Discount
                                                 </label>
                                             </div>

@@ -16,6 +16,30 @@
         span.file-icon::before {
             margin-bottom: 1rem;
         }
+        ul {
+            list-style: none outside none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .content-slider li {
+            background-color: #ed3020;
+            text-align: center;
+            color: #FFF;
+        }
+
+        .content-slider h3 {
+            margin: 0;
+            padding: 70px 0;
+        }
+        .ajs-message{
+            background-color: rgb(140 192 222);
+            color: #FFF;
+        }
+        .ajs-message.ajs-visible{
+            border-radius: 2rem;
+            text-align: center
+        }
     </style>
 @endsection
 
@@ -45,11 +69,11 @@
                                 <div class="text-center upload-ref">
                                     @if (isset($order->transfer))
                                         <img src="{{ asset('storage/transfer/' . $order->transfer->latest()->first()->transfer) }}"
-                                            alt="" class="col-lg-3 col-6">
-                                    @else
-                                        <a href="" id="btnUpload" class="btn rounded-5 px-3" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">Upload transfer reference</a>
+                                            alt="" class="col-lg-3 col-6 mb-3">
+                                            <br>
                                     @endif
+                                    <a href="" id="btnUpload" class="btn rounded-5 px-3" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">Upload transfer reference</a>
                                 </div>
 
                                 <ul class="px-3 ">
@@ -208,7 +232,7 @@
                             <div class="mb-3 text-center file">
                                 <input type="file" id="image"
                                     class="rounded-5 dropify @error('image') is-invalid @enderror" id="input-file-now"
-                                    name="image" data-errors-position="outside" data-max-file-size="4M"
+                                    name="transfer" data-errors-position="outside" data-max-file-size="4M"
                                     data-allowed-file-extensions="jpeg png jpg svg gif" />
                                 @error('image')
                                     <small class="text-danger">{{ $message }}</small>
@@ -216,11 +240,11 @@
                             </div>
 
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary rounded-5" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="btnSend" class="btn rounded-5 px-3">Send</button>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary rounded-5" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" id="btnSend" class="btn rounded-5 px-3">Send</button>
                 </div>
             </div>
         </div>
@@ -252,8 +276,8 @@
             var wrapper = $('#wrapper')
             var modal = $('.modal')
             var form = $('.form')
-                orderDetailId = '{{ $order->id }}'
-                status = 1
+            orderDetailId = '{{ $order->id }}'
+            status = 1
 
             $('#btnUpload').click(function() {
                 modal.modal('show')
@@ -279,8 +303,8 @@
                     console.log();
                     $.ajax({
                         type: "POST",
-                        url: "{{ route('transfer.store') }}",
-                        method: 'post',
+                        url: "{{ route('order.summary.update') }}",
+                        method: 'POST',
                         data: fd,
                         contentType: false,
                         processData: false,
@@ -292,16 +316,7 @@
                                 alertify.set('notifier', 'position', 'top-center');
                                 alertify.message('uploaded succsess').delay(3);
 
-
-                                $('#btnUpload').addClass('d-none')
-                                $('.upload-ref').append(
-                                    ' <img src="{{ URL::asset('storage/transfer') }}' +
-                                    '/' + data.transfer +
-                                    '" class="col-lg-3 col-md-6 col-6"/>')
-                                $('.child-status').addClass('d-none')
-                                $('.status').append(
-                                    '<span class="text-end">Already paid</span>'
-                                )
+                                window.location.reload()
                             } else if (data.error) {
                                 console.log(data.error);
                             }

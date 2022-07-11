@@ -134,7 +134,8 @@
                                                     class="text-muted text-end fw-light">{{ $shipment->name ?? 'data not found' }}</span>
                                                     <input type="hidden" name="courier_id" value="{{ $shipment->id ?? 'data not found' }}">
                                             </div>
-
+                                            <input type="hidden" class="form-control" placeholder=""
+                                            required name="status" value="2">
                                         </li>
                                         <li class="d-flex justify-content-between mb-3 pb-3">
                                             <button class=" w-100 btn rounded-5" type="submit">Confirm</button>

@@ -21,7 +21,7 @@ class CreateOrderDetailsTable extends Migration
             $table->unsignedInteger('payment_id');
             $table->unsignedInteger('address_id');
             $table->unsignedInteger('courier_id');
-            $table->boolean('status')->default(false);
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

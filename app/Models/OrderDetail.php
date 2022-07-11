@@ -17,7 +17,8 @@ class OrderDetail extends Model
         'payment_id',
         'address_id',
         'courier_id',
-        'status'
+        'status',
+        'transaction_number'
     ];
 
     public function user()
@@ -39,5 +40,51 @@ class OrderDetail extends Model
     public function item()
     {
         return $this->hasMany("App\Models\OrderItem", "order_id")->withTrashed();
+    }
+    public function transfer()
+    {
+        return $this->hasOne(Transfer::class);
+    }
+
+    // acessor status
+    public function getStatusLabelAttribute()
+    {
+        //ADAPUN VALUENYA AKAN MENCETAK HTML BERDASARKAN VALUE DARI FIELD STATUS
+        if ($this->status == 1) {
+            return '<span class="badge bg-primary">waiting response</span>';
+        }
+        if ($this->status == 6) {
+            return '<span class="badge bg-dark">Order finished</span>';
+        }
+        if ($this->status == 3) {
+            return '<span class="badge bg-warning">On Process</span>';
+        }
+        if ($this->status == 4) {
+            return '<span class="badge bg-info">Sent</span>';
+        }
+        if ($this->status == 5) {
+            return '<span class="badge bg-success">Received</span>';
+        }
+        return '<span class="badge bg-secondary">Pending payment</span>';
+    }
+    public function getStatusFrontAttribute()
+    {
+        //ADAPUN VALUENYA AKAN MENCETAK HTML BERDASARKAN VALUE DARI FIELD STATUS
+        if ($this->status == 1) {
+            return '<span class="">Waiting response from seller</span>';
+        }
+        if ($this->status == 6) {
+            return '<span class="">Order finished</span>';
+        }
+        if ($this->status == 3) {
+            return '<span class="">Your order is being processed</span>';
+        }
+        if ($this->status == 4) {
+            return '<span class="">Order sent</span>';
+        }
+        if ($this->status == 5) {
+            return '<span class="">Order received by customer</span>';
+        }
+        return '<span class="">Waiting for payment</span>';
     }
 }

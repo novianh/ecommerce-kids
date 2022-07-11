@@ -26161,4 +26161,8 @@ pre[class*="language-"] {
     overflow: auto !important;
   }
 }
+
+.moving-tab {
+  display: none !important;
+}
 /*# sourceMappingURL=material-dashboard.css.map */

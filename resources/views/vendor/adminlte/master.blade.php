@@ -31,7 +31,7 @@
         @include('adminlte::plugins', ['type' => 'css'])
 
         <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}"> 
-        <link rel="stylesheet" href="{{ asset('css/material-dashboard.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('scss/material-dashboard.css') }}">
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
 

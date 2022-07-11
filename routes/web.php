@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Cms\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cms\Home\HeroController;
+use App\Http\Controllers\Cms\OrderController;
 use App\Http\Controllers\Front\AddressController;
 use App\Http\Controllers\ProductCms\ProductController;
 use App\Http\Controllers\ProductCms\GalleryController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\ProductCms\CheckoutController as CO;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\SummaryController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Front\MenuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +68,20 @@ Route::group(['prefix' => 'user'], function () {
    // summary
    Route::get('/gallery/{id}/index', [GalleryController::class, 'index'])->name('gallery.index');
 
+   // profile
+   Route::get('/profile/{id}/index', [MenuController::class, 'profile'])->name('profile');
+   // tansaksi
+   Route::get('/transaction/index', [MenuController::class, 'transaction'])->name('transaction');
+   Route::post('/transfer/store', [CheckoutController::class, 'transfer'])->name('transfer.store');
+   
+   // menu order
+   Route::get('/order/summary/{id}/edit', [MenuController::class, 'edit'])->name('order.summary.edit');
+   Route::post('/order/summary/update', [MenuController::class, 'update'])->name('order.summary.update');
+
+   // summary
+   Route::get('/summary', [SummaryController::class, 'index'])->name('summary.index');
+   Route::post('/summary/store', [SummaryController::class, 'store'])->name('summary.store');
+
 
    Route::get('/try', function () {
       return view('frontend.layouts.shopping.prdDetails');
@@ -106,7 +123,7 @@ Route::group(['middleware' => 'admin_user'], function () {
 
       Route::resource('category', ProductCategoryController::class)->except(['create', 'show']);
 
-      
+
       Route::get('/checkout/shipment', [CO::class, 'shipment'])->name('co.shipment');
       Route::get('/checkout/payment', [CO::class, 'payment'])->name('co.payment');
       Route::post('/checkout/payment/store', [CO::class, 'paymentStore'])->name('co.payment.store');
@@ -123,8 +140,12 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::get('/checkout/address/{id}/edit', [CO::class, 'addressEdit'])->name('admin.address.edit');
       Route::delete('/checkout/address/delete/{id}', [CO::class, 'destroyAddress'])->name('admin.address.delete');
 
-      // summary
-      Route::get('/summary', [SummaryController::class, 'index'])->name('summary.index');
-      Route::post('/summary/store', [SummaryController::class, 'store'])->name('summary.store');
+      // dashboard
+      Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+      // order
+      Route::get('/order', [OrderController::class, 'index'])->name('Morder.index');
+      Route::get('/order/{id}/edit', [OrderController::class, 'edit'])->name('Morder.edit');
+      Route::put('/order/update/{id}', [OrderController::class, 'update'])->name('Morder.update');
    });
 });

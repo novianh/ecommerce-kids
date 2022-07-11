@@ -19,6 +19,14 @@
             margin: 0;
             padding: 70px 0;
         }
+        .ajs-message{
+            background-color: rgb(140 192 222);
+            color: #FFF;
+        }
+        .ajs-message.ajs-visible{
+            border-radius: 2rem;
+            text-align: center
+        }
     </style>
     <link rel="stylesheet" href="{{ asset('ecommerce/src/css/lightslider.css') }}" />
 @endsection
@@ -46,8 +54,7 @@
                             <div class="clearfix" style="width:100%;">
                                 <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
                                     @foreach ($image as $image)
-                                        <li
-                                            data-thumb="{{ url('storage/products/' . $image->image)}}">
+                                        <li data-thumb="{{ url('storage/products/' . $image->image) }}">
                                             <div class="item rounded-4 bg-white">
                                                 <div class=" ">
                                                     <img src="{{ url('storage/products/' . $image->image) ?? 'image not found' }}"
@@ -134,46 +141,52 @@
                     <div class="row">
                         <div class="col-8 carousel-wrap col-xl-10 mx-xl-0 text-start">
                             <div class=" owl-carousel owl-theme">
-                                <div class="card rounded-5 border-0 position-relative item ">
-                                    <div class="row ">
-                                        <a href="#" class="link imgBx p-4 pb-0" style="height:  17.5rem;">
-                                            <img src="ecommerce/img/doll.png" class=" card-img-top mx-auto p-5 m-5 my-3"
-                                                alt="img product" width="100%" />
-                                        </a>
-                                    </div>
-                                    <div class="card__overlay card-body text-center">
-                                        <div class="card__header">
-                                            <div class="row row-cols-1" data-bs-toggle="collapse" href="#collapseExample"
-                                                role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                <div class="col">
-                                                    <h5 class="card-title fw-bold mb-0">Bear Brown Doll</h5>
-                                                    <small class="ctr-sku">Toy, 4AUSCS</small>
-                                                </div>
-                                                <div class="col">
-                                                    <small class="harga text-decoration-line-through"
-                                                        style="font-weight: 600 !important; font-size: 12px !important;">Rp.500.000</small>
-                                                    <span class="harga">Rp.500.000</span>
-                                                </div>
+                                @foreach ($productLike as $np)
+                                    <div class="card rounded-5 border-0 position-relative item product_data ">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div
+                                                class="col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">
+                                                <a href="{{ route('home.detail', $np) }}" class="link">
+                                                    <img src="{{ url('storage/products/thumbnail/' . $np->img_thumbnail) ?? asset('ecommerce/img/doll.png') }}"
+                                                        class=" card-img-top mx-auto p-5 m-5 my-3" alt="img product"
+                                                        width="100%" />
+                                                </a>
                                             </div>
-                                            <div class="text-center pt-3 card__description collapse " id="collapseExample">
-
-                                                <div class="mx-2 row row-cols-1 gap-3 ">
-                                                    <div class="col d-grid">
-                                                        <a href="" class="btn-product"><i
-                                                                class="fi fi-sr-shopping-cart-add"></i>
-                                                            Add</a>
+                                        </div>
+                                        <div class="card__overlay card-body text-center ">
+                                            <div class="card__header">
+                                                <div class="row row-cols-1">
+                                                    <div class="col">
+                                                        <h5 class="card-title fw-bold mb-0 text-capitalize">
+                                                            {{ $np->name ?? 'Bear Brown Doll' }}</h5>
+                                                        <small class="ctr-sku">{{ $np->category->name ?? 'Toy' }},
+                                                            {{ $np->sku ?? '4AUSCS' }}</small>
                                                     </div>
-                                                    <div class="col d-grid">
-                                                        <a href="" class="btn-product"><i
-                                                                class="fi fi-sr-eye"></i>
-                                                            More</a>
+                                                    <div class="col">
+                                                        <p class="harga">Rp. {{ number_format($np->price) ?? '500K' }}
+                                                        </p>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <div class="text-center pt-3 card__description collapse "
+                                                    id="collapseExample{{ $np->id }}">
 
+                                                    <div class="mx-2 row row-cols-1 gap-3 ">
+                                                        <div class="col d-grid">
+                                                            <a href="" class="btn-product"><i
+                                                                    class="fi fi-sr-shopping-cart-add"></i>
+                                                                Add</a>
+                                                        </div>
+                                                        <div class="col d-grid">
+                                                            <a href="" class="btn-product"><i
+                                                                    class="fi fi-sr-eye"></i> More</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
                             <div class="col text-center">
                                 <small><a href="products.html" id="style-2" data-replace="Check it"
@@ -221,7 +234,7 @@
     </script>
     <script>
         $(document).ready(function() {
-            
+
             $('.add-to-cart-btn').click(function(e) {
                 e.preventDefault();
 
@@ -243,6 +256,12 @@
                         'product_id': product_id,
                     },
                     success: function(response) {
+                        // alertify.dialog('alert').set({
+                        //     transition: 'zoom',
+                        //     message: 'add to cart successfully.'
+                        // }).set('frameless', false).set('basic', true).show()
+                        alertify.set('notifier', 'position', 'top-center');
+                        alertify.message('product added to cart').delay(3);
                         cartload();
                     },
                 });

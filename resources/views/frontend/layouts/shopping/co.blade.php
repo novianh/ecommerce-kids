@@ -66,7 +66,8 @@
                                                             class="cart-grand-price-viewajax">{{ number_format($total, 2) }}</span>
                                                     </span>
                                                     <input type="hidden" name="total"
-                                                        value="{{ number_format($total, 2) }}">
+                                                        value="{{ $total }}">
+                                                        
                                                 </li>
                                                 <!-- !total -->
 
@@ -236,6 +237,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+
 
                                 <!-- <h5 class="mb-3">Payment</h5> -->
 
