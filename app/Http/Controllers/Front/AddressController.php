@@ -123,6 +123,9 @@ class AddressController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $address = CustomerAddress::find($id);
+        // \dd($address);
+        $address->delete();
+        return redirect()->route('profile', Auth::user()->id);
     }
 }

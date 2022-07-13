@@ -3,6 +3,17 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ asset('ecommerce/style/co.css') }}">
+    <style>
+        
+        .ajs-message{
+            background-color: rgb(140 192 222);
+            color: #FFF;
+        }
+        .ajs-message.ajs-visible{
+            border-radius: 2rem;
+            text-align: center
+        }
+    </style>
 @endsection
 @section('title', 'CheckOut')
 
@@ -15,11 +26,11 @@
         <section id="co" class=" bg-light">
             <div class="ornaments position-relative">
                 <!-- <div class="ornament position-absolute">
-                                                               <img src="img/starorn.svg" alt="" width="100px">
-                                                            </div> -->
+                                                                   <img src="img/starorn.svg" alt="" width="100px">
+                                                                </div> -->
                 <!-- <div class="ornament2 position-absolute">
-                                                               <img src="img/starorn.svg" alt="" width="100px">
-                                                            </div> -->
+                                                                   <img src="img/starorn.svg" alt="" width="100px">
+                                                                </div> -->
             </div>
             <form class="needs-validation" action="{{ route('checkout.store') }}">
                 @csrf
@@ -65,9 +76,8 @@
                                                     <span class="text-muted">Rp. <span
                                                             class="cart-grand-price-viewajax">{{ number_format($total, 2) }}</span>
                                                     </span>
-                                                    <input type="hidden" name="total"
-                                                        value="{{ $total }}">
-                                                        
+                                                    <input type="hidden" name="total" value="{{ $total }}">
+
                                                 </li>
                                                 <!-- !total -->
 
@@ -291,6 +301,9 @@
                             $('#address').append('<option value="' + data.id + '" selected>' +
                                 data.name + '</option>');
 
+                            alertify.set('notifier', 'position', 'top-center');
+                            alertify.message('Success').delay(3)
+
                         } else if (data.error) {
                             console.log(data.error);
                         }
@@ -303,7 +316,6 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-
         $(document).ready(function() {
 
             $('#provinsi').on('change', function() {

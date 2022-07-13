@@ -152,6 +152,7 @@ class CheckoutController extends Controller
         $shipment->delete();
         return ['success' => true, 'message' => 'Delete successfully',];
     }
+    
     public function destroyAddress($id)
     {
         $address = CustomerAddress::find($id);

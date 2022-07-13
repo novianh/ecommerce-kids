@@ -7,6 +7,35 @@
         .btn.active {
             background: #8CC0DE !important;
         }
+        
+        .content-slider li {
+            background-color: #ed3020;
+            text-align: center;
+            color: #FFF;
+        }
+
+        .content-slider h3 {
+            margin: 0;
+            padding: 70px 0;
+        }
+        .ajs-message{
+            background-color: #F4BFBF;
+            color: #FFF;
+        }
+        .ajs-message.ajs-visible{
+            border-radius: 2rem;
+            text-align: center
+        }
+        .ajs-ok, .ajs-cancel{
+            border: none;
+            border-radius: 2rem;
+        }
+        .ajs-ok{
+            background: #8CC0DE;
+        }
+        .ajs-header, .ajs-footer{
+            background: rgb(248,249,250) !important;
+        }
     </style>
 @endsection
 
@@ -32,7 +61,8 @@
                                             <p class="text-light mb-1" style="font-family: quicksand">
                                                 {{ $user->email ?? '-' }}</p>
                                             <br>
-                                            <a href="{{ route('profile.edit', Auth::user()->id) }}" class="" style="color: #FAF0D7">
+                                            <a href="{{ route('profile.edit', Auth::user()->id) }}" class=""
+                                                style="color: #FAF0D7">
 
                                                 <small>Edit</small>
                                             </a>
@@ -107,10 +137,13 @@
                                                                     </th>
                                                                     <th style="width: 20%" class="text-center align-middle">
 
-                                                                        <a href="{{ route('profile.address.edit', $add) }}" class="ms-3 link mt-1"
+                                                                        {{-- <a href="{{ route('profile.address.edit', $add) }}"
+                                                                            class="ms-3 link mt-1"
                                                                             style="color: #8CC0DE !important"><i
-                                                                                class="fi fi-sr-edit"></i></a>
-                                                                        <a href="" class="ms-3 link mt-1"
+                                                                                class="fi fi-sr-edit"></i></a> --}}
+                                                                        <a href="{{ route('profile.address.delete', $add->id) }}"
+                                                                            class="ms-3 link mt-1"
+                                                                            onclick="notificationBeforeDelete(event, this)"
                                                                             style="color: #F4BFBF !important"><i
                                                                                 class="fi fi-sr-delete"></i></a>
                                                                     </th>
@@ -137,8 +170,26 @@
 @endsection
 
 @section('js')
+    <form action="" id="delete-form" method="post">
+        @method('delete')
+        @csrf
+    </form>
+    <script>
+        function notificationBeforeDelete(event, el) {
+            event.preventDefault();
+            alertify.confirm('Confirm Delete Address', 'Are You Sure?', function() {
+                $("#delete-form").attr('action', $(el).attr('href'));
+                $("#delete-form").submit();
+            }, function () {
+                alertify.set('notifier','position', 'top-center');
+                alertify.message('Cancel').delay(3)
+            });
+
+        }
+    </script>
     <script>
         $(document).ready(function() {
+
 
             var btnAd = $('.btn-address')
             btnOrd = $('.btn-order')

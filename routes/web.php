@@ -74,6 +74,7 @@ Route::group(['prefix' => 'user'], function () {
    Route::get('/profile/{id}/edit', [MenuController::class, 'profileEdit'])->name('profile.edit');
    Route::get('/profile/address/{id}/edit', [MenuController::class, 'profileAddressEdit'])->name('profile.address.edit');
    Route::put('/profile/address/update/{id}', [AddressController::class, 'update'])->name('address.update');
+   Route::delete('/profile/address/delete/{id}', [AddressController::class, 'destroy'])->name('profile.address.delete');
    // tansaksi
    Route::get('/transaction/index', [MenuController::class, 'transaction'])->name('transaction');
    Route::post('/transfer/store', [CheckoutController::class, 'transfer'])->name('transfer.store');
