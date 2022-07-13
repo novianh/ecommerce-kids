@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerAddress;
 use App\Models\OrderDetail;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\Transfer;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,7 +26,16 @@ class MenuController extends Controller
 
     public function profile()
     {
-        //
+        $user = User::find(Auth::user()->id);
+        $order = $user->order;
+        $orderData = json_decode($order, true);
+        // \dd(OrderDetail::find(69)->item);
+        $address = $user->address;
+        return \view('frontend.layouts.user.profile',[
+            'user' => $user,
+            'order' => $order,
+            'address' => $address
+        ])->with('ordered', $orderData);
     }
 
     /**
@@ -33,9 +44,14 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function profileAjax(Request $request)
     {
-        //
+        $user = User::find(Auth::user()->id);
+        $order = $user->order;
+        // $orderData = json_decode($order, true);
+
+        $address = $user->address;
+        return response()->json($order);
     }
 
     /**

@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Cms;
 use App\Http\Controllers\Controller;
 use App\Models\OrderDetail;
 use App\Models\OrderItem;
+use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+
 
 class OrderController extends Controller
 {
@@ -16,8 +19,6 @@ class OrderController extends Controller
      */
     public function index()
     {
-        // $status = OrderDetail::find(65)->transfer;
-        // \dd($status);
         return \view('cms.order.index', [
             'order' => OrderDetail::all()
 
@@ -29,9 +30,15 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function filter(Request $request)
     {
-        //
+        //filter date
+
+        $orders = OrderDetail::whereDate('created_at', '=', $request->time_start)->get();
+        return \view('cms.order.index', [
+            'order' => $orders,
+
+        ]);
     }
 
     /**
@@ -53,7 +60,12 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = OrderDetail::find($id);
+        // dd($order->item[0]->product_id);
+        // $product = Product::where('id' , $order->item->product_id)->get();
+        return \view('cms.order.show', [
+            'order' => $order
+        ]);
     }
 
     /**

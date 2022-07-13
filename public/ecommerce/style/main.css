@@ -320,6 +320,14 @@ small a.link:hover span {
   width: 100%;
 }
 
+.navbar .navbar-nav .nav-link-ltr.active {
+  color: #F4BFBF;
+}
+
+.navbar .navbar-nav .nav-link-ltr.active::before {
+  width: 100%;
+}
+
 .navbar .btn:hover {
   outline: none;
   border: none;

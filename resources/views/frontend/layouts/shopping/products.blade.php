@@ -53,37 +53,48 @@
                                 <div class="row justify-content-lg-start justify-content-center categories-products">
                                     <form action="{{ route('products.filter') }}" method="POST">
                                         @csrf
-                                    <div class="col-12 text-capitalize mb-3">
+                                        <div class="col-12 text-capitalize mb-3">
 
-                                        {{-- <ul style="line-height:180%" class="ms-0 text-capitalize">
-                                            <li>
-                                                <a href="{{ route('products.index') }}" class=" ">All</a>
-                                            </li>
-                                        </ul> --}}
-                                        @isset($categoryAll)
-                                            @foreach ($categoryAll as $item)
-                                                {{-- <li>
+                                            {{-- <ul style="line-height:180%" class="ms-0 text-capitalize">
+                                                <li>
+                                                    <a href="{{ route('products.index') }}" class=" ">All</a>
+                                                </li>
+                                            </ul> --}}
+                                            <div class="form-check">
+                                                <a href="{{ route('products.index') }}" class=" ">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="flexCheckDefaul" name="category_id">
+                                                    <label class="form-check-label" for="flexCheckDefaul">
+                                                        All
+                                                    </label>
+                                                </a>
+                                            </div>
+                                            @isset($categoryAll)
+                                                @foreach ($categoryAll as $item)
+                                                    {{-- <li>
                                                         <a href="{{ route('products.category', $item) }}"
                                                             class=" ">{{ $item->name }}</a>
                                                     </li> --}}
                                                     {{-- <input type="text" value="{{ $item->id }}"> --}}
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="{{ $item->id }}"
-                                                        id="flexCheckDefault{{ $item->id }}" name="category_id">
-                                                    <label class="form-check-label" for="flexCheckDefault{{ $item->id }}">
-                                                        {{ $item->name }}
-                                                    </label>
-                                                </div>
-                                            @endforeach
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            value="{{ $item->id }}" id="flexCheckDefault{{ $item->id }}"
+                                                            name="category_id">
+                                                        <label class="form-check-label"
+                                                            for="flexCheckDefault{{ $item->id }}">
+                                                            {{ $item->name }}
+                                                        </label>
+                                                    </div>
+                                                @endforeach
 
-                                        @endisset
-                                        @empty($categoryAll)
-                                            <p class="text-start">Category is empty</p>
-                                        @endempty
+                                            @endisset
+                                            @empty($categoryAll)
+                                                <p class="text-start">Category is empty</p>
+                                            @endempty
 
 
-                                    </div>
-                                   
+                                        </div>
+
                                         <div class="col-lg-12">
                                             <h5 class="fw-bold">Filter</h5>
 
@@ -160,7 +171,8 @@
                                                                 {{ $prd->sku ?? '4AUSCS' }}</small>
                                                         </div>
                                                         <div class="col">
-                                                            <p class="harga">Rp. {{ $prd->price ?? '500K' }}</p>
+                                                            <p class="harga">Rp.
+                                                                {{ number_format($prd->price, 2) ?? '500K' }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="text-center pt-3 card__description collapse "
@@ -211,7 +223,8 @@
                                                                 {{ $prd->sku ?? '4AUSCS' }}</small>
                                                         </div>
                                                         <div class="col">
-                                                            <p class="harga">Rp. {{ $prd->price ?? '500K' }}</p>
+                                                            <p class="harga">Rp.
+                                                                {{ number_format($prd->price, 2) ?? '500K' }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="text-center pt-3 card__description collapse "

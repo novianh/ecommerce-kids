@@ -62,7 +62,7 @@
                             </div>
                         @endforeach
                         <div class="col-9 col-md-6 col-lg-12 position-relative clients">
-                            <a href="#">
+                            <a href="{{ route('products.category', $categoryLast) }}">
                                 <figure class="c4-izmir c4-image-zoom-in " style="height: 10rem; width: 100%;">
                                     <img class="img-fluid brand-img"
                                         src="{{ url('storage/category/' . $categoryLast->image) ?? asset('ecommerce/img/cat-toy.jpg') }}"

@@ -85,6 +85,6 @@ class OrderDetail extends Model
         if ($this->status == 5) {
             return '<span class="">Order received by customer</span>';
         }
-        return '<span class="">Waiting for payment</span>';
+        return '<span class="">Waiting payment</span>';
     }
 }

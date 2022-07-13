@@ -265,7 +265,6 @@ small a.link{
             color: $pink;
             &::before{
                width: 100%;
-
             }
          }
          &:focus{
@@ -275,6 +274,12 @@ small a.link{
 
             }
          }
+      }
+      .nav-link-ltr.active{
+         color: $pink;
+            &::before{
+               width: 100%;
+            }
       }
       
    }

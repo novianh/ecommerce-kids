@@ -6,13 +6,14 @@
 
 @endsection
 
-@section('title', 'Your Histories Order')
+@section('title', 'Your History Orders')
 
 @section('content')
     <main>
         <section id="co" class=" ">
             <div class="bg-light mb-5">
                 @if (isset($order))
+                
                     <div class="row justify-content-md-center justify-content-lg-start">
                         @foreach ($order as $item)
                             <div class="col-lg-4 col-md-8 col-12">
@@ -26,6 +27,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="card-body ">
+                                                    
                                                     <div class="text-center upload-ref">
                                                         @if (isset($item->transfer))
                                                             <img src="{{ asset('storage/transfer/' . $item->transfer->transfer) }}"

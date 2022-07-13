@@ -28,6 +28,6 @@ class HomeController extends Controller
 
     public function adminHome()
     {
-        return \redirect()->route('product.index');
+        return \redirect()->route('dashboard.index');
     }
 }

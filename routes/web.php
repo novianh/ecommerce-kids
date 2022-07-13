@@ -70,6 +70,7 @@ Route::group(['prefix' => 'user'], function () {
 
    // profile
    Route::get('/profile/{id}/index', [MenuController::class, 'profile'])->name('profile');
+   Route::get('/profile/{id}/list', [MenuController::class, 'profileAjax'])->name('profile.ajax');
    // tansaksi
    Route::get('/transaction/index', [MenuController::class, 'transaction'])->name('transaction');
    Route::post('/transfer/store', [CheckoutController::class, 'transfer'])->name('transfer.store');
@@ -147,5 +148,10 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::get('/order', [OrderController::class, 'index'])->name('Morder.index');
       Route::get('/order/{id}/edit', [OrderController::class, 'edit'])->name('Morder.edit');
       Route::put('/order/update/{id}', [OrderController::class, 'update'])->name('Morder.update');
+      Route::get('/order/{id}/show', [OrderController::class, 'show'])->name('Morder.show');
+
+
+      // filter date order
+      Route::post('/order/filter', [OrderController::class, 'filter'])->name('date.filter.order');
    });
 });

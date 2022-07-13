@@ -13,16 +13,16 @@
                     <div class="navbar-nav text-start ">
                         <a class="nav-line nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4" aria-current="page"
                             href="{{ route('home') }}"> Home</a>
-                        <a class=" nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
-                            href="{{ route('home.category') }}">Categories</a>
-                        <a class="nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
+                        <a class=" nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4 {{ (request()->is('user/category')) ? 'active' : '' }}"
+                            href="{{ route('home.category') }}" >Categories</a>
+                        <a class="{{ (request()->is('user/about')) ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
                             href="{{ route('about.index') }}">About
                             Us</a>
-                        <a class="nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
+                        <a class="{{ (request()->is('user/products*')) ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
                             href="{{ route('products.index') }}">Products</a>
-                        <a class="nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
+                        <a class="{{ (request()->is('user/collection')) ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
                             href="{{ route('collection.index') }}">Collection</a>
-                        <a class="nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
+                        <a class="{{ (request()->is('/#getintouch')) ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
                             href="{{ route('home') }}/#getintouch">Contact Us</a>
 
                     </div>
