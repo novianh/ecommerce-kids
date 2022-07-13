@@ -43,7 +43,7 @@
     </style>
 @endsection
 
-@section('title', 'Summary Order')
+@section('title', 'Edit Summary Order')
 
 @section('content')
     <main>

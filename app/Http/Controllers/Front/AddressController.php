@@ -109,7 +109,10 @@ class AddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $address = CustomerAddress::find($id);
+        $result = $address->update($request->all());
+
+        return redirect()->route('profile', Auth::user()->id);
     }
 
     /**

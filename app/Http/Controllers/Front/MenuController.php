@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\CustomerAddress;
 use App\Models\OrderDetail;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Province;
 use App\Models\Transfer;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -77,6 +79,26 @@ class MenuController extends Controller
         // \dd($request);
         return \view('frontend.layouts.user.orderEdit', [
             'order' => $data
+        ]);
+    }
+    public function profileEdit($id)
+    {
+        $data = User::find($id);
+        // \dd($request);
+        return \view('auth.edit', [
+            'user' => $data
+        ]);
+    }
+    public function profileAddressEdit($id)
+    {
+        $data = CustomerAddress::find($id);
+        $province = Province::find($data->country);
+        $city = $province->city;
+        // \dd($request);
+        return \view('frontend.layouts.user.addressEdit', [
+            'address' => $data,
+            'province' => Province::all(),
+            'city' => $city
         ]);
     }
 
