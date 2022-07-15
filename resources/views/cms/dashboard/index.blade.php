@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Category')
+@section('title', 'Dashboard')
 
 @section('content_header')
     <h1><i class="fas fa-columns"></i> Dashboard</h1>

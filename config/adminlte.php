@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Ecommerce',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -313,6 +313,28 @@ return [
             'text' => 'Order details',
             'url'  => '/admin/order',
             'icon' => 'fas fa-clipboard',
+        ],
+        ['header' => 'Page Management'],
+        [
+            'text'    => 'Home',
+            'icon'    => 'fas fa-home',
+            'submenu' => [
+                [
+                    'text' => 'Slider & New Arrival',
+                    'url'  => '/admin/management/page/slider',
+                    'icon' => 'fas fa-pager',
+                ],
+                [
+                    'text' => 'What We Do',
+                    'url'  => '/admin/management/page/wwd',
+                    'icon' => 'fas fa-laptop-house',
+                ],
+                [
+                    'text' => 'Promo',
+                    'url'  => '/admin/management/page/promo',
+                    'icon' => 'fas fa-tags',
+                ]
+            ]
         ],
         // ['header' => 'labels'],
         // [

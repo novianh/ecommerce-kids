@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DiscHome extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'image', 'discount', 'title', 'icon'
+    ];
 }

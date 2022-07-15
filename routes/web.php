@@ -3,6 +3,7 @@
 use App\Http\Controllers\Cms\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cms\Home\HeroController;
+use App\Http\Controllers\Cms\Home\PageController;
 use App\Http\Controllers\Cms\OrderController;
 use App\Http\Controllers\Front\AddressController;
 use App\Http\Controllers\ProductCms\ProductController;
@@ -159,5 +160,13 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::post('/order/filter', [OrderController::class, 'filter'])->name('date.filter.order');
 
       Route::post('/mark-as-read', [DashboardController::class, 'markNotification'])->name('markNotification');
+      
+      // page management
+      Route::get('/management/page/slider', [PageController::class, 'slider'])->name('slider.index');
+      Route::post('/management/page/slider/store', [PageController::class, 'sliderStore'])->name('slider.store');
+      Route::get('/management/page/wwd', [PageController::class, 'wwd'])->name('wwd.index');
+      Route::post('/management/page/wwd/store', [PageController::class, 'wwdStore'])->name('wwd.store');
+      Route::get('/management/page/promo', [PageController::class, 'promo'])->name('promo.index');
+      Route::post('/management/page/promo/store', [PageController::class, 'promoStore'])->name('promo.store');
    });
 });

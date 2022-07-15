@@ -62,9 +62,9 @@
                                 </tbody>
                             </table>
                             <h6>Product Order Detail:</h6>
-                            <table class="table text-capitalize  text-center table-bordered">
+                            <table class="table text-capitalize  text-center table-bordered ">
                                 <thead>
-                                    <th>Product Name</th>
+                                    <th class="text-start">Product Name</th>
                                     <th>Price</th>
                                     <th>Subtotal</th>
                                 </thead>
@@ -76,65 +76,27 @@
                                             $product = App\Models\Product::find($item->product_id);
                                             ?>
 
-                                            <td>{{ $product->name ?? '-' }}</td>
-                                            <td>Rp. {{ number_format($item->price, 2) ?? '-' }} x
+                                            <td class="text-start align-middle">
+                                                <img src="{{ asset('storage/products/thumbnail/' . $product->img_thumbnail) }}"
+                                                    alt="..." width="50rem" class="ms-2">
+                                                <small class="ms-2">
+                                                    {{ $product->name ?? '-' }}
+                                                </small>
+                                            </td>
+                                            <td class="align-middle">Rp. {{ number_format($item->price, 2) ?? '-' }} x
                                                 {{ $item->quantity ?? '-' }}</td>
-                                            <td>Rp. {{ number_format($item->price * $item->quantity,2) }}</td>
+                                            <td class="align-middle">Rp. {{ number_format($item->price * $item->quantity, 2) }}</td>
                                         </tr>
                                     @endforeach
                                     <tr>
                                         <td colspan="2" class="text-end">Total: </td>
-                                        <td  class=" bg-info">Rp. {{ number_format($order->total,2) }}</td>
+                                        <td class=" bg-info">Rp. {{ number_format($order->total, 2) }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    {{-- <div class=" mt-4 row justify-content-start">
-                        <div class="col-6 col-lg-5 text-start text-xl-left text-muted">
-                            <ul class="list-unstyled gap-3 mb-0">
-                                <li>Product Image Thumbnail:</li>
-                                <li>Product Name:</li>
-                                <li>Product SKU:</li>
-                                <li>Product Price:</li>
-                                <li>Product Quantity:</li>
-                                <li>Product Category:</li>
-                                <li>Product Status:</li>
-
-
-                            </ul>
-                        </div>
-                        <div class="col-6 col-lg-7">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    @isset($product->img_thumbnail)
-                                        <img class="avaatar avatar-sm rounded" width="100%"
-                                            src="{{ url('storage/products/thumbnail/' . $product->img_thumbnail) }}"
-                                            alt="">
-                                    </li>
-                                @endisset
-                                @empty($product->img_thumbnail)
-                                    <a href="{{ route('thumbnail.index', $product->id) }}" class="dropdown-item text-primary"
-                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title=" Add thumbnail">
-                                        <i class="fas fa-plus-square text-lg"></i></a>
-                                @endempty
-                                <li>{{ $product->name }}</li>
-                                <li>{{ $product->sku }}</li>
-                                <li>{{ $product->price }}</li>
-                                <li>{{ $product->quantity }}</li>
-
-
-                                <li><span class="badge bg-info">{{ $product->category->name }}</span></li>
-
-                                <li>{!! $product->status_label !!}</li>
-
-
-
-                            </ul>
-                        </div>
-                    </div>
-                </div> --}}
                     <hr class="dark horizontal my-0">
                     <div class="card-footer">
                         <ul class="list-unstyled">
@@ -145,8 +107,8 @@
                             <li>Transfer Reference:</li>
                         </ul>
                         @isset($order->transfer)
-                            
-                        <p><img src="{{ asset('storage/transfer/'. $order->transfer->transfer) }}" alt="" class="col-lg-3 col-md-4 col-12"></p>
+                            <p><img src="{{ asset('storage/transfer/' . $order->transfer->transfer) }}" alt=""
+                                    class="col-lg-3 col-md-4 col-12"></p>
                         @endisset
                         @empty($order->transfer)
                             -

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldStatusToOrderDetailsTable extends Migration
+class AddFieldIconToDiscHomesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddFieldStatusToOrderDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::table('order_details', function (Blueprint $table) {
-            $table->string('transaction_number')->nullable()->after('status');
+        Schema::table('disc_homes', function (Blueprint $table) {
+            $table->string('icon')->nullable()->after('image');
         });
     }
 
@@ -25,8 +25,8 @@ class AddFieldStatusToOrderDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::table('order_details', function (Blueprint $table) {
-            $table->dropColumn('transaction_number');
+        Schema::table('disc_homes', function (Blueprint $table) {
+            $table->dropColumn('icon');
         });
     }
 }

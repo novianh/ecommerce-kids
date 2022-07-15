@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class NewHome extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'desc'
+    ];
 }

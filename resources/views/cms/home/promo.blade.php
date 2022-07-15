@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Slider')
+@section('title', 'Promo')
 
 @section('content_header')
     <h6> </h6>
@@ -11,28 +11,25 @@
 @endpush
 
 @section('breadcrumb', 'slider')
-
 @section('content')
     <div class="row ">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    @isset($hero)
+                    @isset($promo)
                         <button type="button" class="btn edit btn-block btn-primary mb-3" data-toggle="modal"
                             data-target="#modal-form"><i class="fas fa-edit"></i> edit</button>
 
                         <div class="stretch-card">
                             <div class="card bg-light">
-                                <div class="card-header bg-light">
-                                    <h5>Hero</h5>
-                                </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <img src="{{ asset('storage/hero/' . $hero->image) }}" alt="..." class="col-2">
+                                        <img src="{{ asset('storage/promo/' . $promo->image) }}" alt="..." class="col-2">
+                                        <img src="{{ asset('storage/promo/icon/' . $promo->icon) }}" alt="..." class="col-2">
                                         <div class="col-10">
-                                            <h5>{{ $hero->title }}</h5>
+                                            <h5>{{ $promo->title }}</h5>
                                             <br>
-                                            <small>{{ $hero->desc }}</small>
+                                            <small>{{ $promo->discount }}%</small>
 
                                         </div>
                                     </div>
@@ -40,19 +37,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>New Arrival</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <p>{{ $new->desc ?? '-' }}</p>
-                                </div>
-                            </div>
-                        </div>
                     @endisset
 
-                    @empty($hero)
+                    @empty($promo)
                         <div class="d-flex justify-content-center">
 
                             <a type="button" class=" btn btn-block tambah m-auto" data-toggle="modal"
@@ -73,51 +60,68 @@
                             <h5 class="">Edit slider</h5>
                         </div>
                         <form class="forms-sample" enctype="multipart/form-data" method="POST"
-                            action="{{ route('slider.store') }}" id="my-awesome-dropzone">
+                            action="{{ route('promo.store') }}" id="my-awesome-dropzone">
                             @csrf
-                            <input type="hidden" name="id" value="{{ $hero->id ?? '' }}">
-                            <input type="hidden" name="id_new" value="{{ $new->id ?? '' }}">
+                            <input type="hidden" name="id" value="{{ $promo->id ?? '' }}">
                             <div class="card-body">
                                 <div class="input-group input-group-static mb-4">
                                     <label for="exampleInputUsername1">Title</label>
                                     <input type="text" name="title"
                                         class="form-control @error('title') is-invalid @enderror" id="exampleInputUsername1"
-                                        placeholder="Title" value="{{ $hero->title ?? '' }}">
+                                        placeholder="Title" value="{{ $promo->title ?? '' }}">
                                     @error('title')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="input-group input-group-static mb-4">
-                                    <label for="exampleInputEmail1">Description for hero section</label>
-                                    <textarea class="form-control  @error('desc') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3"
-                                        name="desc" placeholder="Deskripsi singkat">{{ $hero->desc ?? '' }}</textarea>
-                                    @error('desc')
+                                    <label for="exampleInputUsername1">Discount</label>
+                                    <span class="input-group-text" id="basic-addon1">%</span>
+                                    <input type="text" name="discount"
+                                        class="form-control @error('discount') is-invalid @enderror" id="exampleInputUsername1"
+                                        placeholder="50" value="{{ $promo->discount ?? '' }}">
+                                    @error('discount')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="input-group input-group-static mb-4">
-                                    <label for="exampleInputEmail1">Description for new arrival section</label>
-                                    <textarea class="form-control  @error('desc_new') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3"
-                                        name="desc_new" placeholder="Deskripsi singkat">{{ $new->desc ?? '' }}</textarea>
-                                    @error('desc_new')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                @isset($hero)
+                                @isset($promo)
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Image <small class="text-warning">*(Landscape /
-                                                Square)</small></label>
+                                        <label for="exampleInputPassword1">Icon</label>
                                         <input type="file" class="dropify @error('desc') is-invalid @enderror"
-                                            id="input-file-now" name="image" data-errors-position="outside"
+                                            id="input-file-now" name="icon" data-errors-position="outside"
                                             data-min-width="800" data-max-file-size="4M"
                                             data-allowed-file-extensions="jpeg png jpg svg gif"
-                                            data-default-file="{{ url('storage/hero/' . $hero->image) ?? '' }}" />
+                                            data-default-file="{{ url('storage/promo/icon/' . $promo->icon) ?? '' }}" />
                                         @error('desc')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
                                 @endisset
-                                @empty($hero)
+                                @empty($promo)
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Icon</label>
+                                        <input type="file" class="dropify @error('desc') is-invalid @enderror"
+                                            id="input-file-now" name="icon" data-errors-position="outside"
+                                            data-min-width="800" data-max-file-size="4M"
+                                            data-allowed-file-extensions="jpeg png jpg svg gif" />
+                                        @error('desc')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                @endempty
+                                @isset($promo)
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Image <small class="text-warning">*(Landscape)</small></label>
+                                        <input type="file" class="dropify @error('desc') is-invalid @enderror"
+                                            id="input-file-now" name="image" data-errors-position="outside"
+                                            data-min-width="800" data-max-file-size="4M"
+                                            data-allowed-file-extensions="jpeg png jpg svg gif"
+                                            data-default-file="{{ url('storage/promo/' . $promo->image) ?? '' }}" />
+                                        @error('desc')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                @endisset
+                                @empty($promo)
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Image <small class="text-warning">*(Landscape /
                                                 Square)</small></label>
