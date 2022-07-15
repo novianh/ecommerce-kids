@@ -17,13 +17,18 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // \dd(OrderDetail::count());
-        return \view('cms.dashboard.index',[
+        // \dd(Product::find(2));
+        $notifications = auth()->user()->unreadNotifications;
+        $notificationOrder = auth()->user()->unreadNotifications;
+        // \dd($notifications);
+        return \view('cms.dashboard.index', [
             'order' => OrderDetail::count(),
-            'user' => User::where('admin_user', '<', 1)->count(),
-            'product' => Product::where([['status', 'active'],['quantity','>', 0]])->count(),
-            'total' => OrderDetail::sum('total')
+            'user' => User::where('admin_user', null)->orWhere('admin_user', '<', 1)->count(),
+            'product' => Product::where([['status', 'active'], ['quantity', '>', 0]])->count(),
+            'total' => OrderDetail::sum('total'),
+            'notifications' => $notifications
         ]);
+        
     }
 
     /**
@@ -90,5 +95,17 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function markNotification(Request $request)
+    {
+        auth()->user()
+            ->unreadNotifications
+            ->when($request->input('id'), function ($query) use ($request) {
+                return $query->where('id', $request->input('id'));
+            })
+            ->markAsRead();
+
+        return response()->noContent();
     }
 }

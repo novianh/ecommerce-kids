@@ -157,5 +157,7 @@ Route::group(['middleware' => 'admin_user'], function () {
 
       // filter date order
       Route::post('/order/filter', [OrderController::class, 'filter'])->name('date.filter.order');
+
+      Route::post('/mark-as-read', [DashboardController::class, 'markNotification'])->name('markNotification');
    });
 });
