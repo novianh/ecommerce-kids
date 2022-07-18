@@ -333,6 +333,11 @@ return [
                     'text' => 'Promo',
                     'url'  => '/admin/management/page/promo',
                     'icon' => 'fas fa-tags',
+                ],
+                [
+                    'text' => 'About',
+                    'url'  => '/admin/management/page/about',
+                    'icon' => 'fas fa-building',
                 ]
             ]
         ],

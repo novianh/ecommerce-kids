@@ -7,6 +7,7 @@
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('ecommerce/node_modules/dropify/dist/css/dropify.min.css') }}">
+    
     <link rel="stylesheet" href="{{ asset('template/vendors/font-awesome/css/font-awesome.min.css') }}">
     <style>
         li:not(:last-child) {
@@ -92,6 +93,9 @@
 @endsection
 
 @section('js')
+
+
+
     <form action="" id="delete-form" method="post">
         @method('delete')
         @csrf
@@ -99,10 +103,13 @@
     <script>
         function notificationBeforeDelete(event, el) {
             event.preventDefault();
-            if (confirm('Apakah anda yakin akan menghapus data ? ')) {
+            alertify.confirm('Are you sure', function(){ 
                 $("#delete-form").attr('action', $(el).attr('href'));
                 $("#delete-form").submit();
-            }
+             });
+            // if (confirm('Apakah anda yakin akan menghapus data ? ')) {
+                
+            // }
         }
     </script>
 

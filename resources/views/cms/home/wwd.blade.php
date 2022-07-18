@@ -36,9 +36,9 @@
                                                         <img src="{{ asset('storage/wwd/' . $wwd->image1) }}" alt="..."
                                                             class="col-3" width="100%">
                                                         <div class="col-9">
-                                                            <h5>{{ $wwd->title1 }}</h5>
+                                                            <h5>Title: {{ $wwd->title1 }}</h5>
                                                             <br>
-                                                            <small>{{ $wwd->desc1 }}</small>
+                                                            <small>Description: {{ $wwd->desc1 }}</small>
                                                         </div>
                                                     </div>
 
@@ -59,9 +59,9 @@
                                                         <img src="{{ asset('storage/wwd/' . $wwd->image2) }}" alt="..."
                                                             class="col-3" width="100%">
                                                         <div class="col-9">
-                                                            <h5>{{ $wwd->title2 }}</h5>
+                                                            <h5>Title: {{ $wwd->title2 }}</h5>
                                                             <br>
-                                                            <small>{{ $wwd->desc2 }}</small>
+                                                            <small>Description: {{ $wwd->desc2 }}</small>
                                                         </div>
                                                     </div>
 

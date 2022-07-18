@@ -30,7 +30,7 @@
         {{-- Configured Stylesheets --}}
         @include('adminlte::plugins', ['type' => 'css'])
 
-        <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}"> 
+        <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
         <link rel="stylesheet" href="{{ asset('scss/material-dashboard.css') }}">
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
@@ -51,8 +51,12 @@
     @endif
 
     {{-- Custom Stylesheets (post AdminLTE) --}}
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css" />
     @yield('adminlte_css')
-    
+
 
     {{-- Favicon --}}
     @if (config('adminlte.use_ico_only'))
@@ -90,12 +94,12 @@
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-        
+
         {{-- Configured Scripts --}}
         @include('adminlte::plugins', ['type' => 'js'])
-        
+
         <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
-        <script src="{{asset ('js/material-dashboard.min.js') }}"></script>
+        <script src="{{ asset('js/material-dashboard.min.js') }}"></script>
     @else
         <script src="{{ mix(config('adminlte.laravel_mix_js_path', 'js/app.js')) }}"></script>
     @endif
@@ -110,6 +114,9 @@
     @endif
 
     {{-- Custom Scripts --}}
+
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     @yield('adminlte_js')
 
 </body>

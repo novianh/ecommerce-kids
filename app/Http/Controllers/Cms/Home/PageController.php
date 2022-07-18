@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Cms\Home;
 
 use App\Http\Controllers\Controller;
+use App\Models\About;
+use App\Models\AboutHome;
 use App\Models\DiscHome;
 use App\Models\Hero;
 use App\Models\NewHome;
+use App\Models\Story;
 use App\Models\WwdHome;
+use Illuminate\Container\BoundMethod;
 use Illuminate\Http\Request;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 use League\CommonMark\Node\Inline\Newline;
 
 class PageController extends Controller
@@ -31,6 +36,17 @@ class PageController extends Controller
             'hero' => Hero::latest()->first(),
             'new' => NewHome::latest()->first(),
             'promo' => DiscHome::latest()->first(),
+        ]);
+    }
+    public function about()
+    {
+        return \view('cms.home.about', [
+            'hero' => Hero::latest()->first(),
+            'new' => NewHome::latest()->first(),
+            'promo' => DiscHome::latest()->first(),
+            'about' => About::all(),
+            'aboutHome' => AboutHome::latest()->first(),
+            'story' => Story::all()
         ]);
     }
 
@@ -95,7 +111,7 @@ class PageController extends Controller
 
 
         return redirect()->route('slider.index')
-            ->with('success_message', 'Your Action Successfully');
+            ->with('success_message', 'Your Action Success');
     }
     public function wwdStore(Request $request)
     {
@@ -114,7 +130,7 @@ class PageController extends Controller
         $input = $request->all();
         if ($request->file('image1') && !$request->file('image2')) {
             $image1 = $request->file('image1');
-            
+
 
             if (isset($request->id)) {
                 unlink("storage/wwd/" . WwdHome::find($request->id)->image1);
@@ -163,7 +179,7 @@ class PageController extends Controller
             $image2->storeAs($tujuan_upload, $nama_image2);
             $input['image1'] = "$nama_image1";
             $input['image2'] = "$nama_image2";
-            
+
             WwdHome::updateOrCreate(['id' => $request->id], [
                 'title1' => $request->title1,
                 'desc1' => $request->desc1,
@@ -181,7 +197,7 @@ class PageController extends Controller
 
 
         return redirect()->route('wwd.index')
-            ->with('success_message', 'Your Action Successfully');
+            ->with('success_message', 'Your Action Success');
     }
 
     public function promoStore(Request $request)
@@ -202,7 +218,7 @@ class PageController extends Controller
         $input = $request->all();
         if ($request->file('image') && !$request->file('icon')) {
             $image = $request->file('image');
-            
+
 
             if (isset($request->id)) {
                 unlink("storage/promo/" . DiscHome::find($request->id)->image);
@@ -216,7 +232,7 @@ class PageController extends Controller
                 'title' => $request->title,
                 'discount' => $request->discount,
                 'image' => $nama_image,
-                
+
             ]);
         } elseif ($request->file('icon') && !$request->file('image')) {
             $icon = $request->file('icon');
@@ -232,7 +248,7 @@ class PageController extends Controller
                 'title' => $request->title,
                 'discount' => $request->discount,
                 'icon' => $nama_icon,
-                
+
             ]);
         } elseif ($request->file('icon') && $request->file('image')) {
             $image = $request->file('image');
@@ -250,13 +266,13 @@ class PageController extends Controller
             $icon->storeAs($tujuan_upload_icon, $nama_icon);
             $input['image'] = "$nama_image";
             $input['icon'] = "$nama_icon";
-            
+
             DiscHome::updateOrCreate(['id' => $request->id], [
                 'title' => $request->title,
                 'discount' => $request->discount,
                 'image' => $nama_image,
                 'icon' => $nama_icon,
-                
+
             ]);
         } else {
             unset($input['image']);
@@ -267,7 +283,72 @@ class PageController extends Controller
 
 
         return redirect()->route('promo.index')
-            ->with('success_message', 'Your Action Successfully');
+            ->with('success_message', 'Your Action Success');
+    }
+    public function storyStore(Request $request)
+    {
+
+        // \dd($request);
+        $request->validate(
+            [
+                'title' => 'required',
+                'year' => 'required',
+                'desc' => 'required',
+            ],
+        );
+
+        // \dd($request);
+
+        $input = $request->all();
+        Story::create($input);
+
+        return redirect()->route('about.index')
+            ->with('success_message', 'Your Action Success');
+    }
+    public function aboutStore(Request $request)
+    {
+
+        // \dd($request);
+        $request->validate(
+            [
+                'subtitle' => 'required',
+                'icon' => 'required',
+            ],
+        );
+
+        // \dd($request);
+
+        $input = $request->all();
+
+        $icon = $request->file('icon');
+
+        $nama_image = date('d-m-Y His') . uniqid() . "_" . $icon->getClientOriginalName();
+        $tujuan_upload = 'public/about';
+        $icon->storeAs($tujuan_upload, $nama_image);
+        $input['icon'] = "$nama_image";
+
+        About::create($input);
+
+
+        return redirect()->route('about.index')
+            ->with('success_message', 'Your Action Success');
+    }
+    public function subtitleStore(Request $request)
+    {
+
+        // \dd($request);
+        $request->validate(
+            [
+                'subtitle' => 'required',
+
+            ],
+        );
+
+        // $input = $request->all();
+        AboutHome::updateOrCreate(['id' => $request->id], ['subtitle' => $request->subtitle]);
+
+        return redirect()->route('about.index')
+            ->with('success_message', 'Your Action Success');
     }
 
     public function show($id)
@@ -276,20 +357,89 @@ class PageController extends Controller
     }
 
 
-    public function edit($id)
+    public function aboutEdit($id)
     {
-        //
+        $story = About::find($id);
+        return \view('cms.home.aboutEdit', [
+            'about' => $story
+        ]);
     }
 
 
-    public function update(Request $request, $id)
+    public function aboutUpdate(Request $request, $id)
     {
-        //
+
+        $data = About::find($id);
+        $input = $request->all();
+        if ($request->file('icon')) {
+
+            if ($data->icon) {
+                unlink("storage/about/" . $data->icon);
+            }
+            $image = $request->file('icon');
+            $nama_image = date('d-m-Y His') . "_" . $image->getClientOriginalName();
+            $tujuan_upload = 'public/about';
+            $image->storeAs($tujuan_upload, $nama_image);
+            $thumbnail['icon'] = "$nama_image";
+            $data->update([
+                'icon' => $nama_image,
+            ]);
+            $data->save;
+        } else{
+            unset($input['icon']);
+            $data->update($request->all());
+        }
+
+        return redirect()->route('about.index')
+            ->with('success_message', 'Your Action Success');
+    }
+    public function storyEdit($id)
+    {
+        $story = Story::find($id);
+        return \view('cms.home.storyEdit', [
+            'story' => $story
+        ]);
     }
 
 
-    public function destroy($id)
+    public function storyUpdate(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'year' => 'required',
+            'desc' => 'required'
+        ]);
+
+        Story::find($id)->update($request->all());
+
+        return redirect()->route('about.index')
+            ->with('success_message', 'Your Action Success');
+    }
+
+
+    public function aboutDestroy($id)
+    {
+        // \dd($id);
+        $icon = About::find($id);
+        // dd($icon);
+
+        if ($icon->icon) {
+            \unlink("storage/about/" . $icon->icon);
+        }
+
+        $icon->delete();
+        return redirect()->route('about.index')
+            ->with('success_message', 'Your Action Success');
+    }
+
+    public function storyDestroy($id)
+    {
+        // \dd($id);
+        $story = Story::find($id);
+        // dd($icon);
+
+        $story->delete();
+        return redirect()->route('about.index')
+            ->with('success_message', 'Your Action Success');
     }
 }

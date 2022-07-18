@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAboutsTable extends Migration
+class CreateAboutHomesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateAboutsTable extends Migration
      */
     public function up()
     {
-        Schema::create('abouts', function (Blueprint $table) {
+        Schema::create('about_homes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('desc_home');
-            $table->text('icon');
-            $table->string('desc_icon');
-            $table->string('year');
-            $table->string('title');
-            $table->text('desc_story');
+            $table->text('subtitle');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateAboutsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('abouts');
+        Schema::dropIfExists('about_homes');
     }
 }

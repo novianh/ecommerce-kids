@@ -168,5 +168,15 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::post('/management/page/wwd/store', [PageController::class, 'wwdStore'])->name('wwd.store');
       Route::get('/management/page/promo', [PageController::class, 'promo'])->name('promo.index');
       Route::post('/management/page/promo/store', [PageController::class, 'promoStore'])->name('promo.store');
+      Route::get('/management/page/about', [PageController::class, 'about'])->name('about.index');
+      Route::post('/management/page/about/store', [PageController::class, 'aboutStore'])->name('about.store');
+      Route::put('/management/page/about/update/{id}', [PageController::class, 'aboutUpdate'])->name('about.update');
+      Route::get('/management/page/about/{id}/edit', [PageController::class, 'aboutEdit'])->name('about.edit');
+      Route::delete('/management/page/about/delete/{id}', [PageController::class, 'aboutDestroy'])->name('about.front.destroy');
+      Route::post('/management/page/about/subtitle/store', [PageController::class, 'subtitleStore'])->name('about.subtitle.store');
+      Route::post('/management/page/about/story/store', [PageController::class, 'storyStore'])->name('about.story.store');
+      Route::get('/management/page/about/story/{id}/edit', [PageController::class, 'storyEdit'])->name('about.story.edit');
+      Route::put('/management/page/about/story/update/{id}', [PageController::class, 'storyUpdate'])->name('about.story.update');
+      Route::delete('/management/page/about/story/delete/{id}', [PageController::class, 'storyDestroy'])->name('about.story.destroy');
    });
 });
