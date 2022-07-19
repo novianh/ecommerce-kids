@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\OrderDetail;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -33,11 +34,9 @@ class OrderController extends Controller
     public function filter(Request $request)
     {
         //filter date
-
         $orders = OrderDetail::whereDate('created_at', '=', $request->time_start)->get();
         return \view('cms.order.index', [
-            'order' => $orders,
-
+            'order' => $orders
         ]);
     }
 
@@ -77,7 +76,8 @@ class OrderController extends Controller
     public function edit($id)
     {
         $data = OrderDetail::find($id);
-        return \view('cms.order.edit',[
+
+        return \view('cms.order.edit', [
             'order' => $data
         ]);
     }

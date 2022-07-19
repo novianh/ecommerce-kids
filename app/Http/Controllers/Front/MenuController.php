@@ -33,7 +33,7 @@ class MenuController extends Controller
         $orderData = json_decode($order, true);
         // \dd(OrderDetail::find(69)->item);
         $address = $user->address;
-        return \view('frontend.layouts.user.profile',[
+        return \view('frontend.layouts.user.profile', [
             'user' => $user,
             'order' => $order,
             'address' => $address
@@ -88,6 +88,27 @@ class MenuController extends Controller
         return \view('auth.edit', [
             'user' => $data
         ]);
+    }
+    public function profileUpdate(Request $request, $id)
+    {
+        // \dd($request);
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'sometimes|nullable|confirmed'
+        ]);
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password) $user->password = bcrypt($request->password);
+        $user->save();
+
+        // $user = User::find();
+        if (Auth::user()->id == 1) {
+            return \redirect()->route('dashboard.index')->with('success_message', 'Update Success');
+        } else {
+            return \redirect()->route('profile', Auth::user()->id);
+        }
     }
     public function profileAddressEdit($id)
     {
@@ -155,8 +176,16 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function profileDestroy(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        if ($id == $request->user()->id) return redirect()->route('dashboard.index')
+            ->with('error_message', 'You can\'t delete yourself');
+
+        if ($user) $user->delete();
+
+        return redirect()->route('dashboard.index')
+            ->with('success_message', 'success delete customer');
     }
 }

@@ -17,6 +17,7 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\SummaryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Front\MenuController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,8 @@ Route::group(['prefix' => 'user'], function () {
    Route::get('/profile/{id}/index', [MenuController::class, 'profile'])->name('profile');
    Route::get('/profile/{id}/list', [MenuController::class, 'profileAjax'])->name('profile.ajax');
    Route::get('/profile/{id}/edit', [MenuController::class, 'profileEdit'])->name('profile.edit');
+   Route::put('/profile/update/{id}', [MenuController::class, 'profileUpdate'])->name('profile.update');
+   Route::delete('/profile/delete/{id}', [MenuController::class, 'profileDestroy'])->name('profile.destroy');
    Route::get('/profile/address/{id}/edit', [MenuController::class, 'profileAddressEdit'])->name('profile.address.edit');
    Route::put('/profile/address/update/{id}', [AddressController::class, 'update'])->name('address.update');
    Route::delete('/profile/address/delete/{id}', [AddressController::class, 'destroy'])->name('profile.address.delete');
@@ -83,12 +86,14 @@ Route::group(['prefix' => 'user'], function () {
    // menu order
    Route::get('/order/summary/{id}/edit', [MenuController::class, 'edit'])->name('order.summary.edit');
    Route::post('/order/summary/update', [MenuController::class, 'update'])->name('order.summary.update');
-
+   
    // summary
    Route::get('/summary', [SummaryController::class, 'index'])->name('summary.index');
    Route::post('/summary/store', [SummaryController::class, 'store'])->name('summary.store');
-
-
+   
+   // user
+   // Route::resource('/profile', UserController::class);
+   
    Route::get('/try', function () {
       return view('frontend.layouts.shopping.prdDetails');
    });

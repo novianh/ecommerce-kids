@@ -66,10 +66,6 @@
 
                                                 <small>Edit</small>
                                             </a>
-                                            <a href="" class="ms-3" style="color: #FAF0D7">
-
-                                                <small>Del</small>
-                                            </a>
 
                                         </div>
                                     </div>

@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Cms;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\OrderDetail;
-use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,19 +13,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // \dd(Product::find(2));
-        $notifications = auth()->user()->unreadNotifications;
-        $notificationOrder = auth()->user()->unreadNotifications;
-        // \dd($notifications);
-        return \view('cms.dashboard.index', [
-            'countOrder' => OrderDetail::count(),
-            'user' => User::where('admin_user', null)->orWhere('admin_user', '<', 1)->count(),
-            'product' => Product::where([['status', 'active'], ['quantity', '>', 0]])->count(),
-            'total' => OrderDetail::sum('total'),
-            'notifications' => $notifications,
-            'users' => User::all()
-        ]);
-        
+        //
     }
 
     /**
@@ -96,17 +80,5 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function markNotification(Request $request)
-    {
-        auth()->user()
-            ->unreadNotifications
-            ->when($request->input('id'), function ($query) use ($request) {
-                return $query->where('id', $request->input('id'));
-            })
-            ->markAsRead();
-
-        return response()->noContent();
     }
 }
