@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
+use App\Models\Footer;
 use App\Models\OrderDetail;
 use App\Models\OrderItem;
 use App\Models\Payment;
@@ -23,6 +25,8 @@ class SummaryController extends Controller
         Cookie::queue(Cookie::forget('shopping_cart'));
         return \view('frontend.layouts.shopping.summaryCo', [
             'order' => $order,
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ])->with('cart_data', $cart_data);
     }
 

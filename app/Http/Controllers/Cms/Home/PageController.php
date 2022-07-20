@@ -5,15 +5,14 @@ namespace App\Http\Controllers\Cms\Home;
 use App\Http\Controllers\Controller;
 use App\Models\About;
 use App\Models\AboutHome;
+use App\Models\Contact;
 use App\Models\DiscHome;
+use App\Models\Footer;
 use App\Models\Hero;
 use App\Models\NewHome;
 use App\Models\Story;
 use App\Models\WwdHome;
-use Illuminate\Container\BoundMethod;
 use Illuminate\Http\Request;
-use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
-use League\CommonMark\Node\Inline\Newline;
 
 class PageController extends Controller
 {
@@ -47,6 +46,13 @@ class PageController extends Controller
             'about' => About::all(),
             'aboutHome' => AboutHome::latest()->first(),
             'story' => Story::all()
+        ]);
+    }
+    public function contact()
+    {
+        return \view('cms.home.contact', [
+            'contact' => Footer::latest()->first(),
+            'social' => Contact::all(),
         ]);
     }
 
@@ -350,6 +356,48 @@ class PageController extends Controller
         return redirect()->route('about.index')
             ->with('success_message', 'Your Action Success');
     }
+    public function contactStore(Request $request)
+    {
+
+        // \dd($request);
+        $request->validate(
+            [
+                'title' => 'required',
+                'address' => 'required',
+                'telephone' => 'required',
+            ],
+        );
+
+        // $input = $request->all();
+        Footer::updateOrCreate(['id' => $request->id], [
+            'title' => $request->title,
+            'address' => $request->address,
+            'telephone' => $request->telephone,
+    ]);
+
+        return redirect()->route('contact.index')
+            ->with('success_message', 'Your Action Success');
+    }
+    public function socialStore(Request $request)
+    {
+
+        // \dd($request);
+        $request->validate(
+            [
+                'name' => 'required',
+                'url' => 'required',
+                'icon' => 'required'
+            ],
+        );
+
+
+        $input = $request->all();
+
+        Contact::create($input);
+
+        return redirect()->route('contact.index')
+            ->with('success_message', 'Your Action Success');
+    }
 
     public function show($id)
     {
@@ -364,8 +412,27 @@ class PageController extends Controller
             'about' => $story
         ]);
     }
+    public function socialEdit($id)
+    {
+        $social = Contact::find($id);
+        return \view('cms.home.contactEdit', [
+            'social' => $social
+        ]);
+    }
 
 
+    public function socialUpdate(Request $request, $id)
+    {
+
+        $data = Contact::find($id);
+        $input = $request->all();
+        
+            unset($input['icon']);
+            $data->update($request->all());
+
+        return redirect()->route('contact.index')
+            ->with('success_message', 'Your Action Success');
+    }
     public function aboutUpdate(Request $request, $id)
     {
 
@@ -383,6 +450,7 @@ class PageController extends Controller
             $thumbnail['icon'] = "$nama_image";
             $data->update([
                 'icon' => $nama_image,
+                'subtitle' => $request->subtitle
             ]);
             $data->save;
         } else{
@@ -440,6 +508,19 @@ class PageController extends Controller
 
         $story->delete();
         return redirect()->route('about.index')
+            ->with('success_message', 'Your Action Success');
+    }
+    public function socialDestroy($id)
+    {
+        // \dd($id);
+        $social = Contact::find($id);
+        if ($social->icon) {
+            \unlink("storage/social/" . $social->icon);
+        }
+        // dd($icon);
+
+        $social->delete();
+        return redirect()->route('contact.index')
             ->with('success_message', 'Your Action Success');
     }
 }

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\City;
+use App\Models\Contact;
 use App\Models\Courier;
 use App\Models\CustomerAddress;
+use App\Models\Footer;
 use App\Models\OrderDetail;
 use App\Models\Payment;
 use App\Models\Province;
@@ -27,6 +29,8 @@ class CheckoutController extends Controller
             'payment' => Payment::latest()->get(),
             'shipment' => Courier::latest()->get(),
             'province' => Province::all(),
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ])->with('cart_data', $cart_data);
     }
 

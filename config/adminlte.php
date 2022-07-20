@@ -338,6 +338,11 @@ return [
                     'text' => 'About',
                     'url'  => '/admin/management/page/about',
                     'icon' => 'fas fa-building',
+                ],
+                [
+                    'text' => 'Contact',
+                    'url'  => '/admin/management/page/contact',
+                    'icon' => 'fas fa-phone-alt',
                 ]
             ]
         ],

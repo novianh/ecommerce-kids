@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-md-7 col-lg-8 ">
                         <h5>Edit Profile</h5>
-                        <form class="needs-validation" novalidate action="{{ route('profile.update.upt', $user->id) }}" method="post">
+                        <form class="needs-validation" novalidate action="{{ route('profile.update', $user->id) }}" method="post">
                            @csrf
                            @method('put')
                             <div class="row g-3">

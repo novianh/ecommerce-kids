@@ -5,13 +5,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cms\Home\HeroController;
 use App\Http\Controllers\Cms\Home\PageController;
 use App\Http\Controllers\Cms\OrderController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Front\AddressController;
 use App\Http\Controllers\ProductCms\ProductController;
 use App\Http\Controllers\ProductCms\GalleryController;
 use App\Http\Controllers\ProductCms\EntityController;
 use App\Http\Controllers\ProductCMS\ProductCategoryController;
 use App\Http\Controllers\ProductCms\ThumbnailController;
-use App\Http\Controllers\Front\CheckoutController;
+use App\Http\Controllers\Front\ContactController as FrontContactController;
 use App\Http\Controllers\ProductCms\CheckoutController as CO;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\SummaryController;
@@ -47,7 +48,7 @@ Route::group(['prefix' => 'user'], function () {
    Route::get('/products/all', [App\Http\Controllers\Front\HomeController::class, 'products'])->name('products.index');
    Route::get('/products/{id}/category', [App\Http\Controllers\Front\HomeController::class, 'productByCategory'])->name('products.category');
    Route::post('/products/filter', [HomeController::class, 'filterStore'])->name('products.filter');
-   Route::get('/about', [App\Http\Controllers\Front\HomeController::class, 'about'])->name('about.index');
+   Route::get('/about', [App\Http\Controllers\Front\HomeController::class, 'about'])->name('about.home.index');
 
    Route::post('/add-to-cart', [HomeController::class, 'addtocart'])->name('add-to-cart');
    Route::get('/load-cart-data', [HomeController::class, 'cartloadbyajax'])->name('load-cart-data');
@@ -82,18 +83,22 @@ Route::group(['prefix' => 'user'], function () {
    // tansaksi
    Route::get('/transaction/index', [MenuController::class, 'transaction'])->name('transaction');
    Route::post('/transfer/store', [CheckoutController::class, 'transfer'])->name('transfer.store');
-   
+
    // menu order
    Route::get('/order/summary/{id}/edit', [MenuController::class, 'edit'])->name('order.summary.edit');
    Route::post('/order/summary/update', [MenuController::class, 'update'])->name('order.summary.update');
-   
+
    // summary
    Route::get('/summary', [SummaryController::class, 'index'])->name('summary.index');
    Route::post('/summary/store', [SummaryController::class, 'store'])->name('summary.store');
-   
+
+   // email
+   Route::get('/contact-us', [FrontContactController::class, 'index'])->name('front.contact.index');
+   Route::post('/contact-us', [FrontContactController::class, 'save'])->name('front.contact.store');
+
    // user
    // Route::resource('/profile', UserController::class);
-   
+
    Route::get('/try', function () {
       return view('frontend.layouts.shopping.prdDetails');
    });
@@ -165,7 +170,7 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::post('/order/filter', [OrderController::class, 'filter'])->name('date.filter.order');
 
       Route::post('/mark-as-read', [DashboardController::class, 'markNotification'])->name('markNotification');
-      
+
       // page management
       Route::get('/management/page/slider', [PageController::class, 'slider'])->name('slider.index');
       Route::post('/management/page/slider/store', [PageController::class, 'sliderStore'])->name('slider.store');
@@ -183,5 +188,13 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::get('/management/page/about/story/{id}/edit', [PageController::class, 'storyEdit'])->name('about.story.edit');
       Route::put('/management/page/about/story/update/{id}', [PageController::class, 'storyUpdate'])->name('about.story.update');
       Route::delete('/management/page/about/story/delete/{id}', [PageController::class, 'storyDestroy'])->name('about.story.destroy');
+
+
+      Route::get('/management/page/contact', [PageController::class, 'contact'])->name('contact.index');
+      Route::post('/management/page/contact/store', [PageController::class, 'contactStore'])->name('contact.store');
+      Route::get('/management/page/social/{id}/edit', [PageController::class, 'socialEdit'])->name('social.edit');
+      Route::put('/management/page/social/update/{id}', [PageController::class, 'socialUpdate'])->name('social.update');
+      Route::delete('/management/page/social/delete/{id}', [PageController::class, 'socialDestroy'])->name('social.delete');
+      Route::post('/management/page/social/store', [PageController::class, 'socialStore'])->name('social.store');
    });
 });

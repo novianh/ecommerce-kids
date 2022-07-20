@@ -3,10 +3,19 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\About;
+use App\Models\AboutHome;
+use App\Models\Contact;
+use App\Models\DiscHome;
 use App\Models\Entity;
+use App\Models\Footer;
 use App\Models\GalleryProduct;
+use App\Models\Hero;
+use App\Models\NewHome;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\Story;
+use App\Models\WwdHome;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -34,6 +43,14 @@ class HomeController extends Controller
             'image' => GalleryProduct::all(),
             'categories' => ProductCategory::all()->sortByDesc("created_at"),
             'productCtgLast' => $categoryLastPrd,
+            'slider' => Hero::latest()->first(),
+            'newArrival' => NewHome::latest()->first(),
+            'wwd' => WwdHome::latest()->first(),
+            'promo' => DiscHome::latest()->first(),
+            'icon' => About::all(),
+            'about' => AboutHome::latest()->first(),
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
 
         ]);
     }
@@ -67,7 +84,9 @@ class HomeController extends Controller
             'image' => $image,
             'category' => $category,
             'entity' => $entity,
-            'productLike' => $productsLike
+            'productLike' => $productsLike,
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ]);
     }
 
@@ -101,12 +120,20 @@ class HomeController extends Controller
     public function category()
     {
         return view('frontend.layouts.shopping.categories', [
-            'categories' => ProductCategory::all()
+            'categories' => ProductCategory::all(),
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ]);
     }
     public function about()
     {
-        return view('frontend.layouts.shopping.aboutus');
+        return view('frontend.layouts.shopping.aboutus',[
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first(),
+            'icon' => About::all(),
+            'icon2' => About::latest()->take(2)->get(),
+            'story' => Story::all(),
+        ]);
     }
     public function collection()
     {
@@ -115,13 +142,17 @@ class HomeController extends Controller
 
         return view('frontend.layouts.shopping.collection', [
             'product' => $product,
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ]);
     }
     public function products()
     {
         return view('frontend.layouts.shopping.products', [
             'products' => Product::where([['status', '=', 'active'], ['quantity', '>', 0]])->simplePaginate(12),
-            'categoryAll' => ProductCategory::all()
+            'categoryAll' => ProductCategory::all(),
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ]);
     }
 
@@ -133,7 +164,9 @@ class HomeController extends Controller
         return view('frontend.layouts.shopping.products', [
             'category' => $category,
             'categoryAll' => ProductCategory::all(),
-            'product' => $product
+            'product' => $product,
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ]);
     }
 
@@ -174,6 +207,8 @@ class HomeController extends Controller
         return \view('frontend.layouts.shopping.products', [
             'productFilter' => $products,
             'categoryAll' => ProductCategory::all(),
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ]);
     }
 
@@ -331,6 +366,8 @@ class HomeController extends Controller
             'image' => GalleryProduct::all(),
             'categories' => ProductCategory::all()->sortByDesc("created_at"),
             'productCtgLast' => $categoryLastPrd,
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
 
         ]);
     }

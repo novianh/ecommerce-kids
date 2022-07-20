@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\City;
+use App\Models\Contact;
 use App\Models\CustomerAddress;
+use App\Models\Footer;
 use App\Models\OrderDetail;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -23,6 +25,9 @@ class MenuController extends Controller
         $order = $user->order()->simplePaginate(6);
         return \view('frontend.layouts.user.order', [
             'order' => $order,
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
+
         ]);
     }
 
@@ -36,7 +41,9 @@ class MenuController extends Controller
         return \view('frontend.layouts.user.profile', [
             'user' => $user,
             'order' => $order,
-            'address' => $address
+            'address' => $address,
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ])->with('ordered', $orderData);
     }
 
@@ -78,7 +85,9 @@ class MenuController extends Controller
         $data = OrderDetail::find($id);
         // \dd($request);
         return \view('frontend.layouts.user.orderEdit', [
-            'order' => $data
+            'order' => $data,
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ]);
     }
     public function profileEdit($id)
@@ -86,7 +95,9 @@ class MenuController extends Controller
         $data = User::find($id);
         // \dd($request);
         return \view('auth.edit', [
-            'user' => $data
+            'user' => $data,
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ]);
     }
     public function profileUpdate(Request $request, $id)
@@ -119,7 +130,9 @@ class MenuController extends Controller
         return \view('frontend.layouts.user.addressEdit', [
             'address' => $data,
             'province' => Province::all(),
-            'city' => $city
+            'city' => $city,
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ]);
     }
 

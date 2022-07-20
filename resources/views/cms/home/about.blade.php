@@ -8,6 +8,20 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('ecommerce/node_modules/dropify/dist/css/dropify.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/vendors/font-awesome/css/font-awesome.min.css') }}">
+    <style>
+        table {
+            table-layout: fixed !important;
+        }
+
+        td {
+            word-wrap: break-word !important;
+        }
+
+        .table td,
+        .table th {
+            white-space: wrap !important;
+        }
+    </style>
 @endpush
 
 @section('breadcrumb', 'slider')
@@ -33,102 +47,88 @@
                                         data-target="#modal-form-story"><i class="fas fa-plus"></i> ADD Story</a>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table text-center" id="tableStory">
-                                        <thead>
-                                            <th>Year</th>
-                                            <th>Title</th>
-                                            <th>Description</th>
-                                            <th></th>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($story as $story)
-                                                <tr>
-                                                    <td>{{ $story->year }}</td>
-                                                    <td>{{ $story->title }}</td>
-                                                    <td>{{ $story->desc }}</td>
-                                                    <td>
-                                                        <div class="dropdown">
-                                                            <a class="btn text-secondary " href="#" role="button"
-                                                                id="dropdownMenuLink{{ $story->id }}"
-                                                                data-toggle="dropdown" aria-expanded="false">
-                                                                <i class="fas fa-ellipsis-v"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu"
-                                                                aria-labelledby="dropdownMenuLink{{ $story->id }}">
-                                                                <a href="{{ route('about.story.edit', $story) }}"
-                                                                    class="dropdown-item text-success"><i class="fa fa-edit"
-                                                                        data-toggle="modal" data-target="#edit"></i>
-                                                                    Edit</a>
-                                                                <a href="{{ route('about.story.destroy', $story) }}"
-                                                                    class="dropdown-item text-danger"
-                                                                    onclick="notificationBeforeDelete(event, this)"><i
-                                                                        class=" fa fa-trash"></i>
-                                                                    Delete</a>
-
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-                            <div class="card ">
-                                <div class="card-header bg-light d-flex justify-content-between">
-                                    <h5>Icon About</h5>
-                                    <a type="button" class=" btn tambah m-auto" data-toggle="modal"
-                                        data-target="#modal-form-about"><i class="fas fa-plus"></i> ADD Icon About</a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row mb-3">
-                                        @foreach ($about as $about)
-                                            <div class="col-3 text-center">
-                                                <img src="{{ asset('storage/about/' . $about->icon) }}" alt="..."
-                                                    width="50%" class="mb-3 rounded-circle">
-                                                <br>
-                                                <small class="">{{ $about->subtitle }}</small>
-                                                <br>
-                                                <a href="{{ route('about.edit', $about) }}"
-                                                    class="mt-3 btn btn-success btn-sm">Edit</a>
-                                                <a href="{{ route('about.front.destroy', $about->id) }}"
-                                                    onclick="notificationBeforeDelete(event, this)"
-                                                    class="mt-3 btn btn-danger btn-sm">Del</a>
-                                            </div>
-                                        @endforeach
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header bg-light d-flex justify-content-between">
-                                    <h5>Subtitle About Home</h5>
-                                    <a type="button" class="btn edit mb-3 text-end" data-toggle="modal"
-                                        data-target="#modal-form-sub"><i class="fas fa-edit"></i> edit</a>
-                                </div>
-                                <div class="card-body">
+                                    @foreach ($story as $story)
+                                        
+                                    
                                     <div class="row">
-                                        <p>{{ $aboutHome->subtitle }}</p>
-                                    </div>
 
+                                        <div class="card col-2">
+                                            <div class="card-body">
+                                                <h6>Year:</h6>
+                                                <span>{{ $story->year }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="card col-2 mx-3">
+                                            <div class="card-body">
+                                                <h6>Title:</h6>
+                                                <span>{{ $story->title }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="card col">
+                                            <div class="card-body">
+                                                <h6>Description:</h6>
+                                                <span>{{ $story->desc }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
-                    @else
-                        <div class="d-flex justify-content-center">
+                        <div class="card ">
+                            <div class="card-header bg-light d-flex justify-content-between">
+                                <h5>Icon About</h5>
+                                <a type="button" class=" btn tambah m-auto" data-toggle="modal"
+                                    data-target="#modal-form-about"><i class="fas fa-plus"></i> ADD Icon About</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    @foreach ($about as $about)
+                                        <div class="col-3 text-center">
+                                            <img src="{{ asset('storage/about/' . $about->icon) }}" alt="..."
+                                                width="50%" class="mb-3 rounded-circle">
+                                            <br>
+                                            <small class="">{{ $about->subtitle }}</small>
+                                            <br>
+                                            <a href="{{ route('about.edit', $about) }}"
+                                                class="mt-3 btn btn-success btn-sm">Edit</a>
+                                            <a href="{{ route('about.front.destroy', $about->id) }}"
+                                                onclick="notificationBeforeDelete(event, this)"
+                                                class="mt-3 btn btn-danger btn-sm">Del</a>
+                                        </div>
+                                    @endforeach
+                                </div>
 
-                            <a type="button" class=" btn btn-block tambah m-auto" data-toggle="modal"
-                                data-target="#modal-form-story"><i class="fas fa-plus"></i> ADD Story</a>
-                            <a type="button" class=" btn btn-block tambah m-auto" data-toggle="modal"
-                                data-target="#modal-form-about"><i class="fas fa-plus"></i> ADD Icon About</a>
-                            <a type="button" class=" btn btn-block tambah m-auto" data-toggle="modal"
-                                data-target="#modal-form-sub"><i class="fas fa-plus"></i> ADD subtitle about</a>
+                            </div>
                         </div>
-                    @endif
+                        <div class="card">
+                            <div class="card-header bg-light d-flex justify-content-between">
+                                <h5>Subtitle About Home</h5>
+                                <a type="button" class="btn edit mb-3 text-end" data-toggle="modal"
+                                    data-target="#modal-form-sub"><i class="fas fa-edit"></i> edit</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <p>{{ $aboutHome->subtitle }}</p>
+                                </div>
+
+                            </div>
+                        </div>
                 </div>
+            @else
+                <div class="d-flex justify-content-center">
+
+                    <a type="button" class=" btn btn-block tambah m-auto" data-toggle="modal"
+                        data-target="#modal-form-story"><i class="fas fa-plus"></i> ADD Story</a>
+                    <a type="button" class=" btn btn-block tambah m-auto" data-toggle="modal"
+                        data-target="#modal-form-about"><i class="fas fa-plus"></i> ADD Icon About</a>
+                    <a type="button" class=" btn btn-block tambah m-auto" data-toggle="modal"
+                        data-target="#modal-form-sub"><i class="fas fa-plus"></i> ADD subtitle about</a>
+                </div>
+                @endif
             </div>
         </div>
+    </div>
     </div>
 
     <div class="modal fade" id="modal-form-about" tabindex="-1" role="dialog" aria-labelledby="modal-form"
@@ -314,26 +314,15 @@
                     )
                 }
             });
-
-
-
-
-
-            // alertify.confirm('Are you sure?', function() {
-            //     $("#delete-form").attr('action', $(el).attr('href'));
-            //     $("#delete-form").submit();
-            // });
-            //     $('.ajs-button').addClass('btn');
-            //     $('.ajs-ok').addClass('btn-success');
         }
-        $(document).ready(function() {
-            $('#tableStory').DataTable({
-                "responsive": true,
-                pagingType: 'numbers',
-                "searching": false
-            });
+        // $(document).ready(function() {
+        //     $('#tableStory').DataTable({
+        //         "responsive": false,
+        //         pagingType: 'numbers',
+        //         "searching": false
+        //     });
 
-        })
+        // })
     </script>
     <script src="{{ asset('ecommerce/node_modules/dropify/dist/js/dropify.min.js') }}"></script>
     <script>

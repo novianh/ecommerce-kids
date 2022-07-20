@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\City;
+use App\Models\Contact;
 use App\Models\CustomerAddress;
+use App\Models\Footer;
 use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,6 +25,8 @@ class AddressController extends Controller
         return view('cms.checkout.address', [
             'address' => CustomerAddress::all(),
             'user' => User::all(),
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
 
         ]);
     }

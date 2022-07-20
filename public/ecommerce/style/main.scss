@@ -573,7 +573,7 @@ main{
       font-weight: normal;
       color: $black;
    }
-   .wrappers:nth-child(3n-1){
+   .wrappers:nth-child(odd){
       color: $blue;
       .wrapper{
          background: $blue;

@@ -24,11 +24,10 @@
                             </div>
                         </div>
                         <div class="col-9 col-lg-5 col-xl-4 mx-lg-0  text-lg-start">
-                            <h1 class="pt-5 position-relative" style="z-index: 11;"><span>The</span> Best <span>TOY</span>
-                                Collection</h1>
-                            <p class="my-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam consequat
-                                fermentum
-                                augue. </p>
+                            <h1 class="pt-5 position-relative" style="z-index: 11;">{!! $slider->title ??
+                                '<span>The</span> Best <span>TOY</span>
+                                                                                                                                                                            Collection' !!}</h1>
+                            <p class="my-4">{{ $slider->desc ?? '' }} </p>
                             <div class="d-grid d-block d-lg-flex">
                                 <button type="button" class="btn rounded-5 px-lg-5 shadow-lg">Discover Now</button>
                             </div>
@@ -106,7 +105,7 @@
                     <div class="row row-cols-1 justify-content-center g-3">
                         <div class="col-6 text-center">
                             <h2>New <span>Arrival</span></h2>
-                            <p class="mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
+                            <p class="mt-3">{{ $newArrival->desc ?? '' }}</p>
                         </div>
                         <div class="col-8 carousel-wrap col-xl-10 mx-xl-0">
                             <div class=" owl-carousel owl-theme">
@@ -132,7 +131,8 @@
                                                             {{ $np->sku ?? '4AUSCS' }}</small>
                                                     </div>
                                                     <div class="col">
-                                                        <p class="harga">Rp. {{  number_format($np->price) ?? '500K' }}</p>
+                                                        <p class="harga">Rp. {{ number_format($np->price) ?? '500K' }}
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div class="text-center pt-3 card__description collapse "
@@ -181,32 +181,31 @@
                                 class=" ">
                             <h2 class=" fw-700 text-center mb-4">What We <span>Do?</span></h2>
                         </div>
-                        <div class="col-8 second col-md-5">
+                        <div class="col-8 second col-md-5 ">
                             <p class="mb-0 d-block d-md-none">What We Do? </p>
-                            <h2>We Make Your Kids <span>Happy</span></h2>
-                            <p class="mb-0">Help you take care of the kids
+                            <h2 class="text-capitalize">{!! $wwd->title1 ?? 'We Make Your Kids <span>Happy</span>' !!}</h2>
+                            <p class="mb-0">{{ $wwd->desc1 ?? 'Help you take care of the kids' }}
                             </p>
                         </div>
                         <div class="col-12 col-md-7">
                             <div class="wwd-img rounded-5 bg-black">
-                                <img src="{{ asset('ecommerce/img/wwd1.jpg') }}" alt="img">
+                                <img src="{{ asset('storage/wwd/' . $wwd->image2) ?? asset('ecommerce/img/wwd1.jpg') }}"
+                                    alt="img">
                             </div>
                         </div>
                         <div class="col-12 col-md-5 mt-md-4">
-                            <div class="wwd-img img2" style="background-image: url('/ecommerce/img/wwd2.jpg');">
+                            <div class="wwd-img img2"
+                                style="background-image: url('{{ url('storage/wwd/' . $wwd->image1) ?? asset('/ecommerce/img/wwd2.jpg') }}');">
                             </div>
                         </div>
                         <div class="col-11 col-md-7 mt-md-4">
                             <div class="row ">
                                 <div class="col-9">
-                                    <h5>Help you take care of the kids
+                                    <h5>{{ $wwd->title2 ?? 'Help you take care of the kids' }}
                                     </h5>
                                 </div>
                             </div>
-                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam consequat
-                                fermentum
-                                augue, eget
-                                feugiat metus commodo sed. Suspendisse aliquet malesuada nisl rhoncus sagittis. </p>
+                            <p class="mb-0">{{ $wwd->desc2 ?? '' }} </p>
                         </div>
                     </div>
                 </div>
@@ -217,15 +216,15 @@
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-7 col-xl-8 ">
                             <div class="img-box rounded-5 shadow-lg"
-                                style="background-image: url('{{ asset('ecommerce/img/dc.jpg') }}');">
+                                style="background-image: url('{{ url('storage/promo/' . $promo->image) ?? asset('ecommerce/img/dc.jpg') }}');">
                             </div>
                         </div>
                         <div class="col-12 col-md-5 col-xl-4 text-center mt-4 mt-md-0">
                             <div class="wrapper rounded-5 py-5">
-                                <img src="{{ asset('ecommerce/img/rainbow.png') }}" alt="ornament"
+                                <img src="{{ asset('storage/promo/icon/' . $promo->icon)??asset('ecommerce/img/rainbow.png') }}" alt="ornament"
                                     class="mx-auto mb-3 col-4 col-md-5" width="100%">
-                                <p class="text-uppercase mb-4"><br> SALE 50%</p>
-                                <h1 class="text-capitalize mb-4">spring <br> <span>collection</span></h1>
+                                <p class="text-uppercase mb-4"><br> SALE {{ $promo->discount ?? '50' }}%</p>
+                                <h1 class="text-capitalize mb-4">{!! $promo->title ?? 'spring <br> <span>collection</span>' !!}</h1>
                                 <div class=" d-block">
                                     <button type="button" class="btn rounded-5 px-4 shadow-lg">Discover Now</button>
                                 </div>
@@ -240,46 +239,22 @@
                     <div class="row justify-content-center">
                         <div class="col-xl-6 col-12 text-center">
                             <h2 class="mb-3">Why <span>Us?</span></h2>
-                            <p class="opacity-75">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi dicta
-                                earum
-                                repellendus porro
-                                veniam aperiam. Dicta temporibus nihil.</p>
+                            <p class="opacity-75">{{ $about->subtitle ?? '' }}</p>
                         </div>
                     </div>
                     <div
                         class="row row-cols-md-2 mt-3 text-center justify-content-center gap-xl-5 gap-md-0 gap-lg-4 gap-3">
+                        @foreach ($icon as $item)
+                        
                         <div class="col-4 mt-3 col-md-2 wrappers">
                             <div class="wrapper rounded-circle text-center mb-3 ">
-                                <img src="{{ asset('ecommerce/img/whyus/bestprice.svg') }}" alt="icon"
+                                <img src="{{ asset('storage/about/'. $item->icon)??asset('ecommerce/img/whyus/bestprice.svg') }}" alt="icon"
                                     width="100%" class="p-4 p-xl-5">
                             </div>
-                            <small class="pt-5">Best Price</small>
+                            <small class="pt-5">{{ $item->subtitle??'Best Price' }}</small>
                         </div>
-                        <div class="col-4 mt-3 col-md-2 wrappers">
-                            <div class="wrapper rounded-circle text-center mb-3">
-                                <img src="{{ asset('ecommerce/img/whyus/freedev.svg') }}" alt="icon"
-                                    width="100%" class="p-4 p-xl-5 ">
-                            </div>
-                            <small class="pt-5 ">Best Price</small>
-                        </div>
-
-                        <div class="w-100 d-block d-md-none"></div>
-
-                        <div class="col-4 mt-3 col-md-2 wrappers">
-                            <div class="wrapper rounded-circle text-center mb-3">
-                                <img src="{{ asset('ecommerce/img/whyus/quality.svg') }}" alt="icon"
-                                    width="100%" class="p-4 p-xl-5 ">
-                            </div>
-                            <small class="pt-5">Best Price</small>
-                        </div>
-                        <div class="col-4 mt-4 mt-md-3 col-md-2 wrappers">
-                            <div class="wrapper rounded-circle text-center mb-3">
-                                <img src="{{ asset('ecommerce/img/whyus/bestprice.svg') }}" alt="icon"
-                                    width="100%" class="p-4 p-xl-5 ">
-                            </div>
-                            <small class="pt-5">Best Price</small>
-                        </div>
-
+                        
+                        @endforeach
                     </div>
                 </div>
             </section>
@@ -299,9 +274,6 @@
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 
     <script>
-
-
-        
         // ajax
         jQuery(document).ready(function() {
             jQuery.noConflict();
@@ -352,7 +324,7 @@
                                     val.sku + '</small>' +
                                     '</div>' +
                                     '<div class="col">' +
-                                    '<p class="harga">Rp. ' +   val.price + '</p>' +
+                                    '<p class="harga">Rp. ' + val.price + '</p>' +
                                     '</div>' +
                                     '</div>' +
                                     ' <div class="text-center pt-3 card__description collapse " id="' +

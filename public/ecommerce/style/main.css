@@ -648,17 +648,17 @@ main #products .container h2 span {
   color: #676767;
 }
 
-#whyUs .wrappers:nth-child(3n-1), #aboutus .wrappers:nth-child(3n-1) {
+#whyUs .wrappers:nth-child(odd), #aboutus .wrappers:nth-child(odd) {
   color: #8CC0DE;
 }
 
-#whyUs .wrappers:nth-child(3n-1) .wrapper, #aboutus .wrappers:nth-child(3n-1) .wrapper {
+#whyUs .wrappers:nth-child(odd) .wrapper, #aboutus .wrappers:nth-child(odd) .wrapper {
   background: #8CC0DE;
   -webkit-transition-duration: 0.4s;
           transition-duration: 0.4s;
 }
 
-#whyUs .wrappers:nth-child(3n-1) .wrapper:hover, #aboutus .wrappers:nth-child(3n-1) .wrapper:hover {
+#whyUs .wrappers:nth-child(odd) .wrapper:hover, #aboutus .wrappers:nth-child(odd) .wrapper:hover {
   -webkit-transform: scale(1.02);
           transform: scale(1.02);
   -webkit-box-shadow: #8cc0de80 0px 7px 29px 0px;
