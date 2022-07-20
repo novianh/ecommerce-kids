@@ -7,7 +7,7 @@
         .btn.active {
             background: #8CC0DE !important;
         }
-        
+
         .content-slider li {
             background-color: #ed3020;
             text-align: center;
@@ -18,23 +18,30 @@
             margin: 0;
             padding: 70px 0;
         }
-        .ajs-message{
+
+        .ajs-message {
             background-color: #F4BFBF;
             color: #FFF;
         }
-        .ajs-message.ajs-visible{
+
+        .ajs-message.ajs-visible {
             border-radius: 2rem;
             text-align: center
         }
-        .ajs-ok, .ajs-cancel{
+
+        .ajs-ok,
+        .ajs-cancel {
             border: none;
             border-radius: 2rem;
         }
-        .ajs-ok{
+
+        .ajs-ok {
             background: #8CC0DE;
         }
-        .ajs-header, .ajs-footer{
-            background: rgb(248,249,250) !important;
+
+        .ajs-header,
+        .ajs-footer {
+            background: rgb(248, 249, 250) !important;
         }
     </style>
 @endsection
@@ -89,27 +96,39 @@
 
                                             <div class="col-12">
                                                 <div class=" " id="collapseExample">
-                                                    <table class="table mt-3 " style="color: #676767">
+                                                    <table class="table mt-3 table-hover" style="color: #676767">
                                                         <tbody id="data">
-                                                            @foreach ($order as $order)
-                                                                {{-- {{ dd($order->item[0]->product_id) }} --}}
-                                                                <tr>
-                                                                    <th>
-                                                                        <p>{{ date('d-m-Y', strtotime($order->created_at)) }}
-                                                                        </p>
-                                                                        <small style="color: #8CC0DE">
-                                                                            {{ $order->transaction_number ?? '-' }}
-                                                                        </small>
-                                                                        <br>
-                                                                        (<span style="color: #F4BFBF">
-                                                                            {!! $order->status_front !!}
-                                                                        </span>)
+                                                            @foreach ($order as $ord)
+                                                            <tr>
+                                                                
+                                                                <th>
+                                                                        <a href="{{ route('transaction') }}"
+                                                                            class="link text-start">
+                                                                            <p>{{ date('d-m-Y', strtotime($ord->created_at)) }}
+                                                                            </p>
+                                                                            <small style="color: #8CC0DE">
+                                                                                {{ $ord->transaction_number ?? '-' }}
+                                                                            </small>
+                                                                            <br>
+                                                                            (<span style="color: #F4BFBF" id="respoonseStatus">
+                                                                                {!! $ord->status_front !!}
+                                                                            </span>)
+                                                                        </a>
                                                                     </th>
                                                                     <th style="width: 20%" class="text-center align-middle">
 
-                                                                        <a href="" class="ms-3 link mt-1"
-                                                                            style="color: #F4BFBF !important"><i
-                                                                                class="fi fi-sr-delete"></i></a>
+                                                                        <form id="cancelForm" method="post">
+                                                                            @csrf
+                                                                            {{-- {{ dd($ord->id) }} --}}
+                                                                            <input type="hidden" name="id"
+                                                                                value="{{ $ord->id }}"
+                                                                                id="id_order_detail">
+                                                                            <input type="hidden" name="status"
+                                                                                value="7" id="status">
+                                                                            <a href="javascript:void(0)" id="submit" class="ms-3 link mt-1"
+                                                                                style="color: #F4BFBF !important"><i
+                                                                                    class="fi fi-sr-delete"></i></a>
+                                                                        </form>
                                                                     </th>
                                                                 </tr>
                                                             @endforeach
@@ -176,8 +195,8 @@
             alertify.confirm('Confirm Delete Address', 'Are You Sure?', function() {
                 $("#delete-form").attr('action', $(el).attr('href'));
                 $("#delete-form").submit();
-            }, function () {
-                alertify.set('notifier','position', 'top-center');
+            }, function() {
+                alertify.set('notifier', 'position', 'top-center');
                 alertify.message('Cancel').delay(3)
             });
 
@@ -221,6 +240,34 @@
 
             });
 
+            $("#cancelForm").click(function(e) {
+                e.preventDefault();
+
+                let id = $("#id_order_detail").val();
+                let status = $("#status").val();
+
+                $.ajax({
+                    url: "{{ route('order.cancel') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id,
+                        status: status,
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response) {
+                            alertify.set('notifier', 'position', 'top-center');
+                            alertify.message('Delete Success').delay(3)
+                        }
+                        $('#respoonseStatus').html('Waiting response for cancel order')
+                    },
+                    error: function(response) {
+                        $("#id-error").text(response.responseJSON.errors.id);
+                        $("#status-error").text(response.responseJSON.errors.status);
+                    },
+                });
+            });
 
 
         });

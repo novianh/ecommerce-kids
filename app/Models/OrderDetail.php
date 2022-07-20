@@ -56,6 +56,12 @@ class OrderDetail extends Model
         if ($this->status == 6) {
             return '<span class="badge bg-dark">Order finished</span>';
         }
+        if ($this->status == 7) {
+            return '<span class="badge bg-danger">Waiting Cancel</span>';
+        }
+        if ($this->status == 8) {
+            return '<span class="badge bg-light">Canceled</span>';
+        }
         if ($this->status == 3) {
             return '<span class="badge bg-warning">On Process</span>';
         }
@@ -75,6 +81,12 @@ class OrderDetail extends Model
         }
         if ($this->status == 6) {
             return '<span class="">Order finished</span>';
+        }
+        if ($this->status == 7) {
+            return '<span class="">Waiting response for cancel order</span>';
+        }
+        if ($this->status == 8) {
+            return '<span class="">Order Canceled</span>';
         }
         if ($this->status == 3) {
             return '<span class="">Your order is being processed</span>';

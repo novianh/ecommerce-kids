@@ -72,6 +72,7 @@ Route::group(['prefix' => 'user'], function () {
    Route::get('/gallery/{id}/index', [GalleryController::class, 'index'])->name('gallery.index');
 
    // profile
+   Route::post('/profile/cancel/order', [MenuController::class, 'cancel'])->name('order.cancel'); //TODO: cancel order
    Route::get('/profile/{id}/index', [MenuController::class, 'profile'])->name('profile');
    Route::get('/profile/{id}/list', [MenuController::class, 'profileAjax'])->name('profile.ajax');
    Route::get('/profile/{id}/edit', [MenuController::class, 'profileEdit'])->name('profile.edit');

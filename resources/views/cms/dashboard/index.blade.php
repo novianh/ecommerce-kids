@@ -133,7 +133,7 @@
     <div class="card my-4">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div class="bg-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Customers table</h6>
+                <h6 class="text-white text-capitalize ps-3">User table</h6>
             </div>
         </div>
         <div class="card-body px-0 pb-2">
@@ -143,6 +143,10 @@
                         <tr>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Customer</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Order Count
+                            </th>
+                            <th
+                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Status
                             </th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                 Registered</th>
@@ -168,6 +172,13 @@
                                     <p class="text-xs font-weight-bold mb-0">{{ $item->order->count() ?? '-' }}</p>
                                     <p class="text-xs text-secondary mb-0">Rp.
                                         {{ number_format($item->order->sum('total'), 2) }}</p>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    @if ($item->admin_user == 1)
+                                        <span class="badge badge-sm bg-success">admin</span>
+                                    @else
+                                        <span class="badge badge-sm bg-secondary">cust</span>
+                                    @endif
                                 </td>
                                 <td class="align-middle text-center">
                                     <span

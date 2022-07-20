@@ -36,7 +36,7 @@ class MenuController extends Controller
         $user = User::find(Auth::user()->id);
         $order = $user->order;
         $orderData = json_decode($order, true);
-        // \dd(OrderDetail::find(69)->item);
+        // \dd($order);
         $address = $user->address;
         return \view('frontend.layouts.user.profile', [
             'user' => $user,
@@ -200,5 +200,17 @@ class MenuController extends Controller
 
         return redirect()->route('dashboard.index')
             ->with('success_message', 'success delete customer');
+    }
+    public function cancel(Request $request)
+    {
+        // dd($request->id);
+        $data = OrderDetail::find($request->id);
+
+        $data->update([
+            'status' => $request->status,
+        ]);
+        return response()->json(['success'=>'*Form is successfully submitted!']);
+        // return redirect()->route('dashboard.index')
+        //     ->with('success_message', 'success delete customer');
     }
 }

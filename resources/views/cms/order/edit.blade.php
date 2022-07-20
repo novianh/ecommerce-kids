@@ -23,7 +23,7 @@
                     <label for="status" class="ms-0">Edit Status</label>
                     {{-- {{ dd(old('status')) }} --}}
                     <select class="form-control text-capitalize" name="status" id="status">
-                        <option value="1" {{ $order->status == '1' ? 'selected' : '' }}>witing response</option>
+                        <option value="1" {{ $order->status == '1' ? 'selected' : '' }}>Waiting response</option>
                         <option value="2" {{ $order->status == '2' ? 'selected' : '' }}>Pending Payment
                         </option>
                         <option value="3" {{ $order->status == '3' ? 'selected' : '' }}>Order On Process
@@ -33,6 +33,10 @@
                             customer
                         </option>
                         <option value="6" {{ $order->status == '6' ? 'selected' : '' }}>Order finished
+                        </option>
+                        <option value="7" {{ $order->status == '7' ? 'selected' : '' }}>Waiting response cancel
+                        </option>
+                        <option value="8" {{ $order->status == '8' ? 'selected' : '' }}>Order canceled
                         </option>
                     </select>
                 </div>

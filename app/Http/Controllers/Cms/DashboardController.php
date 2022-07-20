@@ -25,7 +25,7 @@ class DashboardController extends Controller
             'countOrder' => OrderDetail::count(),
             'user' => User::where('admin_user', null)->orWhere('admin_user', '<', 1)->count(),
             'product' => Product::where([['status', 'active'], ['quantity', '>', 0]])->count(),
-            'total' => OrderDetail::sum('total'),
+            'total' => OrderDetail::where('status', 5)->sum('total'),
             'notifications' => $notifications,
             'users' => User::all()
         ]);

@@ -52,22 +52,36 @@
                                     
                                     <div class="row">
 
-                                        <div class="card col-2">
+                                        <div class="card col-2 bg-light">
                                             <div class="card-body">
                                                 <h6>Year:</h6>
                                                 <span>{{ $story->year }}</span>
                                             </div>
                                         </div>
-                                        <div class="card col-2 mx-3">
+                                        <div class="card col-2 mx-3 bg-light">
                                             <div class="card-body">
                                                 <h6>Title:</h6>
                                                 <span>{{ $story->title }}</span>
                                             </div>
                                         </div>
-                                        <div class="card col">
+                                        <div class="card col bg-light">
                                             <div class="card-body">
                                                 <h6>Description:</h6>
                                                 <span>{{ $story->desc }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="card col-3 ms-3 bg-light">
+                                            <div class="card-body">
+                                                <h6>Action:</h6>
+                                                
+
+                                                    <a href="{{ route('about.story.edit', $story) }}" class="btn text-success">
+                                                        <i class="fas fa-pen"></i> Edit
+                                                    </a>
+                                                    <a href="{{ route('about.story.destroy', $story) }}" onclick="notificationBeforeDelete(event, this)" class="btn text-danger">
+                                                        <i class="fas fa-trash"></i> Delete
+                                                    </a>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -286,8 +300,6 @@
                 text: "You won't be able to revert this!!",
                 icon: 'warning',
                 showCancelButton: true,
-                // confirmButtonColor: 'rgb(26 115 232)',
-                // cancelButtonColor: '#d33',
                 customClass: {
                     confirmButton: 'btn btn-primary',
                     cancelButton: 'btn btn-info ms-3'
@@ -299,10 +311,6 @@
                 if (result.isConfirmed) {
                     $("#delete-form").attr('action', $(el).attr('href'));
                     $("#delete-form").submit();
-                    swalWithBootstrapButtons.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                    )
                 } else if (
                     /* Read more about handling dismissals below */
                     result.dismiss === Swal.DismissReason.cancel
@@ -315,14 +323,6 @@
                 }
             });
         }
-        // $(document).ready(function() {
-        //     $('#tableStory').DataTable({
-        //         "responsive": false,
-        //         pagingType: 'numbers',
-        //         "searching": false
-        //     });
-
-        // })
     </script>
     <script src="{{ asset('ecommerce/node_modules/dropify/dist/js/dropify.min.js') }}"></script>
     <script>
