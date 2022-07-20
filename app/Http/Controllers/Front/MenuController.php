@@ -105,7 +105,7 @@ class MenuController extends Controller
         // \dd($request);
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'sometimes|nullable|confirmed'
         ]);
         $user = User::find($id);
@@ -115,7 +115,7 @@ class MenuController extends Controller
         $user->save();
 
         // $user = User::find();
-        if (Auth::user()->id == 1) {
+        if (Auth::user()->admin_user == 1) {
             return \redirect()->route('dashboard.index')->with('success_message', 'Update Success');
         } else {
             return \redirect()->route('profile', Auth::user()->id);

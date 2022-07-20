@@ -93,7 +93,6 @@ Route::group(['prefix' => 'user'], function () {
    Route::post('/summary/store', [SummaryController::class, 'store'])->name('summary.store');
 
    // email
-   Route::get('/contact-us', [FrontContactController::class, 'index'])->name('front.contact.index');
    Route::post('/contact-us', [FrontContactController::class, 'save'])->name('front.contact.store');
 
    // user

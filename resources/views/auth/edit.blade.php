@@ -17,40 +17,39 @@
                     </div>
                     <div class="col-md-7 col-lg-8 ">
                         <h5>Edit Profile</h5>
-                        <form class="needs-validation" novalidate action="{{ route('profile.update', $user->id) }}" method="post">
-                           @csrf
-                           @method('put')
+                        <form class="needs-validation" novalidate action="{{ route('profile.update', $user->id) }}"
+                            method="post">
+                            @csrf
+                            @method('put')
                             <div class="row g-3">
                                 <div class="col-sm-12">
                                     <label for="Username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder=""
-                                        value="{{ $user->name }}" required name="name">
-                                    <div class="invalid-feedback">
-                                        Valid first name is required.
-                                    </div>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        id="firstName" placeholder="" value="{{ $user->name }}" name="name">
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="Username" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="firstName" placeholder=""
-                                        value="{{ $user->email }}" required name="email">
-                                    <div class="invalid-feedback">
-                                        Valid first name is required.
-                                    </div>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="firstName" placeholder=""
+                                        value="{{ $user->email }}" name="email">
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="Username" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="firstName" placeholder="" required
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="firstName" placeholder="" 
                                         name="password">
-                                    <div class="invalid-feedback">
-                                        Valid first name is required.
-                                    </div>
+                                    @error('password')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="Username" class="form-label">Confirm Password</label>
-                                    <input type="password" class="form-control" id="firstName" placeholder="" required>
-                                    <div class="invalid-feedback">
-                                        Valid first name is required.
-                                    </div>
+                                    <input type="password" class="form-control" id="firstName" placeholder=""  name="password_confirmation" >
+                                    
                                 </div>
                             </div>
 

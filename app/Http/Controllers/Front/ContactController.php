@@ -13,13 +13,14 @@ class ContactController extends Controller
 
     public function save(Request $request)
     {
-        // dd();
 
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'message' => 'required'
-        ]);
+        // $request->validate([
+        //     'name' => 'required',
+        //     'email' => 'required|email',
+        //     'message' => 'required'
+        // ]);
+
+        // \dd($request);
 
         InTouch::create($request->all());
         Mail::send(
@@ -35,7 +36,7 @@ class ContactController extends Controller
                 $message->subject('Get In Touch - Kids Ecommerce');
             }
         );
-
-        return \redirect()->route('user.home');
+        return response()->json(['success'=>'*Form is successfully submitted!']);
+        // return \redirect()->route('user.home');
     }
 }

@@ -26,7 +26,7 @@
                         <div class="col-9 col-lg-5 col-xl-4 mx-lg-0  text-lg-start">
                             <h1 class="pt-5 position-relative" style="z-index: 11;">{!! $slider->title ??
                                 '<span>The</span> Best <span>TOY</span>
-                                                                                                                                                                            Collection' !!}</h1>
+                                                                                                                                                                                                        Collection' !!}</h1>
                             <p class="my-4">{{ $slider->desc ?? '' }} </p>
                             <div class="d-grid d-block d-lg-flex">
                                 <button type="button" class="btn rounded-5 px-lg-5 shadow-lg">Discover Now</button>
@@ -221,8 +221,8 @@
                         </div>
                         <div class="col-12 col-md-5 col-xl-4 text-center mt-4 mt-md-0">
                             <div class="wrapper rounded-5 py-5">
-                                <img src="{{ asset('storage/promo/icon/' . $promo->icon)??asset('ecommerce/img/rainbow.png') }}" alt="ornament"
-                                    class="mx-auto mb-3 col-4 col-md-5" width="100%">
+                                <img src="{{ asset('storage/promo/icon/' . $promo->icon) ?? asset('ecommerce/img/rainbow.png') }}"
+                                    alt="ornament" class="mx-auto mb-3 col-4 col-md-5" width="100%">
                                 <p class="text-uppercase mb-4"><br> SALE {{ $promo->discount ?? '50' }}%</p>
                                 <h1 class="text-capitalize mb-4">{!! $promo->title ?? 'spring <br> <span>collection</span>' !!}</h1>
                                 <div class=" d-block">
@@ -245,15 +245,13 @@
                     <div
                         class="row row-cols-md-2 mt-3 text-center justify-content-center gap-xl-5 gap-md-0 gap-lg-4 gap-3">
                         @foreach ($icon as $item)
-                        
-                        <div class="col-4 mt-3 col-md-2 wrappers">
-                            <div class="wrapper rounded-circle text-center mb-3 ">
-                                <img src="{{ asset('storage/about/'. $item->icon)??asset('ecommerce/img/whyus/bestprice.svg') }}" alt="icon"
-                                    width="100%" class="p-4 p-xl-5">
+                            <div class="col-4 mt-3 col-md-2 wrappers">
+                                <div class="wrapper rounded-circle text-center mb-3 ">
+                                    <img src="{{ asset('storage/about/' . $item->icon) ?? asset('ecommerce/img/whyus/bestprice.svg') }}"
+                                        alt="icon" width="100%" class="p-4 p-xl-5">
+                                </div>
+                                <small class="pt-5">{{ $item->subtitle ?? 'Best Price' }}</small>
                             </div>
-                            <small class="pt-5">{{ $item->subtitle??'Best Price' }}</small>
-                        </div>
-                        
                         @endforeach
                     </div>
                 </div>
@@ -351,5 +349,39 @@
                 }); //end ajax
             })
         })
+
+        // ajax contact
+        jQuery("#contactForm").on("submit", function(e) {
+            e.preventDefault();
+            jQuery('#submit').html('Processing...')
+
+            let name = jQuery("#name").val();
+            let email = jQuery("#email").val();
+            let message = jQuery("#message").val();
+
+            jQuery.ajax({
+                url: "{{ route('front.contact.store') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    name: name,
+                    email: email,
+                    message: message,
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response) {
+                        jQuery("#success-message").text(response.success);
+                        jQuery("#submit").html('Send');
+                        jQuery("#contactForm")[0].reset();
+                    }
+                },
+                error: function(response) {
+                    jQuery("#name-error").text(response.responseJSON.errors.name);
+                    jQuery("#email-error").text(response.responseJSON.errors.email);
+                    jQuery("#message-error").text(response.responseJSON.errors.message);
+                },
+            });
+        });
     </script>
 @endsection
