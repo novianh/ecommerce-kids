@@ -20,11 +20,13 @@
                 <div class="card-body">
                     {{-- <h4 class="card-title text-center">Data Products</h4> --}}
                     <button type="button" class="btn btn-primary mb-3 add"> <i class="fas fa-plus"></i> Add Product</button>
-                    <a href="{{ route('product.trash') }}" class="btn btn-info mb-3 ml-2"><i class="fas fa-recycle"></i> Recycle Bin</a>
+                    <a href="{{ route('product.trash') }}" class="btn btn-info mb-3 ml-2"><i class="fas fa-recycle"></i>
+                        Recycle Bin</a>
                     <div class="">
                         <table id="example2" class="table table-hover text-center">
                             <thead>
                                 <tr>
+                                    <th>Image Thumbnail</th>
                                     <th>Name</th>
                                     <th>SKU</th>
                                     <th>Quantity</th>
@@ -134,7 +136,8 @@
                                     *(per
                                     item)</small></label>
                             <input type="number" name="price" required
-                                class="form-control @error('price') is-invalid @enderror" id="price" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                class="form-control @error('price') is-invalid @enderror" id="price"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                             @error('price')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -143,8 +146,7 @@
                         <div class="input-group input-group-static input-group-lg mb-4">
                             <label for="exampleInputEmail1" class="">Quantity</label>
 
-                            <input type="number" required name="quantity" class="form-control"
-                                id="qqt">
+                            <input type="number" required name="quantity" class="form-control" id="qqt">
                         </div>
                         <div class="input-group input-group-static my-3">
                             <label for="status">Status</label>
@@ -256,6 +258,15 @@
                     [0, "desc"]
                 ],
                 columns: [{
+                        data: 'img_thumbnail',
+                        name: 'img_thumbnail',
+                        render: function(data, type, full, meta) {
+                            if(data == undefined){
+                                return "-";
+                            }
+                            return "<img src=\"/storage/products/thumbnail/" + data + "\" height=\"50\"/>";
+                        }
+                    }, {
                         data: 'name',
                         name: 'name'
                     },

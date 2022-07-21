@@ -28,6 +28,7 @@ class CheckoutController extends Controller
                     </a>
                     <a href="javascript:;" class="ml-3 text-danger font-weight-bold text-xs btn-delete" data-rowid="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="delete payment"> <i class="fas fa-times"></i></a>
                 </td>';
+
                     return $html;
                 })
                 ->toJson();
@@ -37,6 +38,8 @@ class CheckoutController extends Controller
            
         ]);
     }
+
+
     public function shipment(Request $request)
     {
         $payment = Courier::all();

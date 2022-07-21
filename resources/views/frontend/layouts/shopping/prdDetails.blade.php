@@ -139,7 +139,7 @@
                     <h3>Related Products
                     </h3>
                     <div class="row">
-                        <div class="col-8 carousel-wrap col-xl-10 mx-xl-0 text-start">
+                        <div class="col-12 col-md-8 carousel-wrap col-xl-10 mx-xl-0 text-start">
                             <div class=" owl-carousel owl-theme">
                                 @foreach ($productLike as $np)
                                     <div class="card rounded-5 border-0 position-relative item product_data ">
@@ -256,10 +256,6 @@
                         'product_id': product_id,
                     },
                     success: function(response) {
-                        // alertify.dialog('alert').set({
-                        //     transition: 'zoom',
-                        //     message: 'add to cart successfully.'
-                        // }).set('frameless', false).set('basic', true).show()
                         alertify.set('notifier', 'position', 'top-center');
                         alertify.message('product added to cart').delay(3);
                         cartload();

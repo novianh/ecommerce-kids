@@ -42,7 +42,8 @@ class ProductController extends Controller
                     // $html .= '<button data-rowid="' . $row->id . '" class="btn btn-xs btn-danger btn-delete">Del</button>';
                     return $html;
                 })
-                ->toJson();
+                ->rawColumns(['image', 'action'])
+                ->make(true);
         }
         return \view('cms.products.index', [
             'product' => Product::all(),

@@ -141,18 +141,19 @@
                     </div>
                     <div class="col-12 col-md-10 col-lg-8">
                         <div class="row my-3 justify-content-center gap-3 gap-xl-0 justify-content-lg-start">
-                            @if (!empty($products))
-                                @foreach ($products as $prd)
-                                    <div class=" mt-4 col-8 col-sm-7 col-md-5 col-lg-5 col-xl-4">
+                            @if (!empty($productFilter))
+                                 @foreach ($productFilter as $prd)
+                                    <div class="mt-4 col-9 col-sm-6 col-md-5 col-lg-5 col-xl-4">
                                         <div class="card rounded-5 border-0 position-relative item ">
                                             <div class="row justify-content-center align-items-center">
-                                                <a href="{{ route('home.detail', $prd) }}" class="link">
-                                                    <div
-                                                        class="product col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">
+                                                <div
+                                                    class="product col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">
+                                                    <a href="{{ route('home.detail', $prd) }}" class="link">
                                                         <img src="{{ url('storage/products/thumbnail/' . $prd->img_thumbnail) ?? asset('ecommerce/img/doll.png') }}"
-                                                            class=" card-img-top mx-auto p-5 m-5 my-3" alt="img product" />
-                                                    </div>
-                                                </a>
+                                                            class=" card-img-top mx-auto p-5 m-5 my-3" alt="img product"
+                                                            width="100%" />
+                                                    </a>
+                                                </div>
                                             </div>
                                             <div class="card__overlay card-body text-center ">
                                                 <div class="card__header">
@@ -164,200 +165,24 @@
                                                                 {{ $prd->sku ?? '4AUSCS' }}</small>
                                                         </div>
                                                         <div class="col">
-                                                            <p class="harga">Rp.
-                                                                {{ number_format($prd->price, 2) ?? '500K' }}</p>
+                                                            <p class="harga">Rp. {{ number_format($prd->price,2) ?? '500K' }}</p>
                                                         </div>
                                                     </div>
-                                                    <div class="text-center pt-3 card__description collapse "
-                                                        id="collapseExample{{ $prd->id }}">
-
-                                                        <div class="mx-2 row row-cols-1 gap-3 ">
-                                                            <div class="col d-grid">
-                                                                <a href="" class="btn-product"><i
-                                                                        class="fi fi-sr-shopping-cart-add"></i>
-                                                                    Add</a>
-                                                            </div>
-                                                            <div class="col d-grid">
-                                                                <a href="" class="btn-product"><i
-                                                                        class="fi fi-sr-eye"></i> More</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
 
                                                 </div>
                                             </div>
                                         </div>
 
                                     </div>
-                                @endforeach
-                            @elseif(empty($products) && !empty($product))
-                                @foreach ($product as $prd)
-                                    <div class="mt-4 col-9 col-sm-6 col-md-5 col-lg-5 col-xl-4">
-                                        <div class="card rounded-5 border-0 position-relative item ">
-                                            <div class="row justify-content-center align-items-center">
-                                                <div
-                                                    class="product col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">
-                                                    <a href="{{ route('home.detail', $prd) }}" class="link">
-                                                        <img src="{{ url('storage/products/thumbnail/' . $prd->img_thumbnail) ?? asset('ecommerce/img/doll.png') }}"
-                                                            class=" card-img-top mx-auto p-5 m-5 my-3" alt="img product"
-                                                            width="100%" />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="card__overlay card-body text-center ">
-                                                <div class="card__header">
-                                                    <div class="row row-cols-1" data-bs-toggle="collapse"
-                                                        href="#collapseExample{{ $prd->id }}" role="button"
-                                                        aria-expanded="false" aria-controls="collapseExample">
-                                                        <div class="col">
-                                                            <h5 class="card-title fw-bold mb-0">
-                                                                {{ $prd->name ?? 'Bear Brown Doll' }}</h5>
-                                                            <small class="ctr-sku">{{ $prd->category->name ?? 'Toy' }},
-                                                                {{ $prd->sku ?? '4AUSCS' }}</small>
-                                                        </div>
-                                                        <div class="col">
-                                                            <p class="harga">Rp.
-                                                                {{ number_format($prd->price, 2) ?? '500K' }}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-center pt-3 card__description collapse "
-                                                        id="collapseExample{{ $prd->id }}">
-
-                                                        <div class="mx-2 row row-cols-1 gap-3 ">
-                                                            <div class="col d-grid">
-                                                                <a href="" class="btn-product"><i
-                                                                        class="fi fi-sr-shopping-cart-add"></i>
-                                                                    Add</a>
-                                                            </div>
-                                                            <div class="col d-grid">
-                                                                <a href="" class="btn-product"><i
-                                                                        class="fi fi-sr-eye"></i> More</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                @endforeach
-                                {{-- @elseif(empty($products) && empty($product) && !empty($new))
-                                @foreach ($new as $prd)
-                                    <div class="mt-4 col-9 col-sm-6 col-md-5 col-lg-5 col-xl-4">
-                                        <div class="card rounded-5 border-0 position-relative item ">
-                                            <div class="row justify-content-center align-items-center">
-                                                <div
-                                                    class="product col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">
-                                                    <a href="{{ route('home.detail', $prd) }}" class="link">
-                                                        <img src="{{ url('storage/products/thumbnail/' . $prd->img_thumbnail) ?? asset('ecommerce/img/doll.png') }}"
-                                                            class=" card-img-top mx-auto p-5 m-5 my-3" alt="img product"
-                                                            width="100%" />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="card__overlay card-body text-center ">
-                                                <div class="card__header">
-                                                    <div class="row row-cols-1" data-bs-toggle="collapse"
-                                                        href="#collapseExample{{ $prd->id }}" role="button"
-                                                        aria-expanded="false" aria-controls="collapseExample">
-                                                        <div class="col">
-                                                            <h5 class="card-title fw-bold mb-0">
-                                                                {{ $prd->name ?? 'Bear Brown Doll' }}</h5>
-                                                            <small class="ctr-sku">{{ $prd->category->name ?? 'Toy' }},
-                                                                {{ $prd->sku ?? '4AUSCS' }}</small>
-                                                        </div>
-                                                        <div class="col">
-                                                            <p class="harga">Rp. {{ $prd->price ?? '500K' }}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-center pt-3 card__description collapse "
-                                                        id="collapseExample{{ $prd->id }}">
-
-                                                        <div class="mx-2 row row-cols-1 gap-3 ">
-                                                            <div class="col d-grid">
-                                                                <a href="" class="btn-product"><i
-                                                                        class="fi fi-sr-shopping-cart-add"></i>
-                                                                    Add</a>
-                                                            </div>
-                                                            <div class="col d-grid">
-                                                                <a href="" class="btn-product"><i
-                                                                        class="fi fi-sr-eye"></i> More</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                @endforeach --}}
-                            @elseif(empty($products) && empty($product) && !empty($productFilter))
-                                @foreach ($productFilter as $prd)
-                                    <div class="mt-4 col-9 col-sm-6 col-md-5 col-lg-5 col-xl-4">
-                                        <div class="card rounded-5 border-0 position-relative item ">
-                                            <div class="row justify-content-center align-items-center">
-                                                <div
-                                                    class="product col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">
-                                                    <a href="{{ route('home.detail', $prd) }}" class="link">
-                                                        <img src="{{ url('storage/products/thumbnail/' . $prd->img_thumbnail) ?? asset('ecommerce/img/doll.png') }}"
-                                                            class=" card-img-top mx-auto p-5 m-5 my-3" alt="img product"
-                                                            width="100%" />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="card__overlay card-body text-center ">
-                                                <div class="card__header">
-                                                    <div class="row row-cols-1" data-bs-toggle="collapse"
-                                                        href="#collapseExample{{ $prd->id }}" role="button"
-                                                        aria-expanded="false" aria-controls="collapseExample">
-                                                        <div class="col">
-                                                            <h5 class="card-title fw-bold mb-0">
-                                                                {{ $prd->name ?? 'Bear Brown Doll' }}</h5>
-                                                            <small class="ctr-sku">{{ $prd->category->name ?? 'Toy' }},
-                                                                {{ $prd->sku ?? '4AUSCS' }}</small>
-                                                        </div>
-                                                        <div class="col">
-                                                            <p class="harga">Rp. {{ $prd->price ?? '500K' }}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-center pt-3 card__description collapse "
-                                                        id="collapseExample{{ $prd->id }}">
-
-                                                        <div class="mx-2 row row-cols-1 gap-3 ">
-                                                            <div class="col d-grid">
-                                                                <a href="" class="btn-product"><i
-                                                                        class="fi fi-sr-shopping-cart-add"></i>
-                                                                    Add</a>
-                                                            </div>
-                                                            <div class="col d-grid">
-                                                                <a href="" class="btn-product"><i
-                                                                        class="fi fi-sr-eye"></i> More</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                @endforeach
+                                @endforeach 
                             @endif
                         </div>
                         <nav aria-label="...">
                             <ul class="pagination justify-content-center pt-5 justify-content-lg-start">
-                                @isset($product)
-                                    {{ $product->links() }}
-                                @endisset
-                                @isset($products)
-                                    {{ $products->links() }}
-                                @endisset
                                 @isset($productFilter)
                                     {{ $productFilter->links() }}
                                 @endisset
-
                             </ul>
                         </nav>
                     </div>

@@ -178,6 +178,7 @@ class HomeController extends Controller
                 $products = Product::whereIn('id_category', $category)->whereBetween('price', [$filter_min_price, $filter_max_price])->where([['quantity', '>', 0], ['status', '=', 'active']])->latest()->simplePaginate(12);
             }
         }
+        // dd($products);
         return view('frontend.layouts.shopping.products', [
             'productFilter' => $products,
             'categoryAll' => ProductCategory::all(),

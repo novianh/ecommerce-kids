@@ -17,7 +17,7 @@ $(document).ready(function () {
             },
             500: {
                 items: 1,
-                stagePadding: 130,
+                stagePadding: 50,
             },
             600: {
                 items: 2,
@@ -25,7 +25,7 @@ $(document).ready(function () {
             },
             700: {
                 items: 2,
-                stagePadding: 60,
+                stagePadding: 0,
             },
             1000: {
                 items: 3,
