@@ -24,7 +24,7 @@
                 <div class="row row-cols-1 justify-content-center">
                     <div class="col-8">
                         <div class="wrapper">
-                            <form action="{{ route('products.filter') }}" method="post">
+                            <form action="{{ route('products.index') }}" method="get">
                                 @csrf
                                 <div
                                     class="p-1 bg-light rounded rounded-pill shadow-sm mb-md-4 mb-3 border search-input-wraperr">
@@ -51,42 +51,31 @@
                             </p>
                             <div class="collapse dont-collapse-sm" id="collapseExample">
                                 <div class="row justify-content-lg-start justify-content-center categories-products">
-                                    <form action="{{ route('products.filter') }}" method="POST">
-                                        @csrf
+                                    <form action="{{ URL::current() }}" method="GET">
+
                                         <div class="col-12 text-capitalize mb-3">
 
-                                            {{-- <ul style="line-height:180%" class="ms-0 text-capitalize">
-                                                <li>
-                                                    <a href="{{ route('products.index') }}" class=" ">All</a>
-                                                </li>
-                                            </ul> --}}
-                                            <div class="form-check">
-                                                <a href="{{ route('products.index') }}" class=" ">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="flexCheckDefaul" name="category_id">
-                                                    <label class="form-check-label" for="flexCheckDefaul">
-                                                        All
-                                                    </label>
-                                                </a>
-                                            </div>
+
+
                                             @isset($categoryAll)
                                                 @foreach ($categoryAll as $item)
-                                                    {{-- <li>
-                                                        <a href="{{ route('products.category', $item) }}"
-                                                            class=" ">{{ $item->name }}</a>
-                                                    </li> --}}
-                                                    {{-- <input type="text" value="{{ $item->id }}"> --}}
+                                                    @php
+                                                        $check = [];
+                                                        if (isset($_GET['category_id'])) {
+                                                            $check = $_GET['category_id'];
+                                                        }
+                                                    @endphp
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox"
                                                             value="{{ $item->id }}" id="flexCheckDefault{{ $item->id }}"
-                                                            name="category_id">
+                                                            name="category_id[]"
+                                                            {{ in_array($item->id, $check) ? ' checked' : '' }}>
                                                         <label class="form-check-label"
                                                             for="flexCheckDefault{{ $item->id }}">
                                                             {{ $item->name }}
                                                         </label>
                                                     </div>
                                                 @endforeach
-
                                             @endisset
                                             @empty($categoryAll)
                                                 <p class="text-start">Category is empty</p>
@@ -113,15 +102,21 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
+                                            @php
+                                                $new = [];
+                                                if (isset($_GET['new'])) {
+                                                    $new = $_GET['new'];
+                                                }
+                                            @endphp
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="new"
-                                                    id="flexCheckDefault" name="new">
+                                                    id="flexCheckDefault" name="new" {{ $new ? ' checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     New
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-12">
+                                        {{-- <div class="col-lg-12">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="discount"
                                                     id="dsc" name="discount">
@@ -129,8 +124,7 @@
                                                     Discount
                                                 </label>
                                             </div>
-
-                                        </div>
+                                        </div> --}}
                                         <div class="col-6 mx-auto">
                                             <div class="row">
 
@@ -153,9 +147,10 @@
                                         <div class="card rounded-5 border-0 position-relative item ">
                                             <div class="row justify-content-center align-items-center">
                                                 <a href="{{ route('home.detail', $prd) }}" class="link">
-                                                    <div class="product col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">
+                                                    <div
+                                                        class="product col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">
                                                         <img src="{{ url('storage/products/thumbnail/' . $prd->img_thumbnail) ?? asset('ecommerce/img/doll.png') }}"
-                                                            class=" card-img-top mx-auto p-5 m-5 my-3" alt="img product"/>
+                                                            class=" card-img-top mx-auto p-5 m-5 my-3" alt="img product" />
                                                     </div>
                                                 </a>
                                             </div>
@@ -410,6 +405,7 @@
             $resultFromClass.val(resultFrom);
             $resultToClass.val(resultTo);
         };
+        console.log({!! $from !!});
 
         $("#demo_0").ionRangeSlider({
             type: "double",
@@ -428,11 +424,17 @@
             onChange: function(data) {
                 saveResult(data);
                 writeResult();
+                
             },
             onFinish: function(data) {
                 saveResult(data);
                 writeResult();
+                console.log(data.from);
             },
+            onUpdate: function(data) {
+                from = data.from;
+                to = data.to;
+            }
         });
     </script>
 @endsection

@@ -19,6 +19,7 @@ use App\Models\WwdHome;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Laravel\Ui\Presets\React;
 
 class HomeController extends Controller
 {
@@ -77,7 +78,7 @@ class HomeController extends Controller
         // \dd($category->id);
         $entity = $detail->entity;
         $productsLike = Product::with('category')
-            ->where([['id_category', $category->id],['status', '=', 'active'], ['quantity', '>', 0]])
+            ->where([['id_category', $category->id], ['status', '=', 'active'], ['quantity', '>', 0]])
             ->inRandomOrder()->take(6)->get();
         return \view('frontend.layouts.shopping.prdDetails', [
             'product' => $detail,
@@ -116,7 +117,7 @@ class HomeController extends Controller
         return response()->json($product);
     }
 
-    
+
     public function category()
     {
         return view('frontend.layouts.shopping.categories', [
@@ -127,7 +128,7 @@ class HomeController extends Controller
     }
     public function about()
     {
-        return view('frontend.layouts.shopping.aboutus',[
+        return view('frontend.layouts.shopping.aboutus', [
             'social' => Contact::all(),
             'footer' => Footer::latest()->first(),
             'icon' => About::all(),
@@ -146,17 +147,50 @@ class HomeController extends Controller
             'footer' => Footer::latest()->first()
         ]);
     }
-    public function products()
+    public function products(Request $request)
     {
+        // \dd($request);
+        $products = Product::where([['status', '=', 'active'], ['quantity', '>', 0]])->simplePaginate(12);
+        if ($request->get('category_id')) {
+            $category = $_GET['category_id'];
+            $products = Product::whereIn('id_category', $category)->where([['quantity', '>', 0], ['status', '=', 'active']])->simplePaginate(12);
+        }
+        if ($request->get('new')) {
+            $products = Product::where([['quantity', '>', 0], ['status', '=', 'active']])->latest()->simplePaginate(12);
+        }
+        if ($request->search) {
+            $products = Product::where([['name', 'LIKE', "%{$request->search}%"], ['quantity', '>', 0], ['status', '=', 'active']])
+                ->simplePaginate(12);
+        }
+        if (!$request->new && !$request->category_id && $request->price_from && $request->price_to) {
+
+            // TODO This will only execute if you received any price
+            // TODO Make you you validated the min and max price properly
+            $filter_min_price = $request->price_from;
+            $filter_max_price = $request->price_to;
+            if ($filter_min_price && $filter_max_price) {
+                $products = Product::whereBetween('price', [$filter_min_price, $filter_max_price])->where([['quantity', '>', 0], ['status', '=', 'active']])->simplePaginate(12);
+            }
+        }
+        if($request->get('new') && $request->get('category_id')){
+            $filter_min_price = $request->price_from;
+            $filter_max_price = $request->price_to;
+            $category = $_GET['category_id'];
+            if ($filter_min_price && $filter_max_price) {
+                $products = Product::whereIn('id_category', $category)->whereBetween('price', [$filter_min_price, $filter_max_price])->where([['quantity', '>', 0], ['status', '=', 'active']])->latest()->simplePaginate(12);
+            }
+        }
         return view('frontend.layouts.shopping.products', [
-            'products' => Product::where([['status', '=', 'active'], ['quantity', '>', 0]])->simplePaginate(12),
+            'productFilter' => $products,
             'categoryAll' => ProductCategory::all(),
             'social' => Contact::all(),
-            'footer' => Footer::latest()->first()
+            'footer' => Footer::latest()->first(),
+            'from' => $request->get('price_from'),
+            'to' => $request->get('price_to'),
         ]);
     }
 
-    
+
     // TODO - newarrival
     public function productsNew()
     {
@@ -182,40 +216,45 @@ class HomeController extends Controller
         ]);
     }
 
+    // FIXME- filter select multiple checkbox
 
     public function filterStore(Request $request)
     {
         $products = Product::where([['status', '=', 'active'], ['quantity', '>', 0]])->simplePaginate(12);
-        if ($request->category_id && !$request->new == 'new') {
-            $category = ProductCategory::find($request->category_id);
-            $products = $category->product()->where([['status', '=', 'active'], ['quantity', '>', 0]])->simplePaginate(12);
-        }
-        if ($request->search) {
-            $products = Product::where([['name', 'LIKE', "%{$request->search}%"], ['quantity', '>', 0], ['status', '=', 'active']])
-                ->simplePaginate(12);
-        }
-        if ($request->new == 'new' && $request->price_from && $request->price_to && !$request->category_id) {
-            $filter_min_price = $request->price_from;
-            $filter_max_price = $request->price_to;
-            if ($filter_min_price && $filter_max_price) {
-                $products = Product::whereBetween('price', [$filter_min_price, $filter_max_price])->where([['quantity', '>', 0], ['status', '=', 'active']])->latest()->simplePaginate(12);
-            }
-        }
-        if ($request->new == 'new' && !$request->price_from && !$request->price_to && !$request->category_id) {
-            if ($request->new == 'new') {
-                $products = Product::where([['quantity', '>', 0], ['status', '=', 'active']])->latest()->simplePaginate(12);
-            }
-        }
-        if (!$request->new == 'new' && !$request->category_id && $request->price_from && $request->price_to) {
+        // \dd($request->get('category_id'));
 
-            // This will only execute if you received any price
-            // Make you you validated the min and max price properly
-            $filter_min_price = $request->price_from;
-            $filter_max_price = $request->price_to;
-            if ($filter_min_price && $filter_max_price) {
-                $products = Product::whereBetween('price', [$filter_min_price, $filter_max_price])->where([['quantity', '>', 0], ['status', '=', 'active']])->simplePaginate(12);
-            }
+        if ($request->get('category_id')) {
+            $category = $_GET['category_id'];
+            $products = Product::whereIn('id_category', $category)->where([['quantity', '>', 0], ['status', '=', 'active']])->simplePaginate(12);
         }
+
+
+        // if ($request->search) {
+        //     $products = Product::where([['name', 'LIKE', "%{$request->search}%"], ['quantity', '>', 0], ['status', '=', 'active']])
+        //         ->simplePaginate(12);
+        // }
+        // if ($request->new == 'new' && $request->price_from && $request->price_to && !$request->category_id) {
+        //     $filter_min_price = $request->price_from;
+        //     $filter_max_price = $request->price_to;
+        //     if ($filter_min_price && $filter_max_price) {
+        //         $products = Product::whereBetween('price', [$filter_min_price, $filter_max_price])->where([['quantity', '>', 0], ['status', '=', 'active']])->latest()->simplePaginate(12);
+        //     }
+        // }
+        // if ($request->new == 'new' && !$request->price_from && !$request->price_to && !$request->category_id) {
+        //     if ($request->new == 'new') {
+        //         $products = Product::where([['quantity', '>', 0], ['status', '=', 'active']])->latest()->simplePaginate(12);
+        //     }
+        // }
+        // if (!$request->new == 'new' && !$request->category_id && $request->price_from && $request->price_to) {
+
+        //     // This will only execute if you received any price
+        //     // Make you you validated the min and max price properly
+        //     $filter_min_price = $request->price_from;
+        //     $filter_max_price = $request->price_to;
+        //     if ($filter_min_price && $filter_max_price) {
+        //         $products = Product::whereBetween('price', [$filter_min_price, $filter_max_price])->where([['quantity', '>', 0], ['status', '=', 'active']])->simplePaginate(12);
+        //     }
+        // }
 
         return \view('frontend.layouts.shopping.products', [
             'productFilter' => $products,
@@ -304,7 +343,7 @@ class HomeController extends Controller
     {
         $cookie_data = stripslashes(Cookie::get('shopping_cart'));
         $cart_data = json_decode($cookie_data, true);
-        return view('frontend.layouts.shopping.cart',[
+        return view('frontend.layouts.shopping.cart', [
             'social' => Contact::all(),
             'footer' => Footer::latest()->first()
         ])

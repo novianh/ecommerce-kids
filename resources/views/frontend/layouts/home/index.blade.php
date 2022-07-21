@@ -158,7 +158,7 @@
                             </div>
                             <div class="col text-center">
                                 <small>
-                                    <a href="{{ route('products.filter') }}" class="link align-items-center filterNew"
+                                    <a href="{{ route('products.index') }}" class="link align-items-center filterNew"
                                         id="style-2" data-replace="Check it">
                                         <span> More
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
@@ -391,15 +391,15 @@
             e.preventDefault();
 
             jQuery.ajax({
-                url: "{{ route('products.filter') }}",
-                type: "POST",
+                url: "{{ route('products.index') }}",
+                type: "get",
                 data: {
                     _token: "{{ csrf_token() }}",
                     new: 'new'
                 },
                 success: function(response) {
                     console.log(response);
-                    window.location.href = "user/products/new";
+                    window.location.href = "user/products?new=new";
                 },
                 error: function(response) {
                     console.log(response);
