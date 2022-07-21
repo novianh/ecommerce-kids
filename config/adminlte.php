@@ -262,6 +262,12 @@ return [
             'url'  => 'admin/product',
             'icon' => 'fas fa-list-ul',
         ],
+        ['header' => 'Order Management'],
+        [
+            'text' => 'Order details',
+            'url'  => '/admin/order',
+            'icon' => 'fas fa-clipboard',
+        ],
         [
             'text'    => 'Checkout',
             'icon'    => 'fas fa-credit-card',
@@ -307,12 +313,6 @@ return [
                 // //     'url'  => '#',
                 // // ],
             ],
-        ],
-        ['header' => 'Order Management'],
-        [
-            'text' => 'Order details',
-            'url'  => '/admin/order',
-            'icon' => 'fas fa-clipboard',
         ],
         ['header' => 'Page Management'],
         [

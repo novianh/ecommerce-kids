@@ -39,7 +39,7 @@
 
                     <div class="d-flex mt-n6 mx-auto justify-content-center text-center">
                         <a href="{{ route('thumbnail.index', $product->id) }}" class="dropdown-item text-primary"
-                            data-bs-toggle="tooltip" data-bs-placement="bottom" title=" Add thumbnail">
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" title=" Edit thumbnail">
                             <i class="fas fa-plus-square text-lg"></i></a>
 
                     </div>
@@ -68,7 +68,7 @@
                                 @endisset
                                 @empty($product->img_thumbnail)
                                 <a href="{{ route('thumbnail.index', $product->id) }}" class="dropdown-item text-primary"
-                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title=" Add thumbnail">
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title=" Edit thumbnail">
                                     <i class="fas fa-plus-square text-lg"></i></a>
                                     
                                 @endempty

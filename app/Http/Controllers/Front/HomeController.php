@@ -217,52 +217,6 @@ class HomeController extends Controller
 
     // FIXME- filter select multiple checkbox
 
-    public function filterStore(Request $request)
-    {
-        $products = Product::where([['status', '=', 'active'], ['quantity', '>', 0]])->simplePaginate(12);
-        // \dd($request->get('category_id'));
-
-        if ($request->get('category_id')) {
-            $category = $_GET['category_id'];
-            $products = Product::whereIn('id_category', $category)->where([['quantity', '>', 0], ['status', '=', 'active']])->simplePaginate(12);
-        }
-
-
-        // if ($request->search) {
-        //     $products = Product::where([['name', 'LIKE', "%{$request->search}%"], ['quantity', '>', 0], ['status', '=', 'active']])
-        //         ->simplePaginate(12);
-        // }
-        // if ($request->new == 'new' && $request->price_from && $request->price_to && !$request->category_id) {
-        //     $filter_min_price = $request->price_from;
-        //     $filter_max_price = $request->price_to;
-        //     if ($filter_min_price && $filter_max_price) {
-        //         $products = Product::whereBetween('price', [$filter_min_price, $filter_max_price])->where([['quantity', '>', 0], ['status', '=', 'active']])->latest()->simplePaginate(12);
-        //     }
-        // }
-        // if ($request->new == 'new' && !$request->price_from && !$request->price_to && !$request->category_id) {
-        //     if ($request->new == 'new') {
-        //         $products = Product::where([['quantity', '>', 0], ['status', '=', 'active']])->latest()->simplePaginate(12);
-        //     }
-        // }
-        // if (!$request->new == 'new' && !$request->category_id && $request->price_from && $request->price_to) {
-
-        //     // This will only execute if you received any price
-        //     // Make you you validated the min and max price properly
-        //     $filter_min_price = $request->price_from;
-        //     $filter_max_price = $request->price_to;
-        //     if ($filter_min_price && $filter_max_price) {
-        //         $products = Product::whereBetween('price', [$filter_min_price, $filter_max_price])->where([['quantity', '>', 0], ['status', '=', 'active']])->simplePaginate(12);
-        //     }
-        // }
-
-        return \view('frontend.layouts.shopping.products', [
-            'productFilter' => $products,
-            'categoryAll' => ProductCategory::all(),
-            'social' => Contact::all(),
-            'footer' => Footer::latest()->first()
-        ]);
-    }
-
 
 
 
@@ -300,6 +254,7 @@ class HomeController extends Controller
             $prod_name = $products->name;
             $prod_image = $products->img_thumbnail;
             $priceval = $products->price;
+            $stoct = $products->quantity;
 
             if ($products) {
                 $item_array = array(
@@ -307,7 +262,8 @@ class HomeController extends Controller
                     'item_name' => $prod_name,
                     'item_quantity' => $quantity,
                     'item_price' => $priceval,
-                    'item_image' => $prod_image
+                    'item_image' => $prod_image,
+                    'item_stock' => $stoct
                 );
                 $cart_data[] = $item_array;
 
@@ -342,10 +298,7 @@ class HomeController extends Controller
     {
         $cookie_data = stripslashes(Cookie::get('shopping_cart'));
         $cart_data = json_decode($cookie_data, true);
-        return view('frontend.layouts.shopping.cart', [
-            'social' => Contact::all(),
-            'footer' => Footer::latest()->first()
-        ])
+        return view('frontend.layouts.shopping.cart')
             ->with('cart_data', $cart_data);
     }
     public function updatetocart(Request $request)

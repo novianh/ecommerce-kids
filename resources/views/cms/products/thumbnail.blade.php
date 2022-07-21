@@ -33,7 +33,7 @@
                             <input type="file" id="image"
                                 class="dropify @error('img_thumbnail') is-invalid @enderror" id="input-file-now"
                                 name="img_thumbnail" data-errors-position="outside" data-max-file-size="4M"
-                                data-allowed-file-extensions="jpeg png jpg svg gif"  data-allowed-formats="portrait square" data-max-height="600"/>
+                                data-allowed-file-extensions="jpeg png jpg svg gif"  data-allowed-formats="portrait square"/>
                             @error('img_thumbnail')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror

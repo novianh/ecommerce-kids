@@ -288,7 +288,7 @@
                         success: function(data) {
                             if (data) {
                                 modal.modal('hide')
-
+                                console.log(data);
                                 alertify.set('notifier', 'position', 'top-center');
                                 alertify.message('uploaded succsess').delay(3);
 

@@ -28,6 +28,9 @@ class ProductController extends Controller
                         <a href="product/' . $row->id . '"
                             class="dropdown-item text-dark btn-show" >
                             <i class="fa fa-search"></i> See More</a>
+                        <a href="thumbnail/'.$row->id.'/index"
+                            class="dropdown-item text-dark btn-show" >
+                            <i class="fa fa-image"></i> Add Thumbnail</a>
                         <a href="#"
                             class="dropdown-item text-success btn-edit"><i class="fa fa-edit"
                                 data-toggle="modal" data-target="#edit"></i> Edit</a>

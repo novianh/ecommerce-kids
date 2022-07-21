@@ -70,8 +70,9 @@ class CheckoutController extends Controller
 
             $file = $request->file('file');
             $filename = date('d-m-Y His') . "_" . $file->getClientOriginalName();
-            $tujuan_upload = 'storage/transfer';
+            $tujuan_upload = 'public/transfer';
             $file->storeAs($tujuan_upload, $filename);
+            // dd($filename);
 
             $data = Transfer::updateOrCreate([
                 'order_detail_id' =>  $request->order_detail_id
@@ -86,7 +87,10 @@ class CheckoutController extends Controller
                 'status' => $request->status
             ]);
         }
-        $data = ['data not found'];
+        else{
+
+            $data = ['data not found'];
+        }
 
         // $file = $request->all();
         // if ($request->file) {

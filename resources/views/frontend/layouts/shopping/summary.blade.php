@@ -13,10 +13,10 @@
         <section id="co" class=" bg-light">
             <div class="ornaments position-relative">
                 <div class="ornament position-absolute">
-                    <img src="ecommerce/img/starorn.svg" alt="" width="100px">
+                    <img src="{{ asset('ecommerce/img/starorn.svg') }}" alt="" width="100px">
                 </div>
                 <div class="ornament2 position-absolute">
-                    <img src="ecommerce/img/starorn.svg" alt="" width="100px">
+                    <img src="{{ asset('ecommerce/img/starorn.svg') }}" alt="" width="100px">
                 </div>
             </div>
             <div class="container py-5">

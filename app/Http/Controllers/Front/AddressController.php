@@ -53,7 +53,6 @@ class AddressController extends Controller
             "name" => "required",
             "telephone" => "required",
             "address" => "required",
-            "address2" => "required",
             "country" => "required",
             "state" => "required",
             "zip" => "required",

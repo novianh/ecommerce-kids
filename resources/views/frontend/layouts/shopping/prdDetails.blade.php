@@ -189,7 +189,7 @@
                                 @endforeach
                             </div>
                             <div class="col text-center">
-                                <small><a href="products.html" id="style-2" data-replace="Check it"
+                                <small><a href="{{ route('products.index') }}" id="style-2" data-replace="Check it"
                                         class="link align-items-center">
                                         <span> More
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"

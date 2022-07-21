@@ -56,18 +56,20 @@
                                             {{ number_format($data['item_price']) }}</div>
                                         <div class="col col-3-row" data-label="Quantity">
                                             <div class="row justify-content-center align-items-center">
-                                                <div class="col-md-10 col-xl-8">
+                                                <div class="col-md-10 col-xl-9">
                                                     {{-- <input type="number"
                                                     class=" form-control rounded-5 text-center mx-auto mt-md-0"
                                                     value="{{ $data['item_quantity'] }}" min="1" max="5" style="width: 100% ;"> --}}
-                                                    <input type="hidden" class="product_id"
-                                                        value="{{ $data['item_id'] }}">
+                                                    <input type="hidden" class="product_id" value="{{ $data['item_id'] }}">
                                                     <div class="input-group quantity">
                                                         <div class="input-group-prepend decrement-btn changeQuantity rounded-0"
                                                             style="cursor: pointer ">
                                                             <span class="input-group-text"
                                                                 style="border: 3px solid rgb(244 191 191)">-</span>
                                                         </div>
+                                                        
+                                                        <input type="hidden" class="stock"
+                                                            value="{{ $data['item_stock'] ?? 0}}">
                                                         <input type="text" class="qty-input form-control rounded"
                                                             maxlength="2" value="{{ $data['item_quantity'] }}">
                                                         <div class="input-group-append increment-btn changeQuantity"
@@ -102,9 +104,11 @@
                                             class="cart-grand-price-viewajax">{{ number_format($total) }}</span></div>
                                     <div class="col col-4-row">
                                         @if (Auth::user())
-                                            <a href="{{ route ('checkout') }}" class="btn px-3 btn-sm rounded-5 text-white">Checkout</a>
+                                            <a href="{{ route('checkout') }}"
+                                                class="btn px-3 btn-sm rounded-5 text-white">Checkout</a>
                                         @else
-                                        <a href="{{ route ('login') }}" class="btn px-3 btn-sm rounded-5 text-white">Checkout</a>
+                                            <a href="{{ route('login') }}"
+                                                class="btn px-3 btn-sm rounded-5 text-white">Checkout</a>
                                             {{-- you add a pop modal for making a login --}}
                                         @endif
 
@@ -143,7 +147,10 @@
                 var incre_value = $(this).parents('.quantity').find('.qty-input').val();
                 var value = parseInt(incre_value, 10);
                 value = isNaN(value) ? 0 : value;
-                if (value < 10) {
+                var stock = $(this).parents('.quantity').find('.stock').val();
+                var stock_value = parseInt(stock, 10);
+                console.log(stock_value);
+                if (value < stock) {
                     value++;
                     $(this).parents('.quantity').find('.qty-input').val(value);
                 }
@@ -228,7 +235,7 @@
                     success: function(response) {
                         window.location.reload();
                         // console.log(response)
-                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.set('notifier', 'position', 'top-center');
                         alertify.success(response.status);
 
                     }
