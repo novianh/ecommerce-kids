@@ -1,7 +1,7 @@
 <section class="ftco-section">
     <div class="container text-center pt-5 ">
-        <img src="{{ asset('ecommerce/img/logooo.svg') }}" class="col-3 col-md-2 col-lg-2 col-xl-1" alt="logo"
-            width="100%">
+        <img src="{{ asset('storage/logo/' . $logo->logo) ?? asset('ecommerce/img/logooo.svg') }}"
+            class="col-3 col-md-2 col-lg-2 col-xl-1" alt="logo" width="100%">
         <nav class="navbar navbar-expand-lg ftco-navbar-light ftco_navbar bg-transparent p-5 pb-3 mt-3">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -13,16 +13,16 @@
                     <div class="navbar-nav text-start ">
                         <a class="nav-line nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4" aria-current="page"
                             href="{{ route('home') }}"> Home</a>
-                        <a class=" nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4 {{ (request()->is('user/category')) ? 'active' : '' }}"
-                            href="{{ route('home.category') }}" >Categories</a>
-                        <a class="{{ (request()->is('user/about')) ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
+                        <a class=" nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4 {{ request()->is('user/category') ? 'active' : '' }}"
+                            href="{{ route('home.category') }}">Categories</a>
+                        <a class="{{ request()->is('user/about') ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
                             href="{{ route('about.home.index') }}">About
                             Us</a>
-                        <a class="{{ (request()->is('user/products*')) ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
+                        <a class="{{ request()->is('user/products*') ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
                             href="{{ route('products.index') }}">Products</a>
-                        <a class="{{ (request()->is('user/collection')) ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
+                        <a class="{{ request()->is('user/collection') ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
                             href="{{ route('collection.index') }}">Collection</a>
-                        <a class="{{ (request()->is('/#getintouch')) ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
+                        <a class="{{ request()->is('/#getintouch') ? 'active' : '' }} nav-line  nav-link nav-link-ltr pb-lg-3 pb-3 px-0 mx-lg-4"
                             href="{{ route('home') }}/#getintouch">Contact Us</a>
 
                     </div>

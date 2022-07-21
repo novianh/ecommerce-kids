@@ -9,6 +9,7 @@ use App\Models\Contact;
 use App\Models\DiscHome;
 use App\Models\Footer;
 use App\Models\Hero;
+use App\Models\Logo;
 use App\Models\NewHome;
 use App\Models\Story;
 use App\Models\WwdHome;
@@ -20,7 +21,8 @@ class PageController extends Controller
     {
         return \view('cms.home.hero', [
             'hero' => Hero::latest()->first(),
-            'new' => NewHome::latest()->first()
+            'new' => NewHome::latest()->first(),
+            'logo' => Logo::latest()->first()
         ]);
     }
     public function wwd()
@@ -76,15 +78,13 @@ class PageController extends Controller
                 'title.required' => 'Wajib Diisi',
                 'desc.required' => 'Wajib Diisi',
                 'desc_new.required' => 'Wajib Diisi',
-
             ]
         );
 
         $input_slider = $request->only([
             'title', 'desc'
         ]);
-        $input_new = $request->only('desc_new');
-        if ($request->file('image')) {
+        if ($request->file('image') && !$request->file('logo')) {
             $image = $request->file('image');
             if (isset($request->id)) {
                 unlink("storage/hero/" . Hero::find($request->id)->image);
@@ -102,6 +102,65 @@ class PageController extends Controller
                 'id' => $request->id_new,
             ], [
                 'desc' => $request->desc_new
+            ]);
+        } else if ($request->file('logo') && !$request->file('image')) {
+            $logo = $request->file('logo');
+            if (isset($request->id_logo)) {
+                unlink("storage/logo/" . Logo::find($request->id_logo)->logo);
+            }
+
+            $nama_logo = \uniqid().date('d-m-Y His') . "_" . $logo->getClientOriginalName();
+            $tujuan_upload_logo = 'public/logo';
+            $logo->storeAs($tujuan_upload_logo, $nama_logo);
+            unset($input_slider['image']);
+            Hero::updateOrCreate(['id' => $request->id], [
+                'title' => $request->title,
+                'desc' => $request->desc,
+            ]);
+            NewHome::updateOrCreate([
+                'id' => $request->id_new,
+            ], [
+                'desc' => $request->desc_new
+            ]);
+            Logo::updateOrCreate([
+                'id' => $request->id_logo
+            ], [
+                'logo' => $nama_logo
+            ]);
+        } else if ($request->file('logo') && $request->file('image')) {
+            $logo = $request->file('logo');
+            $image = $request->file('image');
+            if (isset($request->id)) {
+                unlink("storage/hero/" . Hero::find($request->id)->image);
+            }
+            if (isset($request->id_logo)) {
+                unlink("storage/logo/" . Logo::find($request->id_logo)->logo);
+            }
+
+            $nama_image = \uniqid().date('d-m-Y His') . "_" . $image->getClientOriginalName();
+            $tujuan_upload = 'public/hero';
+            $image->storeAs($tujuan_upload, $nama_image);
+            $input_slider['image'] = "$nama_image";
+
+            $nama_logo = date('d-m-Y His') . "_" . $logo->getClientOriginalName();
+            $tujuan_upload_logo = 'public/logo';
+            $logo->storeAs($tujuan_upload_logo, $nama_logo);
+            // $logo['logo'] = "$nama_logo";
+
+            Hero::updateOrCreate(['id' => $request->id], [
+                'title' => $request->title,
+                'desc' => $request->desc,
+                'image' => $nama_image
+            ]);
+            NewHome::updateOrCreate([
+                'id' => $request->id_new,
+            ], [
+                'desc' => $request->desc_new
+            ]);
+            Logo::updateOrCreate([
+                'id' => $request->id_logo
+            ], [
+                'logo' => $nama_logo
             ]);
         } else {
             unset($input_slider['image']);
@@ -373,7 +432,7 @@ class PageController extends Controller
             'title' => $request->title,
             'address' => $request->address,
             'telephone' => $request->telephone,
-    ]);
+        ]);
 
         return redirect()->route('contact.index')
             ->with('success_message', 'Your Action Success');
@@ -426,9 +485,9 @@ class PageController extends Controller
 
         $data = Contact::find($id);
         $input = $request->all();
-        
-            unset($input['icon']);
-            $data->update($request->all());
+
+        unset($input['icon']);
+        $data->update($request->all());
 
         return redirect()->route('contact.index')
             ->with('success_message', 'Your Action Success');
@@ -453,7 +512,7 @@ class PageController extends Controller
                 'subtitle' => $request->subtitle
             ]);
             $data->save;
-        } else{
+        } else {
             unset($input['icon']);
             $data->update($request->all());
         }

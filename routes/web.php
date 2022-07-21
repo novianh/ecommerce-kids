@@ -175,7 +175,8 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::post('/mark-as-read', [DashboardController::class, 'markNotification'])->name('markNotification');
 
       // page management
-      Route::get('/management/page/slider', [PageController::class, 'slider'])->name('slider.index');
+      // FIXME edit for upload logo
+      Route::get('/management/page/slider', [PageController::class, 'slider'])->name('slider.index'); 
       Route::post('/management/page/slider/store', [PageController::class, 'sliderStore'])->name('slider.store');
       Route::get('/management/page/wwd', [PageController::class, 'wwd'])->name('wwd.index');
       Route::post('/management/page/wwd/store', [PageController::class, 'wwdStore'])->name('wwd.store');

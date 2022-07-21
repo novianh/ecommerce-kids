@@ -50,11 +50,34 @@
                                 </div>
                             </div>
                         </div>
+                        @isset($logo)
+                        <div class="card bg-light">
+                            <div class="card-header bg-light">
+                                <h5>Logo</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <img src="{{ asset('storage/logo/' . $logo->logo) }}" alt="..." class="col-md-1 col-2">
+                                </div>
+                            </div>
+                        </div>
+                        @endisset
+                        @empty($logo)
+                        <div class="card bg-light">
+                            <div class="card-header bg-light">
+                                <h5>Logo</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <small>Data not found</small>
+                                </div>
+                            </div>
+                        </div>
+                        @endempty
                     @endisset
 
                     @empty($hero)
                         <div class="d-flex justify-content-center">
-
                             <a type="button" class=" btn btn-block tambah m-auto" data-toggle="modal"
                                 data-target="#modal-form"><i class="fas fa-plus"></i> ADD</a>
                         </div>
@@ -77,6 +100,7 @@
                             @csrf
                             <input type="hidden" name="id" value="{{ $hero->id ?? '' }}">
                             <input type="hidden" name="id_new" value="{{ $new->id ?? '' }}">
+                            <input type="hidden" name="id_logo" value="{{ $new->id ?? '' }}">
                             <div class="card-body">
                                 <div class="input-group input-group-static mb-4">
                                     <label for="exampleInputUsername1">Title</label>
@@ -126,6 +150,33 @@
                                             data-min-width="800" data-max-file-size="4M"
                                             data-allowed-file-extensions="jpeg png jpg svg gif" />
                                         @error('desc')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                @endempty
+                                @isset($logo)
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Logo <small class="text-warning">*(Landscape /
+                                                Square)</small></label>
+                                        <input type="file" class="dropify @error('logo') is-invalid @enderror"
+                                            id="input-file-now" name="logo" data-errors-position="outside"
+                                             data-max-file-size="4M"
+                                            data-allowed-file-extensions="jpeg png jpg svg gif"
+                                            data-default-file="{{ url('storage/logo/' . $logo->logo) ?? '' }}" />
+                                        @error('logo')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                @endisset
+                                @empty($logo)
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Logo <small class="text-warning">*(Landscape /
+                                                Square)</small></label>
+                                        <input type="file" class="dropify @error('logo') is-invalid @enderror"
+                                            id="input-file-now" name="logo" data-errors-position="outside"
+                                             data-max-file-size="4M"
+                                            data-allowed-file-extensions="jpeg png jpg svg gif" />
+                                        @error('logo')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>

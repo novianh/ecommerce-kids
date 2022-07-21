@@ -2,7 +2,7 @@
     <div class="container">
         <section class="ftco-section">
             <div class="container text-center pt-5 ">
-                <img src="{{ asset('ecommerce/img/logooo.svg') }}" class="col-3 col-md-2 col-lg-2 col-xl-1"
+                <img src="{{asset('storage/logo/' . $logo->logo) ??  asset('ecommerce/img/logooo.svg') }}" class="col-3 col-md-2 col-lg-2 col-xl-1"
                     alt="logo" width="100%">
                 <nav class="navbar navbar-expand-lg ftco-navbar-light ftco_navbar bg-transparent p-5 mt-3">
                     <div class="container-fluid">

@@ -50,8 +50,6 @@ class HomeController extends Controller
             'promo' => DiscHome::latest()->first(),
             'icon' => About::all(),
             'about' => AboutHome::latest()->first(),
-            'social' => Contact::all(),
-            'footer' => Footer::latest()->first()
 
         ]);
     }
