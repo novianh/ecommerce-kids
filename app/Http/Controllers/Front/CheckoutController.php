@@ -55,7 +55,9 @@ class CheckoutController extends Controller
             'payment' => $payment,
             'address' => $address,
             'province' => $province,
-            'city' => $city
+            'city' => $city,
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
         ])->with('cart_data', $cart_data);
     }
 

@@ -201,16 +201,16 @@ class MenuController extends Controller
         return redirect()->route('dashboard.index')
             ->with('success_message', 'success delete customer');
     }
-    public function cancel(Request $request)
+    public function cancel($id)
     {
-        // dd($request->id);
-        $data = OrderDetail::find($request->id);
+        // dd($request);
+        $data = OrderDetail::find($id);
 
         $data->update([
-            'status' => $request->status,
+            'status' => 7,
         ]);
         return response()->json(['success'=>'*Form is successfully submitted!']);
-        // return redirect()->route('dashboard.index')
+        // return redirect()->back();
         //     ->with('success_message', 'success delete customer');
     }
 }

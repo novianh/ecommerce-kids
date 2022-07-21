@@ -18,15 +18,14 @@
                                         alt="" width="70rem">
                                 </div>
                                 <div class="col">
-                                    <img src="{{ asset('ecommerce/img/hero.jpg') }}" alt="hero" width="100%"
+                                    <img src="{{asset('storage/hero/'. $slider->image) ?? asset('ecommerce/img/hero.jpg') }}" alt="hero" width="100%"
                                         class="rounded-5 shadow col-lg-12 col-12">
                                 </div>
                             </div>
                         </div>
                         <div class="col-9 col-lg-5 col-xl-4 mx-lg-0  text-lg-start">
                             <h1 class="pt-5 position-relative" style="z-index: 11;">{!! $slider->title ??
-                                '<span>The</span> Best <span>TOY</span>
-                                                                                                                                                                                                        Collection' !!}</h1>
+                                '<span>The</span> Best <span>TOY</span>                                                                                                              Collection' !!}</h1>
                             <p class="my-4">{{ $slider->desc ?? '' }} </p>
                             <div class="d-grid d-block d-lg-flex">
                                 <button type="button" class="btn rounded-5 px-lg-5 shadow-lg">Discover Now</button>
@@ -78,7 +77,8 @@
                             </a>
                         </div>
                         <div class="col text-center">
-                            <small><a href="#" class="link align-items-center" id="style-2" data-replace="Check it">
+                            <small><a href="{{ route('home.category') }}" class="link align-items-center" id="style-2"
+                                    data-replace="Check it">
                                     <span> More
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
                                             fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -145,7 +145,7 @@
                                                                 Add</a>
                                                         </div>
                                                         <div class="col d-grid">
-                                                            <a href="" class="btn-product"><i
+                                                            <a href="javascript:void(0)" class="btn-product"><i
                                                                     class="fi fi-sr-eye"></i> More</a>
                                                         </div>
                                                     </div>
@@ -157,8 +157,9 @@
                                 @endforeach
                             </div>
                             <div class="col text-center">
-                                <small><a href="#" class="link align-items-center" id="style-2"
-                                        data-replace="Check it">
+                                <small>
+                                    <a href="{{ route('products.filter') }}" class="link align-items-center filterNew"
+                                        id="style-2" data-replace="Check it">
                                         <span> More
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16"
                                                 fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -166,7 +167,8 @@
                                                     d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
                                             </svg>
                                         </span>
-                                    </a></small>
+                                    </a>
+                                </small>
                             </div>
                         </div>
                     </div>
@@ -301,7 +303,7 @@
                             jQuery.each(data, function(key, val) {
                                 console.log(val.name)
                                 jQuery('#data').append(
-                                    '<div class="owl-item mx-lg-auto mx-md-3 mt-3 mt-lg-0 col-xl-3 col-md-5 col-sm-6 col-12">' +
+                                    '<div class="owl-item  mx-md-3 mt-3 mt-lg-0 col-xl-3 col-md-5 col-sm-6 col-12">' +
                                     '<div class="card rounded-5 border-0 position-relative item ">' +
                                     ' <div class="row justify-content-center align-items-center">' +
                                     '<div class="col-12 col-md-10 col-lg-12 d-flex justify-content-center align-items-center">' +
@@ -380,6 +382,27 @@
                     jQuery("#name-error").text(response.responseJSON.errors.name);
                     jQuery("#email-error").text(response.responseJSON.errors.email);
                     jQuery("#message-error").text(response.responseJSON.errors.message);
+                },
+            });
+        });
+
+        //TODO - add filter ajax
+        jQuery(".filterNew").click(function(e) {
+            e.preventDefault();
+
+            jQuery.ajax({
+                url: "{{ route('products.filter') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    new: 'new'
+                },
+                success: function(response) {
+                    console.log(response);
+                    window.location.href = "user/products/new";
+                },
+                error: function(response) {
+                    console.log(response);
                 },
             });
         });

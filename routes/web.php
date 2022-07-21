@@ -14,6 +14,7 @@ use App\Http\Controllers\ProductCMS\ProductCategoryController;
 use App\Http\Controllers\ProductCms\ThumbnailController;
 use App\Http\Controllers\Front\ContactController as FrontContactController;
 use App\Http\Controllers\ProductCms\CheckoutController as CO;
+use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\SummaryController;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +47,8 @@ Route::group(['prefix' => 'user'], function () {
    Route::get('/category', [App\Http\Controllers\Front\HomeController::class, 'category'])->name('home.category');
    Route::get('/collection', [App\Http\Controllers\Front\HomeController::class, 'collection'])->name('collection.index');
    Route::get('/products/all', [App\Http\Controllers\Front\HomeController::class, 'products'])->name('products.index');
+   Route::get('/products/new', [App\Http\Controllers\Front\HomeController::class, 'productsNew'])->name('products.new');
+
    Route::get('/products/{id}/category', [App\Http\Controllers\Front\HomeController::class, 'productByCategory'])->name('products.category');
    Route::post('/products/filter', [HomeController::class, 'filterStore'])->name('products.filter');
    Route::get('/about', [App\Http\Controllers\Front\HomeController::class, 'about'])->name('about.home.index');
@@ -72,7 +75,7 @@ Route::group(['prefix' => 'user'], function () {
    Route::get('/gallery/{id}/index', [GalleryController::class, 'index'])->name('gallery.index');
 
    // profile
-   Route::post('/profile/cancel/order', [MenuController::class, 'cancel'])->name('order.cancel'); //TODO: cancel order
+   Route::put('/profile/cancel/order/{id}', [MenuController::class, 'cancel'])->name('order.cancel'); //TODO: cancel order
    Route::get('/profile/{id}/index', [MenuController::class, 'profile'])->name('profile');
    Route::get('/profile/{id}/list', [MenuController::class, 'profileAjax'])->name('profile.ajax');
    Route::get('/profile/{id}/edit', [MenuController::class, 'profileEdit'])->name('profile.edit');

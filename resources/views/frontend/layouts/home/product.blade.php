@@ -32,14 +32,14 @@
         <div class="row justify-content-center">
             <div class="col-12 carousel-wrap mx-xl-0 text-start">
                 <div class="my-5">
-                    <div class="row justify-content-center" id="data">
+                    <div class="row justify-content-start" id="data">
                         @if (is_null($productCtgLast))
                             <h5 class="text-center" style="color:rgb(140 192 222)">Sorry! There are no products in this
                                 category</h5>
                         @else
                             {{-- {{dd($productCtgLast)}} --}}
                             @foreach ($productCtgLast as $np)
-                                <div class="owl-item mx-lg-auto mx-md-3 mt-3 mt-lg-0 col-xl-3 col-md-5 col-sm-6 col-12">
+                                <div class="owl-item mx-md-3 mt-3 mt-lg-0 col-xl-3 col-md-5 col-sm-6 col-12">
                                     <div class="card rounded-5 border-0 position-relative item ">
                                         <div class="row justify-content-center align-items-center">
                                             <div
@@ -74,7 +74,7 @@
                                                                 Add</a>
                                                         </div>
                                                         <div class="col d-grid">
-                                                            <a href="" class="btn-product"><i
+                                                            <a href="javascript:void(0)" class="btn-product"><i
                                                                     class="fi fi-sr-eye"></i>
                                                                 More</a>
                                                         </div>
@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="col text-center ">
-                <small><a href="#" id="style-2" data-replace="Check it" class="link align-items-center">
+                <small><a href="{{ route('products.index') }}" id="style-2" data-replace="Check it" class="link align-items-center productCategory">
                         <span> More
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
                                 class="bi bi-arrow-right" viewBox="0 0 16 16">

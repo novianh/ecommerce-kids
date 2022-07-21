@@ -36,7 +36,7 @@
                                             <th scope="row">Image</th>
                                             
                                             <td><img src="{{ asset('storage/promo/' . $promo->image) }}" alt=""
-                                                class="rounded-5 shadow-lg col-5" width="100%"></td>
+                                                class="rounded-5 shadow-lg col-4 col-md-2" width="100%"></td>
                                           </tr>
                                           <tr>
                                             <th scope="row">Title</th>
@@ -49,35 +49,10 @@
                                           <tr>
                                             <th scope="row">Icon</th>
                                             <td><img src="{{ asset('storage/promo/icon/' . $promo->icon) }}"
-                                                alt="ornament" class="mx-auto mb-3 col-4 col-md-5" width="100%"></td>
+                                                alt="ornament" class="mx-auto mb-3 col-4 col-md-2" width="100%"></td>
                                           </tr>
                                         </tbody>
                                       </table>
-                                    {{-- <section id="discount" class="py-lg-5 ">
-                                        <div class="container-fluid">
-                                            <div class="row justify-content-center">
-                                                <div class="col-12 col-md-7 col-xl-8 ">
-
-                                                    <img src="{{ asset('storage/promo/' . $promo->image) }}" alt=""
-                                                        class="rounded-5 shadow-lg" width="100%">
-
-                                                </div>
-                                                <div class="col-12 col-md-5 col-xl-4 text-center mt-4 mt-md-0">
-                                                    <div class="wrapper rounded-5 py-5">
-                                                        <img src="{{ asset('storage/promo/icon/' . $promo->icon) }}"
-                                                            alt="ornament" class="mx-auto mb-3 col-4 col-md-5" width="100%">
-                                                        <p class="text-uppercase mb-4"><br> SALE {{ $promo->discount }}%</p>
-                                                        <h1 class="text-capitalize mb-4">{{ $promo->title }}</h1>
-                                                        <div class=" d-block">
-                                                            <button type="button"
-                                                                class="btn btn-info rounded-5 px-4 shadow-lg">Discover
-                                                                Now</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section> --}}
 
                                 </div>
                             </div>
@@ -133,7 +108,7 @@
                                         <label for="exampleInputPassword1">Icon</label>
                                         <input type="file" class="dropify @error('desc') is-invalid @enderror"
                                             id="input-file-now" name="icon" data-errors-position="outside"
-                                            data-min-width="800" data-max-file-size="4M"
+                                            data-max-file-size="4M"
                                             data-allowed-file-extensions="jpeg png jpg svg gif"
                                             data-default-file="{{ url('storage/promo/icon/' . $promo->icon) ?? '' }}" />
                                         @error('desc')
@@ -146,7 +121,7 @@
                                         <label for="exampleInputPassword1">Icon</label>
                                         <input type="file" class="dropify @error('desc') is-invalid @enderror"
                                             id="input-file-now" name="icon" data-errors-position="outside"
-                                            data-min-width="800" data-max-file-size="4M"
+                                            data-max-file-size="4M"
                                             data-allowed-file-extensions="jpeg png jpg svg gif" />
                                         @error('desc')
                                             <small class="text-danger">{{ $message }}</small>

@@ -156,6 +156,18 @@ class HomeController extends Controller
         ]);
     }
 
+    
+    // TODO - newarrival
+    public function productsNew()
+    {
+        return view('frontend.layouts.shopping.products', [
+            'products' => Product::where([['status', '=', 'active'], ['quantity', '>', 0]])->latest()->simplePaginate(12),
+            'categoryAll' => ProductCategory::all(),
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
+        ]);
+    }
+
 
     public function productByCategory($id)
     {
@@ -173,7 +185,6 @@ class HomeController extends Controller
 
     public function filterStore(Request $request)
     {
-        // \dd($request->category_id);
         $products = Product::where([['status', '=', 'active'], ['quantity', '>', 0]])->simplePaginate(12);
         if ($request->category_id && !$request->new == 'new') {
             $category = ProductCategory::find($request->category_id);
@@ -184,19 +195,21 @@ class HomeController extends Controller
                 ->simplePaginate(12);
         }
         if ($request->new == 'new' && $request->price_from && $request->price_to && !$request->category_id) {
-            // \dd('no');
             $filter_min_price = $request->price_from;
             $filter_max_price = $request->price_to;
             if ($filter_min_price && $filter_max_price) {
                 $products = Product::whereBetween('price', [$filter_min_price, $filter_max_price])->where([['quantity', '>', 0], ['status', '=', 'active']])->latest()->simplePaginate(12);
             }
         }
+        if ($request->new == 'new' && !$request->price_from && !$request->price_to && !$request->category_id) {
+            if ($request->new == 'new') {
+                $products = Product::where([['quantity', '>', 0], ['status', '=', 'active']])->latest()->simplePaginate(12);
+            }
+        }
         if (!$request->new == 'new' && !$request->category_id && $request->price_from && $request->price_to) {
 
             // This will only execute if you received any price
             // Make you you validated the min and max price properly
-            $min_price = Product::min('price');
-            $max_price = Product::max('price');
             $filter_min_price = $request->price_from;
             $filter_max_price = $request->price_to;
             if ($filter_min_price && $filter_max_price) {
@@ -291,7 +304,10 @@ class HomeController extends Controller
     {
         $cookie_data = stripslashes(Cookie::get('shopping_cart'));
         $cart_data = json_decode($cookie_data, true);
-        return view('frontend.layouts.shopping.cart')
+        return view('frontend.layouts.shopping.cart',[
+            'social' => Contact::all(),
+            'footer' => Footer::latest()->first()
+        ])
             ->with('cart_data', $cart_data);
     }
     public function updatetocart(Request $request)

@@ -99,9 +99,9 @@
                                                     <table class="table mt-3 table-hover" style="color: #676767">
                                                         <tbody id="data">
                                                             @foreach ($order as $ord)
-                                                            <tr>
-                                                                
-                                                                <th>
+                                                                <tr>
+
+                                                                    <th>
                                                                         <a href="{{ route('transaction') }}"
                                                                             class="link text-start">
                                                                             <p>{{ date('d-m-Y', strtotime($ord->created_at)) }}
@@ -110,25 +110,22 @@
                                                                                 {{ $ord->transaction_number ?? '-' }}
                                                                             </small>
                                                                             <br>
-                                                                            (<span style="color: #F4BFBF" id="respoonseStatus">
+                                                                            (<span style="color: #F4BFBF"
+                                                                                id="respoonseStatus"
+                                                                                >
                                                                                 {!! $ord->status_front !!}
                                                                             </span>)
                                                                         </a>
                                                                     </th>
                                                                     <th style="width: 20%" class="text-center align-middle">
 
-                                                                        <form id="cancelForm" method="post">
-                                                                            @csrf
-                                                                            {{-- {{ dd($ord->id) }} --}}
-                                                                            <input type="hidden" name="id"
-                                                                                value="{{ $ord->id }}"
-                                                                                id="id_order_detail">
-                                                                            <input type="hidden" name="status"
-                                                                                value="7" id="status">
-                                                                            <a href="javascript:void(0)" id="submit" class="ms-3 link mt-1"
-                                                                                style="color: #F4BFBF !important"><i
-                                                                                    class="fi fi-sr-delete"></i></a>
-                                                                        </form>
+
+                                                                        <a href="{{ route('order.cancel', $ord->id) }}"
+                                                                            id="submit" class="ms-3 link mt-1 border-0"
+                                                                            onclick="notificationBeforeCancel(event, this)"
+                                                                            style="color: #F4BFBF !important; background: transparent"><i
+                                                                                class="fi fi-sr-delete"></i></a>
+
                                                                     </th>
                                                                 </tr>
                                                             @endforeach
@@ -189,6 +186,10 @@
         @method('delete')
         @csrf
     </form>
+    <form action="" id="cancel-form" method="post">
+        @csrf
+        @method('put')
+    </form>
     <script>
         function notificationBeforeDelete(event, el) {
             event.preventDefault();
@@ -200,6 +201,18 @@
                 alertify.message('Cancel').delay(3)
             });
 
+        }
+
+        function notificationBeforeCancel(event, el) {
+            event.preventDefault();
+            alertify.confirm('Confirm Cancel Order', 'Are You Sure?', function() {
+                $("#cancel-form").attr('action', $(el).attr('href'));
+                $("#cancel-form").submit();
+
+            }, function() {
+                alertify.set('notifier', 'position', 'top-center');
+                alertify.message('Cancel').delay(3)
+            });
         }
     </script>
     <script>
@@ -220,8 +233,6 @@
 
                 $('#collapseExample1').addClass('d-none')
                 $('#collapseExample').removeClass('d-none')
-                // $("#collapseExample").slideDown();
-
 
             });
 
@@ -237,38 +248,7 @@
                 $('#collapseExample1').removeClass('d-none')
                 $('#collapseExample').addClass('d-none')
 
-
             });
-
-            $("#cancelForm").click(function(e) {
-                e.preventDefault();
-
-                let id = $("#id_order_detail").val();
-                let status = $("#status").val();
-
-                $.ajax({
-                    url: "{{ route('order.cancel') }}",
-                    type: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        id: id,
-                        status: status,
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        if (response) {
-                            alertify.set('notifier', 'position', 'top-center');
-                            alertify.message('Delete Success').delay(3)
-                        }
-                        $('#respoonseStatus').html('Waiting response for cancel order')
-                    },
-                    error: function(response) {
-                        $("#id-error").text(response.responseJSON.errors.id);
-                        $("#status-error").text(response.responseJSON.errors.status);
-                    },
-                });
-            });
-
 
         });
     </script>
