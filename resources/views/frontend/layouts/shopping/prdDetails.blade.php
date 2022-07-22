@@ -19,11 +19,13 @@
             margin: 0;
             padding: 70px 0;
         }
-        .ajs-message{
+
+        .ajs-message {
             background-color: rgb(140 192 222);
             color: #FFF;
         }
-        .ajs-message.ajs-visible{
+
+        .ajs-message.ajs-visible {
             border-radius: 2rem;
             text-align: center
         }
@@ -102,21 +104,42 @@
                                     </div>
 
                                     <div class="col-12 mt-3">
-                                        <form action="">
-                                            <div class="row ">
-                                                <div class="col-sm-6 col-12">
-                                                    <input type="hidden" class="product_id" value="{{ $product->id }}">
-                                                    <input type="number" placeholder="input your order" min="0"
-                                                        max="{{ $product->quantity ?? '10' }}"
-                                                        class="form-control rounded-5 qty-input">
+                                        @if ($product->quantity == 0)
+                                            <form action="">
+                                                <div class="row ">
+                                                    <div class="col-sm-6 col-12">
+                                                        <input type="hidden" class="product_id " 
+                                                            value="{{ $product->id }}">
+                                                        <input type="number" placeholder="input your order" min="0"
+                                                            max="{{ $product->quantity ?? '10' }}"
+                                                            class="form-control rounded-5 qty-input" disabled>
+                                                    </div>
+                                                    <div class="col d-grid mt-md-0 mt-1 mt-sm-0">
+                                                        <button type="submit"
+                                                            class=" btn btn-product add-to-cart-btn disabled"><i
+                                                                class="fi fi-sr-shopping-cart-add"></i>
+                                                            Add</button>
+                                                    </div>
                                                 </div>
-                                                <div class="col d-grid mt-md-0 mt-1 mt-sm-0">
-                                                    <button type="submit" class=" btn btn-product add-to-cart-btn"><i
-                                                            class="fi fi-sr-shopping-cart-add"></i>
-                                                        Add</button>
+                                            </form>
+                                        @else
+                                            <form action="">
+                                                <div class="row ">
+                                                    <div class="col-sm-6 col-12">
+                                                        <input type="hidden" class="product_id"
+                                                            value="{{ $product->id }}">
+                                                        <input type="number" placeholder="input your order" min="0"
+                                                            max="{{ $product->quantity ?? '10' }}"
+                                                            class="form-control rounded-5 qty-input">
+                                                    </div>
+                                                    <div class="col d-grid mt-md-0 mt-1 mt-sm-0">
+                                                        <button type="submit" class=" btn btn-product add-to-cart-btn"><i
+                                                                class="fi fi-sr-shopping-cart-add"></i>
+                                                            Add</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

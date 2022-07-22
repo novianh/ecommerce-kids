@@ -28,7 +28,7 @@
                                 '<span>The</span> Best <span>TOY</span>                                                                                                              Collection' !!}</h1>
                             <p class="my-4">{{ $slider->desc ?? '' }} </p>
                             <div class="d-grid d-block d-lg-flex">
-                                <button type="button" class="btn rounded-5 px-lg-5 shadow-lg">Discover Now</button>
+                                <a href="{{ route('products.index') }}" class="btn rounded-5 px-lg-5 shadow-lg">Discover Now</a>
                             </div>
                         </div>
 
@@ -131,7 +131,7 @@
                                                             {{ $np->sku ?? '4AUSCS' }}</small>
                                                     </div>
                                                     <div class="col">
-                                                        <p class="harga">Rp. {{ number_format($np->price) ?? '500K' }}
+                                                        <p class="harga">Rp. {{ number_format($np->price,2) ?? '500K' }}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -228,7 +228,7 @@
                                 <p class="text-uppercase mb-4"><br> SALE {{ $promo->discount ?? '50' }}%</p>
                                 <h1 class="text-capitalize mb-4">{!! $promo->title ?? 'spring <br> <span>collection</span>' !!}</h1>
                                 <div class=" d-block">
-                                    <button type="button" class="btn rounded-5 px-4 shadow-lg">Discover Now</button>
+                                    <a href="{{ route('products.index') }}" class="btn rounded-5 px-4 shadow-lg">Discover Now</a>
                                 </div>
                             </div>
                         </div>

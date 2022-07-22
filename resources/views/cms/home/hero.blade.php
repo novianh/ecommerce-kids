@@ -20,7 +20,8 @@
                     @isset($hero)
                         <button type="button" class="btn edit btn-block btn-primary mb-3" data-toggle="modal"
                             data-target="#modal-form"><i class="fas fa-edit"></i> edit</button>
-
+                    <h6>NB:</h6>
+                    <p> {{ '<span>...</span>' }} make change color</p>
                         <div class="stretch-card">
                             <div class="card bg-light">
                                 <div class="card-header bg-light">

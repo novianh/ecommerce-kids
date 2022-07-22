@@ -200,5 +200,8 @@ Route::group(['middleware' => 'admin_user'], function () {
       Route::put('/management/page/social/update/{id}', [PageController::class, 'socialUpdate'])->name('social.update');
       Route::delete('/management/page/social/delete/{id}', [PageController::class, 'socialDestroy'])->name('social.delete');
       Route::post('/management/page/social/store', [PageController::class, 'socialStore'])->name('social.store');
+
+      // TODO product discount
+      
    });
 });

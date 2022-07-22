@@ -61,7 +61,7 @@
                                                             {{ $np->sku ?? '4AUSCS' }}</small>
                                                     </div>
                                                     <div class="col">
-                                                        <p class="harga">Rp. {{ $np->price ?? '500K' }}</p>
+                                                        <p class="harga">Rp. {{ number_format($np->price,2) ?? '500K' }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="text-center pt-3 card__description collapse "

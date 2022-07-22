@@ -51,6 +51,7 @@
                                 <li>Product SKU:</li>
                                 <li>Product Price:</li>
                                 <li>Product Quantity:</li>
+                                <li>Discount:</li>
                                 <li>Product Category:</li>
                                 <li>Product Status:</li>
 
@@ -78,6 +79,7 @@
                                 <li>{{ $product->quantity }}</li>
 
 
+                                <li>{{ $product->discount ?? 0 }}% <span><a href="{{ route('product.discount') }}" class="px-3 text-primary"><i class="fas fa-pen"></i></a></span></li>
                                 <li><span class="badge bg-info">{{ $product->category->name }}</span></li>
 
                                 <li>{!! $product->status_label !!}</li>
